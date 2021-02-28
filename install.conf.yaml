@@ -6,12 +6,16 @@
 - clean: ['~']
 
 - link:
+    ~/.dotfiles: ''
     ~/.vim:
       force: true
       path: vim
     ~/.vimrc: vimrc
     ~/.zsh: zsh
     ~/.zshrc: zshrc
+    ~/.gitconfig:
+      force: true
+      path: gitconfig
 
 - create:
   - ~/.vim/undo-history
