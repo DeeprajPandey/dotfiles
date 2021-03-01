@@ -6,15 +6,22 @@
 - clean: ['~']
 
 - link:
-    ~/.vim:
+    ~/.dotfiles: ''
+    ~/.gitconfig:
       force: true
-      path: vim
-    ~/.vimrc: vimrc
-    ~/.zsh: zsh
-    ~/.zshrc: zshrc
+      path: gitconfig
+    ~/.gitignore_global:
+      force: true
+      path: gitignore_global
+    ~/.gnupg/gpg.conf:
+    ~/.vim:
+    ~/.vimrc:
+    ~/.zsh:
+    ~/.zshrc:
 
 - create:
   - ~/.vim/undo-history
 
 - shell:
+  - git submodule sync --recursive
   - [git submodule update --init --recursive, Installing submodules]
