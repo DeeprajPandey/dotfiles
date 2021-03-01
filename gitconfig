@@ -135,7 +135,7 @@
 	detail = "%C(auto)%h %s%n  %C(yellow)by %C(blue)%an %C(magenta)<%ae> %C(bold brightmagenta)[%G?] %C(green)%ad%n %C(auto)%d%n"
 
 [pull]
-	ff = only
+	rebase = false
 
 [push]
 	default = upstream
