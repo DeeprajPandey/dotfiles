@@ -60,9 +60,10 @@ zinit light zsh-users/zsh-completions
 zi0a pick'autopair.zsh'
 zinit light hlissner/zsh-autopair
 
+### Slow - replaced with exa separately (shell/alias.sh)
 ### k: better than ls
-zi0a
-zinit light supercrabtree/k
+# zi0a
+# zinit light supercrabtree/k
 
 ### Load this last to avoid bug where suggestion prints twice
 zi0a blockf atload'_zsh_autosuggest_start'
@@ -77,23 +78,24 @@ zi_program() {
 zi0a pick'src/bash.command-not-found'
 zinit light hkbakke/bash-insulter
 
+### NOT NEEDED
 ### URL encoder/decoder
-zi_program pick'hURL'
-zinit light 'fnord0/hURL'
+# zi_program pick'hURL'
+# zinit light 'fnord0/hURL'
 
 
 #### Setup
 
-# dotfiles=~/.dotfiles/other/
+dotfiles=~/.shell/
 
 ### Set up sandboxd for slow packages
 # https://github.com/benvan/sandboxd
 # source $dotfiles/.sandboxd
 
 ### Load dotfiles
-# for file in $dotfiles/.{fzf.zsh,export,alias,functions,inputrc}; do
-#     [ -r "$file" ] && [ -f "$file" ] && source "$file";
-# done;
+for file in $dotfiles/{export,alias,functions,inputrc}.sh; do
+    [ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
 
 export PATH="/usr/local/sbin:$PATH"
 
