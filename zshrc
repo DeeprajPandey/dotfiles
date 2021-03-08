@@ -80,8 +80,8 @@ zinit light hkbakke/bash-insulter
 
 ### NOT NEEDED
 ### URL encoder/decoder
-# zi_program pick'hURL'
-# zinit light 'fnord0/hURL'
+zi_program pick'hURL'
+zinit light 'fnord0/hURL'
 
 
 #### Setup
