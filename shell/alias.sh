@@ -5,7 +5,8 @@
 alias grep='grep --color'
 
 # ls aliases - make sure exa is installed
-alias le='exa --group-directories-first --icons -aG'
+alias ls='exa --group-directories-first --icons -aG'
+alias le='exa --icons -aG'
 alias ld='exa --icons --time-style=default -s=Filename -FlaghHD'
 alias la='exa --group-directories-first --colour-scale --icons --time-style=default -s=Filename -FlaghHS'
 alias LD='exa --icons --time-style=default -s=Filename -laghHiD'
