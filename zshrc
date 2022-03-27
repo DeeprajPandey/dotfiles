@@ -177,3 +177,6 @@ export NVM_DIR="$HOME/.nvm"
 ## Run executable from local node_modules/
 # https://web.archive.org/web/20200812154305/https://2ality.com/2016/01/locally-installed-npm-executables.html
 function npm-do { (PATH=$(npm bin):$PATH; eval $@;) }
+
+# pyenv initialization
+eval "$(pyenv init -)"

@@ -19,6 +19,8 @@
     ~/.vimrc:
     ~/.zsh:
     ~/.zshrc:
+    ~/.zprofile:
+      force: true
 
 - create:
   - ~/.vim/undo-history
