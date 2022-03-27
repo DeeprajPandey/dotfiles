@@ -1,5 +1,5 @@
 [user]
-	signingkey = D2B0E070F5BBBBEB
+	signingkey = 666543CEE0C7203D
 	name = Deepraj Pandey
 	email = 15888623+DeeprajPandey@users.noreply.github.com
 
@@ -121,6 +121,9 @@
 
 [gpg]
 	program = gpg
+
+[init]
+    defaultBranch = main
 
 [merge]
 	defaultToUpstream = true
