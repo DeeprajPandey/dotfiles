@@ -41,41 +41,5 @@ export IN_ZINIT=1
 # https://github.com/benvan/sandboxd
 # source $dotfiles/.sandboxd
 
-
-
-#### Shell Setup
-# dotfiles=~/.shell/
-
-# # load dotfiles
-# for file in $dotfiles/{aliases,export,functions,inputrc}.sh; do
-#     [ -r "$file" ] && [ -f "$file" ] && source "$file";
-# done;
-
-#
-# zsh-substring-completion
-#
-setopt complete_in_word
-setopt always_to_end
-WORDCHARS=''
-zmodload -i zsh/complist
-
-# Substring completion
-zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-
-# The next line updates PATH for the Google Cloud SDK.
-#if [ -f '/Users/pontiac/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/pontiac/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-#if [ -f '/Users/pontiac/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/pontiac/google-cloud-sdk/completion.zsh.inc'; fi
-
-# Add the following to your shell init to set up gpg-agent automatically for every shell
-#if [ -f ~/.gnupg/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
-#    source ~/.gnupg/.gpg-agent-info
-#    export GPG_AGENT_INFO
-#else
-#    eval $(gpg-agent --daemon)
-#fi
-
 ### Profiling zsh
 # zprof | head -n 20
