@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-## Tell shellcheck this script will not be executed
+# To allow shellcheck linting
 
 # Use colors in coreutils utilities output
 alias grep='grep --color'
