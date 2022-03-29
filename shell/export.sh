@@ -23,3 +23,6 @@ export KEYTIMEOUT=1
 
 # Temp bin - primarily used for tmpmail
 export PATH="$PATH:~/.dotfiles/tmpbin"
+
+# Make the $path array have unique values.
+typeset -U PATH
