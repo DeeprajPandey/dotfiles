@@ -24,3 +24,6 @@ alias g='git'
 
 # cd to git root directory
 alias cdgr='cd "$(git root)"'
+
+# good 'ol cls
+alias cls='clear'
