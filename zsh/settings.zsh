@@ -61,6 +61,9 @@ zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!
 zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
+# pasting with tabs doesn't perform completion
+zstyle ':completion:*' insert-tab pending
+
 # Make sure the terminal is in application mode, which zle is active. Only then
 # are the values from $terminfo valid.
 # See http://zshwiki.org/home/zle/bindkeys#reading_terminfo.
@@ -172,6 +175,14 @@ function fancy_ctrl_z() {
 zle -N fancy_ctrl_z
 bindkey '^Z' fancy_ctrl_z
 autoload edit-command-line
+
+# 
+bindkey '^[^[[D' backward-word
+bindkey '^[^[[C' forward-word
+bindkey '^[[5D' beginning-of-line
+bindkey '^[[5C' end-of-line
+bindkey '^[[3~' delete-char
+bindkey '^?' backward-delete-char
 
 # Print previous command with Alt-N, where N is the number of arguments
 bindkey -s '\e1' "!:0 \t"
