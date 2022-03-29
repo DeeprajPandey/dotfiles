@@ -1,5 +1,5 @@
 # shellcheck shell=bash
-## Tell shellcheck this script will not be executed
+# To allow shellcheck linting
 
 # Update dotfiles
 dfu() {
@@ -81,3 +81,7 @@ alias mirrorsite='wget -m -k -K -E -e robots=off'
 
 # Mirror stdout to stderr, useful for seeing data going through a pipe
 alias peek='tee >(cat 1>&2)'
+
+## Run executable from local node_modules/
+# https://web.archive.org/web/20200812154305/https://2ality.com/2016/01/locally-installed-npm-executables.html
+function npm-do { (PATH=$(npm bin):$PATH; "$@";) }

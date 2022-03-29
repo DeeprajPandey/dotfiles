@@ -3,7 +3,7 @@
       create: true
       relink: true
 
-- clean: ['~']
+- clean: ['~', '~/.config']
 
 - link:
     ~/.dotfiles: ''
@@ -20,11 +20,26 @@
     ~/.zsh:
     ~/.zshrc:
     ~/.zprofile:
-      force: true
+        force: true
 
 - create:
   - ~/.vim/undo-history
 
+- create:
+    ~/.ssh:
+      mode: 0700
+
 - shell:
-  - git submodule sync --recursive
-  - [git submodule update --init --recursive, Installing submodules]
+    - ["git submodule update --init --recursive", "Installing submodules"]
+
+- clean: [
+    '~',
+    '~/.config'
+]
+  # - git submodule sync --recursive
+  # the following have to run after linking ~/.gitconfig
+  # - git update-submodules
+  # - >
+  #   git cleanall -f
+  #   vim/pack/vendor/start/
+  #   zsh/plugins/
