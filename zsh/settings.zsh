@@ -2,6 +2,7 @@
 # Completion initialization happens asynchrously when loading plugins.
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
 zstyle ':completion:*' max-errors 3 numeric
+autoload -Uz compinit && compinit
 
 # bind C-Z to "fg", so the same keybind suspends and resumes
 function fancy_ctrl_z() {
