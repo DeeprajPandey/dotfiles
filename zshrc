@@ -26,7 +26,7 @@ autoload -Uz _zinit
 ### End of Zinit's installer chunk
 
 
-### ZSH Settings - Powerlevel10K & zsh-init
+### ZSH Settings
 source ~/.zsh/settings.zsh
 
 # source the theme
@@ -61,10 +61,6 @@ zmodload -i zsh/complist
 
 # Substring completion
 zstyle ':completion:*' matcher-list 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-
-
-# pyenv initialization
-eval "$(pyenv init -)"
 
 
 # The next line updates PATH for the Google Cloud SDK.

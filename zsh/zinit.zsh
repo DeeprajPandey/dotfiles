@@ -115,10 +115,6 @@ zinit light srijanshetty/zsh-pandoc-completion
 zi0b as'completion'
 zinit light zsh-users/zsh-completions
 
-zi_completion mv'git-completion.zsh -> _git'
-zinit snippet https://github.com/git/git/blob/master/contrib/completion/git-completion.zsh
-
-
 #################
 ## Shell Setup ##
 #################
