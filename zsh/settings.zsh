@@ -82,15 +82,6 @@ fi
 # See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
 [ -n "${terminfo[kcbt]}" ] && bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
-# Set LS_COLORS.
-if [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolor module is loaded, this style can be used to set color
-# specifications.
-if [ -z "$LS_COLORS" ]; then
-  zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=30;41:sg=30;46:tw=30;42:ow=30;43:'
-else
-  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-fi
 
 # =============================================================================
 # History
