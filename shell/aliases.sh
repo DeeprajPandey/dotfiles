@@ -27,3 +27,6 @@ alias cdgr='cd "$(git root)"'
 
 # good 'ol cls
 alias cls='clear'
+
+# use code to mean codium
+alias code='codium'
