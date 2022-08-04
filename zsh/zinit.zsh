@@ -59,7 +59,7 @@ zinit light hkbakke/bash-insulter
 
 
 
-# zinit light zsh-users/zsh-nvm
+zinit light lukechilds/zsh-nvm
 # zinit light zsh-users/zsh-new-up
 
 
