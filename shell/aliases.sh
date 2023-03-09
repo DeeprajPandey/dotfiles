@@ -27,3 +27,10 @@ alias cdgr='cd "$(git root)"'
 
 # good 'ol cls
 alias cls='clear'
+
+# make sure docker is installed, gcloud image exists, and you have authenticated
+# using a mounted volume to $HOME/.config/gcloud before using this
+alias gcloud='docker run --rm -ti \
+-v $HOME/.config/gcloud:/root/.config/gcloud \
+gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud'
+
