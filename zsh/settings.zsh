@@ -36,11 +36,14 @@ WORDCHARS=''
 
 
 
-# Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/
+# Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/; Init completion
+autoload -Uz compinit && compinit
+
 # Menu selection will be started unconditionally.
 zstyle ':completion:*' menu select
-
 zmodload zsh/complist
+
+# Use vim style keybinds in menu completion
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
@@ -118,10 +121,15 @@ setopt hist_verify
 # waiting until the shell exits.
 setopt inc_append_history
 
+# Save each command’s beginning timestamp (in seconds since the epoch) and the
+# duration (in seconds) to the history file. The format of this prefixed data is:
+# ‘: <beginning time>:<elapsed seconds>;<command>’.
+setopt extended_history
+
 # See 2.5.4 of http://zsh.sourceforge.net/Guide/zshguide02.html.
 [ -z "$HISTFILE" ] && HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
-SAVEHIST=10000
+SAVEHIST=$HISTSIZE
 
 # =============================================================================
 # Input/Output
@@ -134,6 +142,15 @@ unsetopt flow_control
 # =============================================================================
 # Key Bindings
 # =============================================================================
+# Initialise editing command line
+autoload -U edit-command-line && zle -N edit-command-line
+
+# Enable interactive comments (# on the command line)
+setopt interactivecomments
+
+# The time the shell waits, in hundredths of seconds, for another key to be pressed
+# when reading bound multi-character sequences.
+KEYTIMEOUT=1 # corresponds to 10ms
 
 # See
 # http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
@@ -157,10 +174,6 @@ unsetopt flow_control
 [ -n "${terminfo[kcub1]}" ] && bindkey "${terminfo[kcub1]}" backward-char
 # Right-arrow
 [ -n "${terminfo[kcuf1]}" ] && bindkey "${terminfo[kcuf1]}" forward-char
-# Ctrl-U
-bindkey "^U" backward-kill-line
-
-autoload -Uz compinit && compinit
 
 # bind C-Z to "fg", so the same keybind suspends and resumes
 function fancy_ctrl_z() {
@@ -174,15 +187,35 @@ function fancy_ctrl_z() {
 }
 zle -N fancy_ctrl_z
 bindkey '^Z' fancy_ctrl_z
-autoload edit-command-line
 
-# 
+# Option + Left arrow for prev word
 bindkey '^[^[[D' backward-word
+# Option + Right arrow for next word
 bindkey '^[^[[C' forward-word
+# Will not work on mac: Ctrl + Left/Right arrow
 bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
+
 bindkey '^[[3~' delete-char
+# Use vim style line editing in zsh
+bindkey -v
+# Movement
+bindkey -a 'gg' beginning-of-buffer-or-history
+bindkey -a 'G' end-of-buffer-or-history
+# Undo
+bindkey -a 'u' undo
+bindkey -a '^R' redo
+# Edit line
+bindkey -a '^V' edit-command-line
+# Backspace
 bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+# TODO: Option + Backspace
+# Ctrl-U
+bindkey "^U" backward-kill-line
+
+# Use incremental search
+bindkey "^R" history-incremental-search-backward
 
 # Print previous command with Alt-N, where N is the number of arguments
 bindkey -s '\e1' "!:0 \t"
