@@ -10,7 +10,7 @@
     ~/.config/git:
       force: true
       path: git
-    # ~/.gnupg/gpg.conf:
+    ~/.gnupg/gpg.conf:
     # ~/.rtorrent.rc:
     # ~/.shell:
     # ~/.vim:
