@@ -7,26 +7,23 @@
 
 - link:
     ~/.dotfiles: ''
-    ~/.gitconfig:
+    ~/.config/git:
       force: true
-      path: gitconfig
-    ~/.gitignore_global:
-      force: true
-      path: gitignore_global
-    ~/.gnupg/gpg.conf:
-    ~/.rtorrent.rc:
-    ~/.shell:
-    ~/.vim:
-    ~/.vimrc:
-    ~/.zsh:
+      path: git
+    # ~/.gnupg/gpg.conf:
+    # ~/.rtorrent.rc:
+    # ~/.shell:
+    # ~/.vim:
+    # ~/.vimrc:
+    # ~/.zsh:
     ~/.zshrc:
     ~/.zprofile:
         force: true
 
 - create:
-  - ~/.rtorrent/downloads
-  - ~/.rtorrent/session
-  - ~/.rtorrent/watch
+  # - ~/.rtorrent/downloads
+  # - ~/.rtorrent/session
+  # - ~/.rtorrent/watch
   - ~/.vim/undo-history
 
 - create:
@@ -36,10 +33,6 @@
 - shell:
     - ["git submodule update --init --recursive", "Installing submodules"]
 
-- clean: [
-    '~',
-    '~/.config'
-]
   # - git submodule sync --recursive
   # the following have to run after linking ~/.gitconfig
   # - git update-submodules

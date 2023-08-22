@@ -1,5 +1,5 @@
 [user]
-	signingkey = 666543CEE0C7203D
+	signingkey = 99EE13392AE64AE0353B29A75DB3E939DCFB3E03
 	name = Deepraj Pandey
 	email = 15888623+DeeprajPandey@users.noreply.github.com
 
@@ -68,7 +68,7 @@
 [core]
 	autocrlf = false
 	editor = vim
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.config/git/ignore
 	pager = diff-so-fancy | less --tabs=4 -RFX
 
 [interactive]
