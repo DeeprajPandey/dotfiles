@@ -6,7 +6,8 @@ brew "wget"
 brew "git"
 brew "gpg" if OS.mac?
 brew "glibc" if OS.linux?
-brew "shellcheck"
+brew "shellcheck"   # shellcheck needed before vscode extn
+brew "starship"     # current shell prompt
 
 # Install essential casks (GUI applications)
 cask "docker"
@@ -24,7 +25,7 @@ cask "google-drive"
 # Install font cask for nerd-fonts and such
 # Font preview: https://www.programmingfonts.org/#source-code-pro
 tap "homebrew/cask-fonts"
-brew "font-source-code-pro-for-powerline"
+cask "font-source-code-pro-for-powerline"
 # brew "font-fira-code-nerd-font"
 # brew "font-hack-nerd-font"
 
