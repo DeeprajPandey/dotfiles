@@ -11,16 +11,16 @@ Welcome to the backbone of my MacOS setup. This repository houses my personally 
 
 ### Brew the Essentials
 
-Whenever I'm setting up a new MacOS environment, I typically start by installing a few essential tools and apps using [Homebrew](https://brew.sh/). To streamline this initial setup, I've included the `setup-mac.sh` script in this repository. You have two options:
+Whenever I'm setting up a new MacOS environment, I typically start by installing a few essential tools and apps using [Homebrew](https://brew.sh/). To streamline this initial setup, I've included the `setup.sh` script in this repository. You have two options:
 
-1. Download [the script](https://raw.githubusercontent.com/DeeprajPandey/dotfiles/HEAD/setup-mac.sh) directly from the repository and run it.
+1. Download [the script](https://raw.githubusercontent.com/DeeprajPandey/dotfiles/HEAD/setup.sh) directly from the repository and run it.
 2. Install `git` first, then clone this repository to access the script along with all other dotfiles.
 
 Once you have a copy, make the script executable and run it:
 
 ```sh
-chmod +x setup-mac.sh
-./setup-mac.sh
+chmod +x setup.sh
+./setup.sh
 ```
 
 ## Installation
