@@ -30,7 +30,7 @@ cask "font-source-code-pro-for-powerline"
 
 # Docker daemon should be running for this.
 # It should be running if this Brewfile is run from `setup.sh`.
-cask "whalebrew"
+brew "whalebrew"
 
 # Install linux packages through Whalebrew
 # https://github.com/whalebrew/whalebrew
