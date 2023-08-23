@@ -6,8 +6,14 @@ Welcome to the backbone of my MacOS setup. This repository houses my personally 
 
 ### Prerequisites
 
-- A MacOS system
-- A working internet connection
+- A MacOS system.
+- A working internet connection.
+- A terminal with Full Disk Access:
+  - Necessary for writing MacOS defaults.
+  - Navigate to `System Preferences -> Privacy & Security -> Full Disk Access`
+  - Either locate your current terminal in the list and check it, or click the `+` button to add your terminal application.
+  - If the terminal application was open during this process, quit and restart it to ensure changes take effect.
+  <img src="./assets/full-disk.png" alt="MacOS Ventura full disk access" width="70%"/>
 
 ### Brew the Essentials
 
@@ -28,12 +34,14 @@ chmod +x setup.sh
 With the groundwork done, here's how to get the dotfiles up and running:
 
 1. **Clone this repository**:
+
    ```sh
    git clone https://github.com/DeeprajPandey/dotfiles.git ~/dotfiles
    cd ~/dotfiles
    ```
 
 2. **Run the install script**:
+
    ```sh
    ./install
    ```
