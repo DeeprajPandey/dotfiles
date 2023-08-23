@@ -10,10 +10,8 @@ brew "shellcheck"   # shellcheck needed before vscode extn
 brew "starship"     # current shell prompt
 
 # Install essential casks (GUI applications)
-cask "docker"
 cask "iterm2"
 cask "visual-studio-code"
-cask "whalebrew"
 cask "firefox"
 cask "keepassxc", greedy: true      # always upgrade
 cask "protonvpn"
@@ -29,6 +27,10 @@ cask "font-source-code-pro-for-powerline"
 # brew "font-fira-code-nerd-font"
 # brew "font-hack-nerd-font"
 
+
+# Docker daemon should be running for this.
+# It should be running if this Brewfile is run from `setup.sh`.
+cask "whalebrew"
 
 # Install linux packages through Whalebrew
 # https://github.com/whalebrew/whalebrew
