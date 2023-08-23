@@ -2,8 +2,11 @@
 
 echo -e "\\nSetting up your Mac..."
 
+# See: determining whether a command exists
+# https://unix.stackexchange.com/questions/85249/why-not-use-which-what-to-use-then
+
 # Install Xcode Command Line Tools
-if ! xcode-select -p &>/dev/null; then
+if type -a xcode-select > /dev/null 2>&1; then
     xcode-select --install &>/dev/null
 
     # Wait until the Xcode Command Line Tools are installed
@@ -13,7 +16,7 @@ if ! xcode-select -p &>/dev/null; then
 fi
 
 # Install Homebrew if it's missing
-if test ! "$(which brew)"; then
+if type -a brew > /dev/null 2>&1; then
     echo -e "\\nInstalling Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -26,7 +29,7 @@ brew update && brew upgrade
 brew install --cask docker
 
 # Run Docker if it's not running
-if (! docker stats --no-stream &> /dev/null ); then
+if type -a docker > /dev/null 2>&1; then
     open /Applications/Docker.app
     
     # Wait until Docker daemon is running and has completed initialisation
