@@ -44,5 +44,6 @@ fi
 brew tap homebrew/bundle
 brew bundle --file ./init/Brewfile
 
-# Create a projects dir
-mkdir "$HOME"/Documents/wd
+# Create a projects dir and symlink to ~
+mkdir -p "$HOME"/Documents/wd
+ln -sfn "$HOME"/Documents/wd ~/wd

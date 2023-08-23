@@ -34,7 +34,7 @@ brew "whalebrew"
 
 # Install linux packages through Whalebrew
 # https://github.com/whalebrew/whalebrew
-whalebrew "whalebrew/ffmpeg"
+# whalebrew "whalebrew/ffmpeg"
 
 # Install VSCode extensions
 # generic extensions
