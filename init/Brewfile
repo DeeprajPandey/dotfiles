@@ -6,6 +6,7 @@ brew "wget"
 brew "git"
 brew "gpg" if OS.mac?
 brew "glibc" if OS.linux?
+brew "shellcheck"
 
 # Install essential casks (GUI applications)
 cask "docker"
@@ -37,6 +38,7 @@ whalebrew "whalebrew/ffmpeg"
 vscode "yzhang.markdown-all-in-one"
 vscode "DavidAnson.vscode-markdownlint"
 vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "timonwong.shellcheck"
 
 # python specific extensions
 vscode "ms-python.python"

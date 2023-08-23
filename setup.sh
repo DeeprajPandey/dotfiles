@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Setting up your Mac..."
+echo -e "\\nSetting up your Mac..."
 
 # Install Xcode Command Line Tools
 if ! xcode-select -p &>/dev/null; then
@@ -13,9 +13,15 @@ if ! xcode-select -p &>/dev/null; then
 fi
 
 # Install Homebrew if it's missing
-if test ! $(which brew); then
-    echo "Installing Homebrew..."
+if test ! $(which brew);
+    then
+    echo -e "\\nInstalling Homebrew..."
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    else
+    echo -e "\\nHomebrew is installed already! Updating all recipes instead."
+    brew update
+    brew upgrade
 fi
 
 # Update Homebrew recipes
@@ -24,7 +30,7 @@ brew update
 # Install all our dependencies with bundle (See Brewfile)
 # https://github.com/Homebrew/homebrew-bundle
 brew tap homebrew/bundle
-brew bundle --file ./Brewfile
+brew bundle --file ./init/Brewfile
 
 # Create a projects dir
 mkdir $HOME/Documents/wd
