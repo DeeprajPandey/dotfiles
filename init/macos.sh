@@ -205,6 +205,56 @@ sudo defaults write /Library/Preferences/com.apple.timezone.auto.plist Active -b
 ###############################################################################
 # Energy saving                                                               #
 ###############################################################################
+# For MacOS power settings: https://eclecticlight.co/2017/01/20/power-management-in-detail-using-pmset/
+
+# TODO: add as shell function
+# # Travel Mode
+# sudo pmset -b standby 1
+# # Hibernation Mode 25: Copy RAM to disk and TURN OFF power to RAM. Slow sleep + wake, high battery life
+# sudo pmset -b hibernatemode 25
+# sudo pmset -b standbydelaylow 2700       # 45 mins
+# sudo pmset -b standbydelayhigh 5400      # 1.5 hrs
+
+# Destroy FileVault Key when device goes into standby (keep standby on)
+# Check the ^link and see https://github.com/drduh/macOS-Security-and-Privacy-Guide#full-disk-encryption
+sudo pmset -a DestroyFVKeyOnStandby 1
+
+# Hibernation mode
+# 0: Disable hibernation (speeds up entering sleep mode)
+# 3: Copy RAM to disk so the system state can still be restored in case of a
+#    power failure.
+sudo pmset -a hibernatemode 3
+sudo pmset -a standby 1
+
+# Set standby delay to 5 hours (default is 1 hour)
+# IMP: this is when a hibernation image is written to the default location (usually /var/vm/sleepimage)
+# this is NOT when the device goes into standby mode and powers off RAM (see standbydelayhigh for that)
+sudo pmset -a standbydelay 18000
+
+sudo pmset -a standbydelaylow 10800       # 3 hrs
+sudo pmset -a standbydelayhigh 18000      # 5 hrs
+
+# Park disk heads on changes in G Force (enable readings from sudden motion sensor)
+sudo pmset -a sms 1
+
+
+# While charging:
+# 1. Sleep display after 15 mins
+# 2. Set disk sleep to 17 mins
+# 3. Disable machine sleep
+# 4. Enable wake on ethernet magic pkt
+# 5. Enable powernap
+# 6. Prevent sleep on active (not idle) remote session
+sudo pmset -c displaysleep 15 disksleep 17 sleep 0 womp 1 powernap 1 ttyskeepawake 1
+
+# On Battery:
+# 1. Sleep display after 5 mins
+# 2. Set disk sleep to 10 mins
+# 3. Set machine sleep to 10 mins
+# 4. Disable wake on ethernet magic pkt
+# 5. Disable powernap (background work)
+# 6. Slightly dim display when switching to battery
+sudo pmset -b displaysleep 5 disksleep 10 sleep 10 womp 0 powernap 0 lessbright 1
 
 # Remove the sleep image file to save disk space
 # sudo rm /private/var/vm/sleepimage
