@@ -69,10 +69,13 @@
 	autocrlf = false
 	editor = vim
 	excludesfile = ~/.config/git/ignore
-	pager = diff-so-fancy | less --tabs=4 -RFX
+	pager = delta
+
+[include]
+	path = ./delta.themes.gitconfig
 
 [interactive]
-	diffFilter = diff-so-fancy --patch
+	diffFilter = delta --color-only --features=interactive
 
 [color]
 	ui = true
@@ -111,10 +114,22 @@
 	changed = yellow
 	untracked = red
 
-[diff-so-fancy]
-	changeHunkIndicators = false
-	markEmptyLines = true
-	stripLeadingSymbols = false
+# gruvmax-fang mellow-barbet villsau
+[delta]
+	features = side-by-side gruvmax-fang
+	hyperlinks = true
+	# sticking to vscode rn. for vim, see https://dandavison.github.io/delta/grep.html?highlight=hyperlinks#grep
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+    light = false      # set to true if you're in a terminal w/ a light background color
+	navigate = true    # use n and N to move between diff sections
+	true-color = always
+
+[delta "interactive"]
+	keep-plus-minus-markers = false
+
+[diff]
+	# check and set up later: https://dandavison.github.io/delta/color-moved-support.html
+    colorMoved = default
 
 [grep]
 	lineNumber = true
@@ -126,11 +141,15 @@
     defaultBranch = main
 
 [merge]
+	conflictstyle = diff3
 	defaultToUpstream = true
 	tool = vimdiff
 
 [mergetool]
 	keepBackup = false
+
+[pager]
+	blame = delta
 
 [pretty]
 	line = "%C(auto)%h %<|(60,trunc)%s %Cgreen(%ar) %C(blue)<%aN> %C(auto)%d"

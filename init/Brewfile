@@ -2,12 +2,15 @@
 cask_args appdir: "~/Applications", require_sha: true
 
 # Install essential tools
+brew "ansifilter"
 brew "bat"
 brew "coreutils"
 brew "git"
+brew "git-delta"
 brew "glibc" if OS.linux?
 brew "gpg" if OS.mac?
 brew "openssl@1.1"
+brew "ripgrep"
 brew "shellcheck"                   # needed before shellcheck vscode extn
 brew "starship"                     # current shell prompt
 brew "wget"
