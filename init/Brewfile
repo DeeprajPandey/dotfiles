@@ -2,30 +2,67 @@
 cask_args appdir: "~/Applications", require_sha: true
 
 # Install essential tools
-brew "wget"
+brew "bat"
+brew "coreutils"
 brew "git"
-brew "gpg" if OS.mac?
 brew "glibc" if OS.linux?
-brew "shellcheck"   # shellcheck needed before vscode extn
-brew "starship"     # current shell prompt
+brew "gpg" if OS.mac?
+brew "openssl@1.1"
+brew "shellcheck"                   # needed before shellcheck vscode extn
+brew "starship"                     # current shell prompt
+brew "wget"
+brew "yamllint"
+brew "zopfli"
+# Diagram scripting
+tap "terrastruct/d2"
+brew "d2"
+
 
 # Install essential casks (GUI applications)
-cask "iterm2"
-cask "visual-studio-code"
-cask "firefox"
-cask "keepassxc", greedy: true      # always upgrade
-cask "protonvpn"
 cask "aldente"
-cask "monitorcontrol"
+cask "colour-contrast-analyser"
+# cask "daisydisk"                  # checksum undefined
+cask "firefox"
 cask "google-drive"
-# brew install --cask logi-options-plus     # iff 3S is on the desk
+cask "handbrake"
+cask "imageoptim"
+cask "inkscape"
+cask "iterm2"
+cask "karabiner-elements"
+cask "kap"
+cask "keepassxc", greedy: true      # always upgrade
+# cask "little-snitch"
+# cask logi-options-plus     # iff 3S is on the desk
+cask "monitorcontrol"
+# mas "nextdns", id: 1464122853
+# Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
+cask "pika"
+cask "protonvpn"
+cask "raspberry-pi-imager"
+cask "screaming-frog-seo-spider"
+cask "screens-connect"
+# mas "sequel-ace", id: 1518036000
+cask "shottr"
+# cask "spotify"                    # checksum undefined
+# mas "unifi", id: 1057750338
+cask "visual-studio-code"
+cask "zoom"
+
 
 # Install font cask for nerd-fonts and such
 # Font preview: https://www.programmingfonts.org/#source-code-pro
 tap "homebrew/cask-fonts"
 cask "font-source-code-pro-for-powerline"
-# brew "font-fira-code-nerd-font"
-# brew "font-hack-nerd-font"
+# cask "font-fira-code-nerd-font"
+# cask "font-hack-nerd-font"
+cask "font-atkinson-hyperlegible"
+# cask "font-ia-writer-duospace"    # checksum undefined
+# cask "font-ia-writer-mono"        # checksum undefined
+cask "font-ibm-plex"
+cask "font-inter"
+# cask "font-lato"                  # checksum undefined
+# cask "font-nunito"                # checksum undefined
+# cask "font-nunito-sans"           # checksum undefined
 
 
 # Docker daemon should be running for this.
@@ -35,6 +72,7 @@ brew "whalebrew"
 # Install linux packages through Whalebrew
 # https://github.com/whalebrew/whalebrew
 # whalebrew "whalebrew/ffmpeg"
+
 
 # Install VSCode extensions
 # generic extensions
