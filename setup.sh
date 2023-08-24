@@ -47,3 +47,7 @@ brew bundle --file ./init/Brewfile
 # Create a projects dir and symlink to ~
 mkdir -p "$HOME"/Documents/wd
 ln -sfn "$HOME"/Documents/wd ~/wd
+
+# Set macOS preferences - we will run this last because this will reload the shell
+# shellcheck source=/dev/null
+source ./init/macos.sh
