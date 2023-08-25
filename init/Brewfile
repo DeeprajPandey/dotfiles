@@ -5,14 +5,24 @@ cask_args appdir: "~/Applications", require_sha: true
 brew "ansifilter"
 brew "bat"
 brew "coreutils"
+brew "findutils"
 brew "git"
 brew "git-delta"
 brew "glibc" if OS.linux?
 brew "gpg" if OS.mac?
+# brew "imagemagick"
+# brew "lynx"
+brew "moreutils"
+brew "openssh"
 brew "openssl@1.1"
+brew "pv"
+# brew "rename"
 brew "ripgrep"
 brew "shellcheck"                   # needed before shellcheck vscode extn
+brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
+brew "tldr"
+brew "vbindiff"
 brew "wget"
 brew "yamllint"
 brew "zopfli"
@@ -67,6 +77,31 @@ cask "font-inter"
 # cask "font-nunito"                # checksum undefined
 # cask "font-nunito-sans"           # checksum undefined
 
+# # Install some CTF tools; see https://github.com/ctfs/write-ups.
+# brew "aircrack-ng"
+# brew "bfg"
+# brew "binutils"
+# brew "binwalk"
+# brew "cifer"
+# brew "dex2jar"
+# brew "dns2tcp"
+# brew "fcrackzip"
+# brew "foremost"
+# brew "hashpump"
+# brew "hydra"
+# brew "john"
+# brew "knock"
+# brew "netpbm"
+# brew "nmap"
+# brew "pngcheck"
+# brew "socat"
+# brew "sqlmap"
+# brew "tcpflow"
+# brew "tcpreplay"
+# brew "tcptrace"
+# brew "ucspi-tcp" # `tcpserver` etc.
+# brew "xpdf"
+# brew "xz"
 
 # Docker daemon should be running for this.
 # It should be running if this Brewfile is run from `setup.sh`.
