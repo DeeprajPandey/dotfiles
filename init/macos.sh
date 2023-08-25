@@ -54,6 +54,9 @@ defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 2
 # defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 # Possible values: `WhenScrolling`, `Automatic` and `Always`
 
+# Set clock format
+defaults write com.apple.menuextra.clock "DateFormat" -string "\"EEE d MMM HH:mm:ss\""
+
 # Disable the over-the-top focus ring animation
 # defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
 
@@ -70,6 +73,10 @@ defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
 # Expand print panel by default
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
 defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+# Expand print panel by default.
+defaults write NSGlobalDomain NSNavPanelExpandedStateForPrintMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForPrintMode2 -bool true
 
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
@@ -158,6 +165,12 @@ sudo defaults write /Library/Preferences/com.apple.locationmenu.plist ShowSystem
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 ###############################################################################
+
+# Set trackpad click weight to 0 (light)
+defaults write com.apple.AppleMultitouchTrackpad "FirstClickThreshold" -int "0"
+
+# Enable dragging with Drag lock.
+defaults write com.apple.AppleMultitouchTrackpad "DragLock" -bool "true"
 
 # Increase sound quality for Bluetooth headphones/headsets
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
@@ -300,6 +313,9 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 1
 # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
 # defaults write com.apple.finder QuitMenuItem -bool true
 
+# Finder: increase sidebar width
+defaults write com.apple.finder SidebarWidth -int 175
+
 # Finder: disable window animations and Get Info animations
 defaults write com.apple.finder DisableAllAnimations -bool true
 
@@ -335,10 +351,16 @@ defaults write com.apple.finder ShowPathbar -bool true
 # Display full POSIX path as Finder window title
 defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 
+# Display folder icon before title in title bar
+defaults write com.apple.universalaccess "showWindowTitlebarIcons" -bool "true"
+
 # Keep folders on top when sorting by name
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
 
 # When performing a search, search the current folder by default
+# This Mac       : `SCev`
+# Current Folder : `SCcf`
+# Previous Scope : `SCsp`
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
 # Disable the warning when changing a file extension
@@ -397,6 +419,9 @@ defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 # Disable the warning before emptying the Trash
 # defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
+# Remove items in Trash after 30 days
+defaults write com.apple.finder "FXRemoveOldTrashItems" -bool "true"
+
 # Enable AirDrop over Ethernet and on unsupported Macs running Lion
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
@@ -421,6 +446,9 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 ###############################################################################
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
+
+# Set Dock on the left side of the screen
+defaults write com.apple.dock "orientation" -string "left"
 
 # Enable highlight hover effect for the grid view of a stack (Dock)
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
@@ -768,11 +796,15 @@ hash tmutil &> /dev/null && sudo tmutil disablelocal
 # Activity Monitor                                                            #
 ###############################################################################
 
+# Logging interval for Activity Monitor
+defaults write com.apple.ActivityMonitor "UpdatePeriod" -int "2"
+
 # Show the main window when launching Activity Monitor
 defaults write com.apple.ActivityMonitor OpenMainWindow -bool true
 
 # Visualize CPU usage in the Activity Monitor Dock icon
-defaults write com.apple.ActivityMonitor IconType -int 5
+# https://macos-defaults.com/activity-monitor/icontype.html#set-to-6
+defaults write com.apple.ActivityMonitor IconType -int 6
 
 # Show all processes in Activity Monitor
 defaults write com.apple.ActivityMonitor ShowCategory -int 0
