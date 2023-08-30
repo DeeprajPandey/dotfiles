@@ -1,7 +1,14 @@
 # set arguments for all 'brew install --cask' commands
 cask_args appdir: "~/Applications", require_sha: true
 
+# All taps
+tap "buo/cask-upgrade"              # `brew cu` for cask updates
+tap "homebrew/cask-fonts"
+tap "terrastruct/d2"
+tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
+
 # Install essential tools
+brew "amber"                        # tap danopia
 brew "ansifilter"
 brew "bat"
 brew "coreutils"
@@ -27,8 +34,7 @@ brew "wget"
 brew "yamllint"
 brew "zopfli"
 # Diagram scripting
-tap "terrastruct/d2"
-brew "d2"
+brew "d2"                           # tap terrastruct
 
 
 # Install essential casks (GUI applications)
@@ -45,7 +51,8 @@ cask "karabiner-elements"
 cask "kap"
 cask "keepassxc", greedy: true      # always upgrade
 # cask "little-snitch"
-# cask logi-options-plus     # iff 3S is on the desk
+# cask "logi-options-plus"          # iff 3S is on the desk
+cask "logseq"
 cask "monitorcontrol"
 # mas "nextdns", id: 1464122853
 # Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
@@ -62,9 +69,8 @@ cask "visual-studio-code"
 cask "zoom"
 
 
-# Install font cask for nerd-fonts and such
+# Install fonts (tap cask-fonts)
 # Font preview: https://www.programmingfonts.org/#source-code-pro
-tap "homebrew/cask-fonts"
 cask "font-source-code-pro-for-powerline"
 # cask "font-fira-code-nerd-font"
 # cask "font-hack-nerd-font"
@@ -76,6 +82,7 @@ cask "font-inter"
 # cask "font-lato"                  # checksum undefined
 # cask "font-nunito"                # checksum undefined
 # cask "font-nunito-sans"           # checksum undefined
+
 
 # # Install some CTF tools; see https://github.com/ctfs/write-ups.
 # brew "aircrack-ng"
@@ -102,6 +109,7 @@ cask "font-inter"
 # brew "ucspi-tcp" # `tcpserver` etc.
 # brew "xpdf"
 # brew "xz"
+
 
 # Docker daemon should be running for this.
 # It should be running if this Brewfile is run from `setup.sh`.
