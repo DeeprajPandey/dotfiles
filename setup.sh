@@ -48,6 +48,10 @@ brew bundle --file ./init/Brewfile
 mkdir -p "$HOME"/Documents/wd
 ln -sfn "$HOME"/Documents/wd ~/wd
 
+# Set up the shell and everything else
+# shellcheck source=/dev/null
+source ./install
+
 # Set macOS preferences - we will run this last because this will reload the shell
 # shellcheck source=/dev/null
 source ./init/macos.sh
