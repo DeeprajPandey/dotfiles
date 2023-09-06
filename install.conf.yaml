@@ -15,6 +15,9 @@
       force: true
       path: git
     ~/.gnupg/gpg.conf:
+      path: gnupg/gpg.conf
+    ~/.gnupg/gpg-agent.conf:
+      path: gnupg/gpg-agent.conf
     # ~/.rtorrent.rc:
     # ~/.shell:
     # ~/.vim:
@@ -22,7 +25,7 @@
     # ~/.zsh:
     ~/.zshrc:
     ~/.zprofile:
-        force: true
+      force: true
 
 - create:
   # - ~/.rtorrent/downloads
