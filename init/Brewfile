@@ -5,6 +5,7 @@ cask_args appdir: "~/Applications", require_sha: true
 tap "buo/cask-upgrade"              # `brew cu` for cask updates
 tap "microsoft/git"
 tap "homebrew/cask-fonts"
+tap "hashicorp/tap"
 tap "terrastruct/d2"
 tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
 
@@ -33,6 +34,7 @@ brew "kondo"
 brew "moreutils"
 brew "openssh"
 brew "openssl@1.1"
+brew "paperkey"
 brew "pinentry-mac"
 brew "procs"
 brew "pv"
@@ -46,6 +48,7 @@ brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
 brew "tldr"
 brew "tokei"
+brew "hashicorp-vagrant"
 brew "valgrind"
 brew "vbindiff"
 brew "wget"
