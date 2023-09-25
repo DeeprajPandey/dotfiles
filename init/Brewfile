@@ -12,6 +12,7 @@ tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46
 # Install essential tools
 brew "amber"                        # tap danopia
 brew "ansifilter"
+brew "bandwhich"                     # current network utilisation by proc
 brew "bat"
 brew "bottom"
 brew "broot"
@@ -52,7 +53,7 @@ brew "hashicorp-vagrant"
 brew "valgrind"
 brew "vbindiff"
 brew "wget"
-brew "xh"
+brew "xh"                          # HTTPie port in rust (curl alt)
 brew "yamllint"
 brew "zellij"
 brew "zopfli"
@@ -78,6 +79,7 @@ cask "keepassxc", greedy: true      # always upgrade
 # cask "little-snitch"
 # cask "logi-options-plus"          # iff 3S is on the desk
 cask "logseq"
+cask "magicavoxel"                  # 8-bit 3D voxel editor and renderer
 cask "monitorcontrol"
 # mas "nextdns", id: 1464122853
 # Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
