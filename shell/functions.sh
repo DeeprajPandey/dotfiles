@@ -85,3 +85,17 @@ alias peek='tee >(cat 1>&2)'
 ## Run executable from local node_modules/
 # https://web.archive.org/web/20200812154305/https://2ality.com/2016/01/locally-installed-npm-executables.html
 function npm-do { (PATH=$(npm bin):$PATH; "$@";) }
+
+# Argbash via docker container
+# https://web.archive.org/web/20230927191830/https://github.com/matejak/argbash/blob/master/docker/README.md
+function argbash() {
+  docker run --rm \
+  -v "$(pwd):/work" \
+  -u "$(id -u):$(id -g)" matejak/argbash "$@"
+}
+
+function argbash-init() {
+  docker run --rm -e PROGRAM=argbash-init \
+  -v "$(pwd):/work" \
+  -u "$(id -u):$(id -g)" matejak/argbash "$@"
+}
