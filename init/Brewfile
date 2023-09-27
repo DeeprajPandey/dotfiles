@@ -5,7 +5,6 @@ cask_args appdir: "~/Applications", require_sha: true
 tap "buo/cask-upgrade"              # `brew cu` for cask updates
 tap "microsoft/git"
 tap "homebrew/cask-fonts"
-tap "hashicorp/tap"
 tap "terrastruct/d2"
 tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
 
@@ -45,12 +44,12 @@ brew "rustscan"
 brew "sccache"
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
+brew "spicetify-cli"
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
 brew "tldr"
 brew "tokei"
-brew "hashicorp-vagrant"
-brew "valgrind"
+# brew "valgrind"                   # noinstall: not available for Apple Silicon
 brew "vbindiff"
 brew "wget"
 brew "xh"                          # HTTPie port in rust (curl alt)
