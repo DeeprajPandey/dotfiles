@@ -64,7 +64,7 @@ brew "d2"                           # tap terrastruct
 # Install essential casks
 cask "aldente"
 cask "colour-contrast-analyser"
-# cask "daisydisk"                  # checksum undefined
+# cask "daisydisk"                  # noinstall: checksum undefined
 cask "firefox"
 cask "git-credential-manager"
 cask "google-drive"
@@ -89,7 +89,7 @@ cask "screaming-frog-seo-spider"
 cask "screens-connect"
 # mas "sequel-ace", id: 1518036000
 cask "shottr"
-# cask "spotify"                    # checksum undefined
+# cask "spotify"                    # noinstall: checksum undefined
 # mas "unifi", id: 1057750338
 cask "visual-studio-code"
 cask "zoom"
@@ -101,13 +101,13 @@ cask "font-source-code-pro-for-powerline"
 # cask "font-fira-code-nerd-font"
 # cask "font-hack-nerd-font"
 cask "font-atkinson-hyperlegible"
-# cask "font-ia-writer-duospace"    # checksum undefined
-# cask "font-ia-writer-mono"        # checksum undefined
+# cask "font-ia-writer-duospace"    # noinstall: checksum undefined
+# cask "font-ia-writer-mono"        # noinstall: checksum undefined
 cask "font-ibm-plex"
 cask "font-inter"
-# cask "font-lato"                  # checksum undefined
-# cask "font-nunito"                # checksum undefined
-# cask "font-nunito-sans"           # checksum undefined
+# cask "font-lato"                  # noinstall: checksum undefined
+# cask "font-nunito"                # noinstall: checksum undefined
+# cask "font-nunito-sans"           # noinstall: checksum undefined
 
 
 # # Install some CTF tools; see https://github.com/ctfs/write-ups.
