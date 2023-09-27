@@ -90,12 +90,12 @@ function npm-do { (PATH=$(npm bin):$PATH; "$@";) }
 # https://web.archive.org/web/20230927191830/https://github.com/matejak/argbash/blob/master/docker/README.md
 function argbash() {
   docker run --rm \
-  -v "$(pwd):/work" \
+  -v "$PWD:/work" \
   -u "$(id -u):$(id -g)" matejak/argbash "$@"
 }
 
 function argbash-init() {
   docker run --rm -e PROGRAM=argbash-init \
-  -v "$(pwd):/work" \
+  -v "$PWD:/work" \
   -u "$(id -u):$(id -g)" matejak/argbash "$@"
 }
