@@ -1,9 +1,30 @@
 #!/usr/bin/env bash
+# ARG_OPTIONAL_BOOLEAN([install], [i], [Perform a fresh installation. This is the default behavior.], [on])
+# ARG_OPTIONAL_BOOLEAN([update], [u], [Update the installed tools and applications.])
+# ARG_OPTIONAL_BOOLEAN([configure-os], [c], [Reconfigure the operating system settings.])
+# ARG_HELP([This script automates the setup of a MacOS environment. It can perform a fresh installation, update tools and applications, or reconfigure the operating system settings. By default, it performs a fresh installation unless another option is provided.])
+# ARGBASH_GO
+
+# [ <-- needed because of Argbash
+
+declare _arg_install
+declare _arg_update
+declare _arg_configure_os
+
+# Assign CLI args to variables for brevity
+flag_install=$_arg_install
+flag_update=$_arg_update
+flag_config=$_arg_configure_os
+
+# Get the directory of the currently executing script
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Define color codes
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+# Argbash workaround for square brackets:
+# https://web.archive.org/web/20230927170347/https://argbash.readthedocs.io/en/latest/#limitations
+GREEN='\033[0;32m'          # match square bracket for argbash: ]
+YELLOW='\033[1;33m'         # match square bracket for argbash: ]
+NC='\033[0m' # No Color     # match square bracket for argbash: ]
 
 function log_info() {
     echo -e "${YELLOW}[INFO] $1${NC}"
@@ -64,7 +85,7 @@ function install_core_dependencies() {
     # Create a projects dir and symlink to ~
     log_info "Creating a working directory and linking to home..."
     mkdir -p "$HOME"/Documents/wd
-    ln -sfn "$HOME"/Documents/wd ~/wd
+    ln -sfn "$HOME"/Documents/wd "$HOME"/wd
     log_success "Working directory initialised and linked."
 }
 
@@ -82,7 +103,7 @@ function setup_environment_and_shell() {
     # Set up the shell and everything else
     log_info "Setting up the shell using dotbot..."
     # shellcheck source=/dev/null
-    source ./install
+    source "$DIR/install"
     log_success "Shell set up."
 }
 
@@ -91,6 +112,24 @@ function apply_macos_configurations() {
     # Set macOS preferences - we will run this last because this will reload the shell
     echo -e "\\n${YELLOW}[INFO] Applying MacOS configurations...${NC}"
     # shellcheck source=/dev/null
-    source ./init/macos.sh
+    source "$DIR/init/macos.sh"
     log_success "MacOS configurations applied."
 }
+
+# Check the provided options and perform the corresponding actions
+if [ "$flag_update" = on ]; then
+    setup_environment_and_shell
+elif [ "$flag_config" = on ]; then
+    apply_macos_configurations
+elif [ "$flag_install" = on ]; then
+    install_core_dependencies
+    setup_environment_and_shell
+    apply_macos_configurations
+else
+    # Same behaviour as `$flag_install` now; can be extended later
+    install_core_dependencies
+    setup_environment_and_shell
+    apply_macos_configurations
+fi
+
+# ] <-- needed because of Argbash
