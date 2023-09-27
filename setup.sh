@@ -5,40 +5,48 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+function log_info() {
+    echo -e "${YELLOW}[INFO] $1${NC}"
+}
+
+function log_success() {
+    echo -e "${GREEN}[SUCCESS] $1${NC}"
+}
+
 # Installs foundational components: xcode-select, Homebrew, and Docker.
 # Ensures Docker is running and initialises a project directory.
 function install_core_dependencies() {
-    echo -e "${YELLOW}[INFO] Setting up your Mac's core dependencies...${NC}"
+    log_info "Setting up your Mac's core dependencies..."
 
     # See: determining whether a command exists
     # https://unix.stackexchange.com/questions/85249/why-not-use-which-what-to-use-then
 
     # Install Xcode Command Line Tools
     if ! type -a xcode-select > /dev/null 2>&1; then
-        echo -e "${YELLOW}[INFO] Installing Xcode Command Line Tools...${NC}"
+        log_info "Installing Xcode Command Line Tools..."
         xcode-select --install &>/dev/null
 
         # Wait until the Xcode Command Line Tools are installed
         until xcode-select -p &>/dev/null; do
             sleep 5
         done
-        echo -e "${GREEN}[SUCCESS] Xcode Command Line Tools installed.${NC}"
+        log_success "Xcode Command Line Tools installed."
     fi
 
     # Install Homebrew if it's missing
     if ! type -a brew > /dev/null 2>&1; then
-        echo -e "${YELLOW}[INFO] Installing Homebrew...${NC}"
+        log_info "Installing Homebrew..."
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         eval "$(/opt/homebrew/bin/brew shellenv)"
-        echo -e "${GREEN}[SUCCESS] Homebrew installed.${NC}"
+        log_success "Homebrew installed."
     fi
 
-    # Update Homebrew recipes
-    echo -e "${YELLOW}[INFO] Updating Homebrew recipes and upgrading installed formulae...${NC}"
+    # Update Homebrew and upgrade formulae
+    log_info "Updating Homebrew and upgrading installed formulae..."
     brew update && brew upgrade
 
     # Install docker and start the daemon before moving to Brewfile (whalebrew needs this)
-    echo -e "${YELLOW}[INFO] Installing and starting Docker...${NC}"
+    log_info "Installing and starting Docker..."
     brew install --cask docker
 
     # Run Docker if it's not running
@@ -50,14 +58,14 @@ function install_core_dependencies() {
             echo -e "\\n${YELLOW}[INFO] Waiting for Docker to launch...${NC}"
             sleep 5
         done
-        echo -e "${GREEN}[SUCCESS] Docker is running.${NC}"
+        log_success "Docker is running."
     fi
 
     # Create a projects dir and symlink to ~
-    echo -e "${YELLOW}[INFO] Creating a working directory and linking to home...${NC}"
+    log_info "Creating a working directory and linking to home..."
     mkdir -p "$HOME"/Documents/wd
     ln -sfn "$HOME"/Documents/wd ~/wd
-    echo -e "${GREEN}[SUCCESS] Working directory initialised and linked.${NC}"
+    log_success "Working directory initialised and linked."
 }
 
 # Installs Brew formulae and casks from Brewfile and sets up the shell using Dotbot.
@@ -66,16 +74,16 @@ function setup_environment_and_shell() {
 
     # Install all our dependencies with bundle (See Brewfile)
     # https://github.com/Homebrew/homebrew-bundle
-    echo -e "${YELLOW}[INFO] Installing dependencies from Brewfile...${NC}"
+    log_info "Installing dependencies from Brewfile..."
     brew tap homebrew/bundle
     brew bundle --file ./init/Brewfile
-    echo -e "${GREEN}[SUCCESS] Homebrew formulae and casks installed.${NC}"
+    log_success "Homebrew formulae and casks installed."
 
     # Set up the shell and everything else
-    echo -e "${YELLOW}[INFO] Setting up the shell using dotbot...${NC}"
+    log_info "Setting up the shell using dotbot..."
     # shellcheck source=/dev/null
     source ./install
-    echo -e "${GREEN}[SUCCESS] Shell set up.${NC}"
+    log_success "Shell set up."
 }
 
 # Applies user-preferred configurations and settings to MacOS.
@@ -84,5 +92,5 @@ function apply_macos_configurations() {
     echo -e "\\n${YELLOW}[INFO] Applying MacOS configurations...${NC}"
     # shellcheck source=/dev/null
     source ./init/macos.sh
-    echo -e "${GREEN}[SUCCESS] MacOS configurations applied.${NC}"
+    log_success "MacOS configurations applied."
 }
