@@ -89,13 +89,45 @@ function npm-do { (PATH=$(npm bin):$PATH; "$@";) }
 # Argbash via docker container
 # https://web.archive.org/web/20230927191830/https://github.com/matejak/argbash/blob/master/docker/README.md
 function argbash() {
+  workingdir="$PWD"
+
+  # Initialize an empty array to store the modified arguments
+  modified_args=()
+
+  # Iterate over each argument
+  for arg in "$@"; do
+    # If the argument starts with the working directory, remove that prefix
+    if [[ $arg == $workingdir/* ]]; then
+      arg="${arg#"$workingdir"/}"
+    fi
+    
+    # Append the (possibly modified) argument to the array
+    modified_args+=("$arg")
+  done
+
   docker run --rm \
-  -v "$PWD:/work" \
-  -u "$(id -u):$(id -g)" matejak/argbash "$@"
+  -v "$workingdir:/work" \
+  -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
 }
 
 function argbash-init() {
+  workingdir="$PWD"
+
+  # Initialize an empty array to store the modified arguments
+  modified_args=()
+
+  # Iterate over each argument
+  for arg in "$@"; do
+    # If the argument starts with the working directory, remove that prefix
+    if [[ $arg == $workingdir/* ]]; then
+      arg="${arg#"$workingdir"/}"
+    fi
+    
+    # Append the (possibly modified) argument to the array
+    modified_args+=("$arg")
+  done
+
   docker run --rm -e PROGRAM=argbash-init \
-  -v "$PWD:/work" \
-  -u "$(id -u):$(id -g)" matejak/argbash "$@"
+  -v "$workingdir:/work" \
+  -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
 }
