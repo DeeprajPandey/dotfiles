@@ -6,7 +6,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel)"
 # Iff run.m4 is staged for commit
 if git diff --cached --name-only | rg "run.m4$"; then
     # Generate the run script from setup.m4
-    argbash "$REPO_ROOT/run.m4" -o "$REPO_ROOT/run"
+    argbash "$REPO_ROOT/run.m4" -c -o "$REPO_ROOT/run"
 
     # Add run script to the commit
     git add "$REPO_ROOT/run"
