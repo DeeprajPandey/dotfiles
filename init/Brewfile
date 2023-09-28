@@ -7,6 +7,7 @@ tap "microsoft/git"
 tap "homebrew/cask-fonts"
 tap "terrastruct/d2"
 tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
+tap "spicetify/homebrew-tap"        # spicetify
 
 # Install essential tools
 brew "amber"                        # tap danopia
@@ -44,7 +45,7 @@ brew "rustscan"
 brew "sccache"
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
-brew "spicetify-cli"
+brew "spicetify-cli"                # customise spotify
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
 brew "tldr"
