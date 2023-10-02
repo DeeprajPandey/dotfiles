@@ -1,133 +1,34 @@
 # shellcheck shell=bash
 # To allow shellcheck linting
 
-# Update dotfiles
-dfu() {
-  (
-    cd ~/dotfiles && git pull --ff-only && ./install -q
-  )
+path_remove() {
+    PATH=$(echo -n "$PATH" | awk -v RS=: -v ORS=: "\$0 != \"$1\"" | sed 's/:$//')
 }
 
-# Create a directory and cd into it
-mcd() {
-  mkdir "${1}" && cd "${1}" || return
+path_append() {
+    path_remove "$1"
+    PATH="${PATH:+"$PATH:"}$1"
 }
 
-# Go up [n] directories
-up() {
-  cdir="$(pwd)"
-  local cdir
-  if [[ "${1}" == "" ]]; then
-    cdir="$(dirname "${cdir}")"
-  elif ! [[ "${1}" =~ ^[0-9]+$ ]]; then
-    echo "Error: argument must be a number"
-  elif ! [[ "${1}" -gt "0" ]]; then
-    echo "Error: argument must be positive"
-  else
-    for ((i = 0; i < ${1}; i++)); do
-      ncdir="$(dirname "${cdir}")"
-      local ncdir
-      if [[ "${cdir}" == "${ncdir}" ]]; then
-        break
-      else
-        cdir="${ncdir}"
-      fi
-    done
-  fi
-  cd "${cdir}" || return
+path_prepend() {
+    path_remove "$1"
+    PATH="$1${PATH:+":$PATH"}"
 }
 
-# Check if a file contains non-ascii characters
-nonascii() {
-  LC_ALL=C grep -n '[^[:print:][:space:]]' "${1}"
-}
-
-# Fetch pull request
-fpr() {
-  if ! git rev-parse --git-dir >/dev/null 2>&1; then
-    echo "error: fpr must be executed from within a git repository"
-    return 1
-  fi
-  (
-    cdgr
+# Basic here-there based sigle-dir bookmarking system
+here() {
+    local loc
     if [ "$#" -eq 1 ]; then
-      local repo="${PWD##*/}"
-      local user="${1%%:*}"
-      local branch="${1#*:}"
-    elif [ "$#" -eq 2 ]; then
-      local repo="${PWD##*/}"
-      local user="${1}"
-      local branch="${2}"
-    elif [ "$#" -eq 3 ]; then
-      local repo="${1}"
-      local user="${2}"
-      local branch="${3}"
+        loc=$(realpath "$1")
     else
-      echo "Usage: fpr [repo] username branch"
-      return 1
+        loc=$(realpath ".")
     fi
-
-    git fetch "git@github.com:${user}/${repo}" "${branch}:${user}/${branch}"
-  )
+    ln -sfn "${loc}" "$HOME/.shell.here"
+    echo "here -> $(readlink "$HOME"/.shell.here)"
 }
 
-# Serve current directory
-serve() {
-  python3 -m http.server
-}
+there="$HOME/.shell.here"
 
-# Mirror a website
-alias mirrorsite='wget -m -k -K -E -e robots=off'
-
-# Mirror stdout to stderr, useful for seeing data going through a pipe
-alias peek='tee >(cat 1>&2)'
-
-## Run executable from local node_modules/
-# https://web.archive.org/web/20200812154305/https://2ality.com/2016/01/locally-installed-npm-executables.html
-function npm-do { (PATH=$(npm bin):$PATH; "$@";) }
-
-# Argbash via docker container
-# https://web.archive.org/web/20230927191830/https://github.com/matejak/argbash/blob/master/docker/README.md
-function argbash() {
-  workingdir="$PWD"
-
-  # Initialize an empty array to store the modified arguments
-  modified_args=()
-
-  # Iterate over each argument
-  for arg in "$@"; do
-    # If the argument starts with the working directory, remove that prefix
-    if [[ $arg == $workingdir/* ]]; then
-      arg="${arg#"$workingdir"/}"
-    fi
-    
-    # Append the (possibly modified) argument to the array
-    modified_args+=("$arg")
-  done
-
-  docker run --rm \
-  -v "$workingdir:/work" \
-  -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
-}
-
-function argbash-init() {
-  workingdir="$PWD"
-
-  # Initialize an empty array to store the modified arguments
-  modified_args=()
-
-  # Iterate over each argument
-  for arg in "$@"; do
-    # If the argument starts with the working directory, remove that prefix
-    if [[ $arg == $workingdir/* ]]; then
-      arg="${arg#"$workingdir"/}"
-    fi
-    
-    # Append the (possibly modified) argument to the array
-    modified_args+=("$arg")
-  done
-
-  docker run --rm -e PROGRAM=argbash-init \
-  -v "$workingdir:/work" \
-  -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
+there() {
+    cd "$(readlink "${there}")" || exit
 }
