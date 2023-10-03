@@ -40,8 +40,3 @@ fi
 if [ -f ~/.shell_private ]; then
     source ~/.shell_private
 fi
-
-# Set up gpg agent
-# https://github.com/Homebrew/homebrew-core/issues/14737#issuecomment-309848851
-export GPG_TTY="$(tty)"
-gpg-connect-agent updatestartuptty /bye >/dev/null
