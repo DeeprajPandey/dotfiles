@@ -21,7 +21,7 @@
     ~/.config/spicetify:
       path: spicetify
     # ~/.rtorrent.rc:
-    # ~/.shell:
+    ~/.shell:
     # ~/.vim:
     # ~/.vimrc:
     # ~/.zsh:

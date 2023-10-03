@@ -12,12 +12,12 @@ tap "spicetify/homebrew-tap"        # spicetify
 # Install essential tools
 brew "amber"                        # tap danopia
 brew "ansifilter"
-brew "bandwhich"                     # current network utilisation by proc
-brew "bat"
-brew "bottom"
-brew "broot"
+brew "bandwhich"                    # current network utilisation by proc
+brew "bat"                          # rust port - cat; highlight, git
+brew "bottom"                       # rust port - htop; process monitor
+brew "broot"                        # rust port - tree; truncated output
 brew "coreutils"
-brew "exa"
+brew "exa"                          # rust port: ls
 brew "fd"
 brew "findutils"
 brew "fzf"
@@ -53,9 +53,9 @@ brew "tokei"
 # brew "valgrind"                   # noinstall: not available for Apple Silicon
 brew "vbindiff"
 brew "wget"
-brew "xh"                          # HTTPie port in rust (curl alt)
+brew "xh"                           # rust port - curl; HTTPie API
 brew "yamllint"
-brew "zellij"
+brew "zellij"                       # rust port - tmux; floating panes
 brew "zopfli"
 brew "zoxide"
 # Diagram scripting
