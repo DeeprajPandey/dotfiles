@@ -149,8 +149,9 @@ brew "whalebrew"
 
 
 # Install VSCode extensions
-# generic extensions
-vscode "DavidAnson.vscode-markdownlint"
+
+# Generic
+vscode "DavidAnson.vscode-markdownlint"              # md linting and stylechecking
 # vscode "MS-vsliveshare.vsliveshare"
 vscode "VisualStudioExptTeam.vscodeintellicode"
 vscode "adpyke.codesnap"                             # code screenshots
@@ -159,14 +160,29 @@ vscode "streetsidesoftware.code-spell-checker"       # helpful for latex
 vscode "timonwong.shellcheck"
 vscode "vscodevim.vim"                               # vim keybindings in vscode (note: enable keyrepeat (check macos.sh for VSCode settings))
 vscode "wayou.vscode-todo-highlight"
-vscode "yzhang.markdown-all-in-one"
+vscode "yzhang.markdown-all-in-one"                  # preview, shortcuts, ToC for writing md
 
-# python specific extensions
+# Themes & Icons
+vscode "Catppuccin.catppuccin-vsc"
+vscode "Catppuccin.catppuccin-vsc-icons"
+vscode "PKief.material-icon-theme"
+vscode "alexdauenhauer.catppuccin-noctis"            # catpuccin colour + noctis highlighting
+vscode "liviuschera.noctis"
+
+# C/C++
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "twxs.cmake"
+
+
+# Python
 vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"                    # py lsp
 vscode "njpwerner.autodocstring"
 vscode "KevinRose.vsc-python-indent"
 vscode "donjayamanne.python-environment-manager"
 
-# containerising
+# Containerised
 vscode "ms-azuretools.vscode-docker"
-vscode "ms-vscode-remote.remote-containers"
+vscode "ms-vscode-remote.remote-containers"          # dev containers
