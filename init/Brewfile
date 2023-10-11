@@ -165,9 +165,16 @@ vscode "yzhang.markdown-all-in-one"                  # preview, shortcuts, ToC f
 # Themes & Icons
 vscode "Catppuccin.catppuccin-vsc"
 vscode "Catppuccin.catppuccin-vsc-icons"
+vscode "Equinusocio.vsc-material-theme"
+vscode "GulajavaMinistudio.mayukaithemevsc"
+vscode "Nimda.deepdark-material"
 vscode "PKief.material-icon-theme"
-vscode "alexdauenhauer.catppuccin-noctis"            # catpuccin colour + noctis highlighting
+vscode "alexdauenhauer.catppuccin-noctis"            # catppuccin colour + noctis highlighting
+vscode "dracula-theme.theme-dracula"
+vscode "ftsamoyed.theme-pink-cat-boo"
 vscode "liviuschera.noctis"
+vscode "teabyii.ayu"
+# vscode "webrender.synthwave-x-fluoromachine"       # true synthwave, needs custom css; goes with Operator Mono
 
 # C/C++
 vscode "ms-vscode.cmake-tools"
