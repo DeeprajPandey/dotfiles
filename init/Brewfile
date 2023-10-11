@@ -33,6 +33,7 @@ brew "hexyl"
 brew "kondo"
 # brew "lynx"
 brew "moreutils"
+brew "nvim"                         # neovim
 brew "openssh"
 brew "openssl@1.1"
 brew "paperkey"
@@ -153,6 +154,7 @@ vscode "yzhang.markdown-all-in-one"
 vscode "DavidAnson.vscode-markdownlint"
 vscode "VisualStudioExptTeam.vscodeintellicode"
 vscode "timonwong.shellcheck"
+vscode "vscodevim.vim"        # vim keybindings in vscode
 
 # python specific extensions
 vscode "ms-python.python"

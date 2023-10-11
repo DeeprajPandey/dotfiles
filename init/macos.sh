@@ -937,6 +937,14 @@ defaults write com.apple.messageshelper.MessageController SOInputLineSettings -d
 # Randomize port on launch
 # defaults write org.m0k.transmission RandomPort -bool true
 
+
+###############################################################################
+# MS Visual Studio Code.app                                                   #
+###############################################################################
+
+# For vscode vim extension
+defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+
 ###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
