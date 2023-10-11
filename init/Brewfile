@@ -150,11 +150,16 @@ brew "whalebrew"
 
 # Install VSCode extensions
 # generic extensions
-vscode "yzhang.markdown-all-in-one"
 vscode "DavidAnson.vscode-markdownlint"
+# vscode "MS-vsliveshare.vsliveshare"
 vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "adpyke.codesnap"                             # code screenshots
+vscode "christian-kohler.path-intellisense"          # autocomplete filenames
+vscode "streetsidesoftware.code-spell-checker"       # helpful for latex
 vscode "timonwong.shellcheck"
-vscode "vscodevim.vim"        # vim keybindings in vscode
+vscode "vscodevim.vim"                               # vim keybindings in vscode (note: enable keyrepeat (check macos.sh for VSCode settings))
+vscode "wayou.vscode-todo-highlight"
+vscode "yzhang.markdown-all-in-one"
 
 # python specific extensions
 vscode "ms-python.python"
