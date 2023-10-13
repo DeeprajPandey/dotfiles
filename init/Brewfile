@@ -23,6 +23,7 @@ brew "findutils"
 brew "fzf"
 brew "git"
 brew "git-delta"
+brew "git-filter-repo"              # clean way to rewrite git history
 brew "glibc" if OS.linux?
 brew "gnupg"
 brew "gpg" if OS.mac?
