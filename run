@@ -212,10 +212,12 @@ function install_core_dependencies() {
     fi
 
     # Create a projects dir and symlink to ~
-    log_info "Creating a working directory and linking to home..."
+    log_info "Creating a working directory, gnupg, and spicetify dirs to symlink everything appropriately..."
     mkdir -p "$HOME"/Documents/wd
     ln -sfn "$HOME"/Documents/wd "$HOME"/wd
-    log_success "Working directory initialised and linked."
+    mkdir -p "$HOME/.gnupg"
+    mkdir -p "$HOME/.config/spicetify"
+    log_success "Directories initialised and linked."
 }
 
 # Installs Brew formulae and casks from Brewfile and sets up the shell using Dotbot.
