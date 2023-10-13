@@ -174,6 +174,7 @@ vscode "alexdauenhauer.catppuccin-noctis"            # catppuccin colour + nocti
 vscode "dracula-theme.theme-dracula"
 vscode "ftsamoyed.theme-pink-cat-boo"
 vscode "liviuschera.noctis"
+vscode "ryanolsonx.solarized"
 vscode "teabyii.ayu"
 # vscode "webrender.synthwave-x-fluoromachine"       # true synthwave, needs custom css; goes with Operator Mono
 
