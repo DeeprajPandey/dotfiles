@@ -116,7 +116,7 @@
 
 # gruvmax-fang mellow-barbet villsau
 [delta]
-	features = side-by-side gruvmax-fang
+	features = side-by-side frankenstein
 	hyperlinks = true
 	# sticking to vscode rn. for vim, see https://dandavison.github.io/delta/grep.html?highlight=hyperlinks#grep
 	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
