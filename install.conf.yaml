@@ -14,7 +14,7 @@
     ~/.config/git:
       force: true
       path: git
-    ~/.config/iterm/:
+    ~/.config/iterm:
       path: iterm
     ~/.config/spicetify/CustomApps:
       path: spicetify/CustomApps
@@ -24,6 +24,8 @@
       path: spicetify/Themes
     ~/.config/spicetify/config-xpui.ini:
       path: spicetify/config-xpui.ini
+    ~/.config/starship:
+      path: starship
     ~/.gnupg/gpg.conf:
       path: gnupg/gpg.conf
     ~/.gnupg/gpg-agent.conf:

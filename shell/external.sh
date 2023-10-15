@@ -1,6 +1,9 @@
 # shellcheck shell=bash
 # To allow shellcheck linting
 
+# Change default strahip prompt config file location
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
+
 # pip should only run if there is a virtualenv currently activated
 export PIP_REQUIRE_VIRTUALENV=true
 
