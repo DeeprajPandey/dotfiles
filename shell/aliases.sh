@@ -1,6 +1,11 @@
 # shellcheck shell=bash
 # To allow shellcheck linting
 
+# Single character alias
+alias _='sudo'
+alias g='git'
+alias l='ls'
+
 # Use colors in coreutils utilities output
 alias grep='grep --color'
 
@@ -19,8 +24,21 @@ alias ltd='exa --tree --icons -aDL'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# Git alias
-alias g='git'
+# Better defaults
+alias vi='vim'
+alias nv='nvim'
+alias  ping='ping -c 5'
+
+# fix typos
+alias got=git
+alias quit='exit'
+alias cd..='cd ..'
+alias zz='exit'
+
+# tar
+alias tarls="tar -tvf"
+alias untar="tar -xvf"
+alias untars="tar -xvzf"
 
 # cd to git root directory
 alias cdgr='cd "$(git root)"'
@@ -28,12 +46,31 @@ alias cdgr='cd "$(git root)"'
 # good 'ol cls
 alias cls='clear'
 
-# Update dotfiles
-dfu() {
-  (
-    cd ~/dotfiles && git pull --ff-only && ./install -q
-  )
+# date/time
+alias timestamp="date '+%Y-%m-%d %H:%M:%S'"
+alias datestamp="date '+%Y-%m-%d'"
+alias isodate="date +%Y-%m-%dT%H:%M:%S%z"
+alias utc="date -u +%Y-%m-%dT%H:%M:%SZ"
+alias unixepoch="date +%s"
+
+# find
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+
+# fast reload zshrc
+alias reload='source ~/.zshrc'
+
+# disk usage
+biggest() {
+  du -s ./* | sort -nr | awk "{print $2}" | xargs du -sh
 }
+alias dux='du -x --max-depth=1 | sort -n'
+alias dud='du -d 1 -h'
+alias duf='du -sh *'
+
+# print things
+alias print-path='echo $PATH | tr ":" "\n"'
+alias print-functions='print -l ${(k)functions[(I)[^_]*]} | sort'
 
 # Use pip without requiring virtualenv
 syspip() {
@@ -121,7 +158,3 @@ alias mirrorsite='wget -m -k -K -E -e robots=off'
 
 # Mirror stdout to stderr, useful for seeing data going through a pipe
 alias peek='tee >(cat 1>&2)'
-
-## Run executable from local node_modules/
-# https://web.archive.org/web/20200812154305/https://2ality.com/2016/01/locally-installed-npm-executables.html
-function npm-do { (PATH=$(npm bin):$PATH; "$@";) }
