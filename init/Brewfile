@@ -30,10 +30,11 @@ brew "gpg" if OS.mac?
 brew "gping"
 brew "helix"
 brew "hexyl"
-# brew "imagemagick"
+# brew "imagemagick"                  # cli image editor
 brew "kondo"
 # brew "lynx"
 brew "moreutils"
+brew "neofetch"                     # prettyprint system-info
 brew "nvim"                         # neovim
 brew "openssh"
 brew "openssl@1.1"
@@ -184,7 +185,6 @@ vscode "ms-vscode.cmake-tools"
 vscode "ms-vscode.cpptools"
 vscode "ms-vscode.cpptools-extension-pack"
 vscode "twxs.cmake"
-
 
 # Python
 vscode "ms-python.python"
