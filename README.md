@@ -55,6 +55,11 @@ With the prerequisites in place, follow these steps to get the dotfiles up and r
 
    After the first run, there should be no need to run it in this mode again.
 
+## Post Installation
+
+1. Restart your device for changes to apply.
+2. Open iTerm, go to `General -> Preferences` Change `Save changes` to **Automatically**.
+
 ## Gotchas
 
 Keeping a friendly log of control flow assumptions. I will get around to refactoring these into more elegant solutions if I get some time. Until then, this section serves as the first place to check if something awry comes up during installation.
