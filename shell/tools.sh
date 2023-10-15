@@ -72,3 +72,10 @@ function argbash-init() {
   -v "$workingdir:/work" \
   -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
 }
+
+# Update Spicetify in one go
+function spicetify-update() {
+  spicetify backup
+  spicetify upgrade
+  spicetify restore backup apply
+}
