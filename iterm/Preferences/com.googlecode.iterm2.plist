@@ -7016,7 +7016,7 @@
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
-	<string>11D3C01C-A1AE-4C23-B9D4-58A1545ACC47</string>
+	<string>91BD4204-2F9A-4797-9E5A-85734B6055FB</string>
 	<key>DimBackgroundWindows</key>
 	<false/>
 	<key>DimOnlyText</key>
@@ -7458,6 +7458,8 @@
 			<string>No</string>
 			<key>Custom Directory</key>
 			<string>Recycle</string>
+			<key>Custom Window Title</key>
+			<string>McFloaty</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -7905,6 +7907,8 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Custom Window Title</key>
+			<true/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -8153,6 +8157,8 @@
 			<string>No</string>
 			<key>Custom Directory</key>
 			<string>Yes</string>
+			<key>Custom Window Title</key>
+			<string>McTermy</string>
 			<key>Default Bookmark</key>
 			<string>No</string>
 			<key>Description</key>
@@ -8574,6 +8580,8 @@
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
+			<true/>
+			<key>Use Custom Window Title</key>
 			<true/>
 			<key>Use Italic Font</key>
 			<true/>
