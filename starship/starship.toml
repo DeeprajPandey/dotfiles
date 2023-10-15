@@ -1,0 +1,31 @@
+# Does not a blank line between shell prompts
+add_newline = false
+command_timeout = 2000
+
+[git_branch]
+symbol = "󰘬 "
+
+[git_status]
+ahead = "[](purple)[$count](white)"
+behind = "[](cyan)[$count](white)"
+conflicted = '[=$count](yellow)'
+deleted = '[✘$count](black)'
+diverged = "[](cyan)[$ahead_count](white)[](purple)[$behind_count](white)"
+modified = '[*$count](red)'
+renamed = "[»$count](purple)"
+staged = "[+$count](green)"
+stashed = "[\\$$count](yellow)"
+style = "bold bright-white"
+untracked = "[?$count](cyan)"
+
+[git_commit]
+only_detached = true
+style = "bold black"
+format = "[$hash]($style) "
+tag_symbol = '🔖 '
+
+[nodejs]
+symbol = " "
+
+[python]
+symbol = "󰌠 "
