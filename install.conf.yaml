@@ -14,10 +14,8 @@
     ~/.config/git:
       force: true
       path: git
-    ~/.gnupg/gpg.conf:
-      path: gnupg/gpg.conf
-    ~/.gnupg/gpg-agent.conf:
-      path: gnupg/gpg-agent.conf
+    ~/.config/iterm/:
+      path: iterm
     ~/.config/spicetify/CustomApps:
       path: spicetify/CustomApps
     ~/.config/spicetify/Extensions:
@@ -26,6 +24,10 @@
       path: spicetify/Themes
     ~/.config/spicetify/config-xpui.ini:
       path: spicetify/config-xpui.ini
+    ~/.gnupg/gpg.conf:
+      path: gnupg/gpg.conf
+    ~/.gnupg/gpg-agent.conf:
+      path: gnupg/gpg-agent.conf
     # ~/.rtorrent.rc:
     ~/.shell:
     # ~/.vim:

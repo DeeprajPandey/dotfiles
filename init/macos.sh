@@ -784,6 +784,13 @@ defaults write com.apple.Terminal ShowLineMarks -int 0
 # Don’t display the annoying prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
+# Specify custom directory to load iTerm2 Prefs
+# Note: dir will be created later when `run` invokes dotbot install.
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "{$HOME}/iterm/Preferences"
+
+# Enable use for this pref file
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+
 ###############################################################################
 # Time Machine                                                                #
 ###############################################################################
