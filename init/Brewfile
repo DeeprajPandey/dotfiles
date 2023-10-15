@@ -171,6 +171,7 @@ vscode "GulajavaMinistudio.mayukaithemevsc"
 vscode "Nimda.deepdark-material"
 vscode "PKief.material-icon-theme"
 vscode "alexdauenhauer.catppuccin-noctis"            # catppuccin colour + noctis highlighting
+vscode "dnicolson.binary-plist"                      # opens new editor with xml and writes to binary plist on the fly
 vscode "dracula-theme.theme-dracula"
 vscode "ftsamoyed.theme-pink-cat-boo"
 vscode "liviuschera.noctis"

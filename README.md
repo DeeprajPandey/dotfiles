@@ -55,6 +55,12 @@ With the prerequisites in place, follow these steps to get the dotfiles up and r
 
    After the first run, there should be no need to run it in this mode again.
 
+## Gotchas
+
+Keeping a friendly log of control flow assumptions. I will get around to refactoring these into more elegant solutions if I get some time. Until then, this section serves as the first place to check if something awry comes up during installation.
+
+1. iTerm section of `macos.sh` sets a custom prefs path to `~/.config/iterm/Preferences`. Only, this directory will not be created until dotbot `install` script completes setting up symlinks to `~/.config`. If iTerm throws any errors, it's possible `run` was terminated before it could finish. Just rerun with `/.run -u` and it should work.
+
 ## Customisations
 
 ### Dotfile Modifications

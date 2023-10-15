@@ -2784,7 +2784,8 @@
       "ms-vscode.cpptools": null,
       "ms-vscode.cpptools-extension-pack": null,
       "twxs.cmake": null,
-      "ms-python.vscode-pylance": null
+      "ms-python.vscode-pylance": null,
+      "dnicolson.binary-plist": null
     }
   },
   "system": {
