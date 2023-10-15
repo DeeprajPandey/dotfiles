@@ -448,7 +448,7 @@
 [delta "frankenstein"]
     # General appearance
     dark = true
-    syntax-theme = dracula
+    syntax-theme = gruvbox-dark
     side-by-side = true
     # File
     file-style = "#FFFFFF" bold
