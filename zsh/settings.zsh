@@ -15,6 +15,18 @@ setopt auto_pushd
 # Don't push multiple copies of the same directory onto the directory stack.
 setopt pushd_ignore_dups
 
+# Allow for corrections when mistyping directory names with 'cd'.
+# Zsh will suggest the closest match.
+setopt correct_all
+
+# Makes 'cd' change to the previous directory when no argument is given.
+# Can be useful if you often switch between two directories.
+setopt cdable_vars
+
+# The prompt will display information about the status of a background job 
+# if it starts or stops. Useful if you background tasks often.
+setopt notify
+
 # =============================================================================
 # Completion
 # =============================================================================
@@ -32,16 +44,16 @@ unsetopt list_beep
 
 # Characters which are also part of a word.
 # See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
-WORDCHARS=''
+WORDCHARS=${WORDCHARS/\/}
 
-
+# See http://zsh.sourceforge.net/Doc/Release/Completion-System.html.
+zmodload zsh/complist
 
 # Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/; Init completion
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -i
 
 # Menu selection will be started unconditionally.
-zstyle ':completion:*' menu select
-zmodload zsh/complist
+zstyle ':completion:*' menu select=4
 
 # Use vim style keybinds in menu completion
 bindkey -M menuselect 'h' vi-backward-char
@@ -127,7 +139,7 @@ setopt inc_append_history
 setopt extended_history
 
 # See 2.5.4 of http://zsh.sourceforge.net/Guide/zshguide02.html.
-[ -z "$HISTFILE" ] && HISTFILE=$HOME/.zsh_history
+[ -z "$HISTFILE" ] && HISTFILE=$HOME/.config/zsh/.zsh_history
 HISTSIZE=10000
 SAVEHIST=$HISTSIZE
 
@@ -152,29 +164,6 @@ setopt interactivecomments
 # when reading bound multi-character sequences.
 KEYTIMEOUT=1 # corresponds to 10ms
 
-# See
-# http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
-# for the table of terminfo, and see
-# http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
-# for standard widgets of zsh.
-
-# Home
-[ -n "${terminfo[khome]}" ] && bindkey "${terminfo[khome]}" beginning-of-line
-# End
-[ -n "${terminfo[kend]}" ] && bindkey "${terminfo[kend]}" end-of-line
-# Backspace
-[ -n "${terminfo[kbs]}" ] && bindkey "${terminfo[kbs]}" backward-delete-char
-# Delete
-[ -n "${terminfo[kdch1]}" ] && bindkey "${terminfo[kdch1]}" delete-char
-# Up-arrow
-[ -n "${terminfo[kcuu1]}" ] && bindkey "${terminfo[kcuu1]}" up-line-or-history
-# Down-arrow
-[ -n "${terminfo[kcud1]}" ] && bindkey "${terminfo[kcud1]}" down-line-or-history
-# Left-arrow
-[ -n "${terminfo[kcub1]}" ] && bindkey "${terminfo[kcub1]}" backward-char
-# Right-arrow
-[ -n "${terminfo[kcuf1]}" ] && bindkey "${terminfo[kcuf1]}" forward-char
-
 # bind C-Z to "fg", so the same keybind suspends and resumes
 function fancy_ctrl_z() {
 	if [[ $#BUFFER -eq 0 ]]; then
@@ -188,6 +177,12 @@ function fancy_ctrl_z() {
 zle -N fancy_ctrl_z
 bindkey '^Z' fancy_ctrl_z
 
+# See
+# http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
+# for the table of terminfo, and see
+# http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
+# for standard widgets of zsh.
+
 # Option + Left arrow for prev word
 bindkey '^[^[[D' backward-word
 # Option + Right arrow for next word
@@ -197,6 +192,10 @@ bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
 
 bindkey '^[[3~' delete-char
+
+# Use vim as the editor
+export EDITOR=vim
+
 # Use vim style line editing in zsh
 bindkey -v
 # Movement
@@ -210,7 +209,8 @@ bindkey -a '^V' edit-command-line
 # Backspace
 bindkey '^?' backward-delete-char
 bindkey '^H' backward-delete-char
-# TODO: Option + Backspace
+# FIXME: Option + Backspace doesn't work
+bindkey '^[^?' backward-delete-word
 # Ctrl-U
 bindkey "^U" backward-kill-line
 
@@ -228,19 +228,5 @@ bindkey -s '\e`' "!:0- \t"     # all but the last word
 # automatically escape pasted URLs
 autoload -Uz bracketed-paste-magic
 zle -N bracketed-paste bracketed-paste-magic
-# autoload -Uz url-quote-magic
-# zle -N self-insert url-quote-magic
-
-# reload the zsh session. From OMZ:plugins/zsh_reload
-zreload() {
-	local cache="$ZSH_CACHE_DIR"
-	autoload -U compinit zrecompile
-	compinit -i -d "$cache/zcomp-$HOST"
-
-	for f in ${ZDOTDIR:-~}/.zshrc "$cache/zcomp-$HOST"; do
-		zrecompile -p $f && command rm -f $f.zwc.old
-	done
-
-	# Use $SHELL if available; remove leading dash if login shell
-	[[ -n "$SHELL" ]] && exec ${SHELL#-} || exec zsh
-}
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic

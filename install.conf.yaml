@@ -26,15 +26,15 @@
       path: spicetify/config-xpui.ini
     ~/.config/starship:
       path: starship
+    ~/.config/zsh:
+      path: zsh
     ~/.gnupg/gpg.conf:
       path: gnupg/gpg.conf
     ~/.gnupg/gpg-agent.conf:
       path: gnupg/gpg-agent.conf
-    # ~/.rtorrent.rc:
     ~/.shell:
     # ~/.vim:
     # ~/.vimrc:
-    # ~/.zsh:
     ~/.zshrc:
     ~/.zprofile:
       force: true

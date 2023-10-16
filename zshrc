@@ -11,6 +11,9 @@ if [ -f ~/.zshrc_local_before ]; then
     source ~/.zshrc_local_before
 fi                                                                                              
 
+# Settings
+source ~/.config/zsh/settings.zsh
+
 # Bootstrap
 source ~/.shell/bootstrap.sh
 
