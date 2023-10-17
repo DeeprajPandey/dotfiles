@@ -2748,7 +2748,7 @@
     },
     "tap": {
       "homebrew/cask-fonts": {
-        "revision": "deeffbd8f30d64cb71a8f63821cfa54756385a3d"
+        "revision": "c6f484c2f8831c64198e47b5b846338e34551fbf"
       },
       "terrastruct/d2": {
         "revision": "2a87730352c1a0b21bcebac4b99f643f301d0466"
@@ -2805,7 +2805,7 @@
   "system": {
     "macos": {
       "ventura": {
-        "HOMEBREW_VERSION": "4.1.15",
+        "HOMEBREW_VERSION": "4.1.16",
         "HOMEBREW_PREFIX": "/opt/homebrew",
         "Homebrew/homebrew-core": "api",
         "CLT": "14.3.1.0.1.1683849156",
