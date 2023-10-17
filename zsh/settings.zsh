@@ -19,10 +19,6 @@ setopt pushd_ignore_dups
 # Zsh will suggest the closest match.
 setopt correct_all
 
-# Makes 'cd' change to the previous directory when no argument is given.
-# Can be useful if you often switch between two directories.
-setopt cdable_vars
-
 # The prompt will display information about the status of a background job 
 # if it starts or stops. Useful if you background tasks often.
 setopt notify
@@ -55,12 +51,6 @@ autoload -Uz compinit && compinit -i
 # Menu selection will be started unconditionally.
 zstyle ':completion:*' menu select=4
 
-# Use vim style keybinds in menu completion
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-
 # Try smart-case completion, then case-insensitive, then partial-word, and then
 # substring completion.
 # See http://zsh.sourceforge.net/Doc/Release/Completion-Widgets.html#Completion-Matching-Control.
@@ -79,6 +69,18 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 # pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
 
+# Use vim style keybinds in menu completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+
+# Shift-Tab: Perform menu completion, like menu-complete, except that if a menu
+# completion is already in progress, move to the previous completion rather than
+# the next.
+# See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
+[ -n "${terminfo[kcbt]}" ] && bindkey "${terminfo[kcbt]}" reverse-menu-complete
+
 # Make sure the terminal is in application mode, which zle is active. Only then
 # are the values from $terminfo valid.
 # See http://zshwiki.org/home/zle/bindkeys#reading_terminfo.
@@ -94,16 +96,89 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   zle -N zle-line-finish
 fi
 
-# Shift-Tab: Perform menu completion, like menu-complete, except that if a menu
-# completion is already in progress, move to the previous completion rather than
-# the next.
-# See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
-[ -n "${terminfo[kcbt]}" ] && bindkey "${terminfo[kcbt]}" reverse-menu-complete
+# =============================================================================
+# Key Bindings
+# =============================================================================
+# Initialise editing command line
+autoload -U edit-command-line && zle -N edit-command-line
 
+# Enable interactive comments (# on the command line)
+setopt interactivecomments
+
+# The time the shell waits, in hundredths of seconds, for another key to be pressed
+# when reading bound multi-character sequences.
+KEYTIMEOUT=1 # corresponds to 10ms
+
+# Use vim as the editor
+export EDITOR=vim
+
+# Use vim style line editing in zsh
+bindkey -v
+# Movement
+bindkey -a 'gg' beginning-of-buffer-or-history
+bindkey -a 'G' end-of-buffer-or-history
+# Undo
+bindkey -a 'u' undo
+bindkey -a '^R' redo
+# Edit line
+bindkey -a '^V' edit-command-line
+# Backspace
+bindkey '^?' backward-delete-char
+bindkey '^H' backward-delete-char
+# FIXME: Option + Backspace doesn't work
+bindkey '^[^?' backward-delete-word
+# Ctrl-U
+bindkey "^U" backward-kill-line
+
+# Use incremental search
+bindkey "^R" history-incremental-search-backward
+
+# Print previous command with Alt-N, where N is the number of arguments
+bindkey -s '\e1' "!:0 \t"
+bindkey -s '\e2' "!:0-1 \t"
+bindkey -s '\e3' "!:0-2 \t"
+bindkey -s '\e4' "!:0-3 \t"
+bindkey -s '\e5' "!:0-4 \t"
+bindkey -s '\e`' "!:0- \t"     # all but the last word
+
+# bind C-Z to "fg", so the same keybind suspends and resumes
+function fancy_ctrl_z() {
+	if [[ $#BUFFER -eq 0 ]]; then
+		export BUFFER='fg'
+		zle accept-line
+	else
+		zle push-input
+		zle clear-screen
+	fi
+}
+zle -N fancy_ctrl_z
+bindkey '^Z' fancy_ctrl_z
+
+# Update: switch entirely to vim keybinds. Removing everything else.
+# # See
+# # http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
+# # for the table of terminfo, and see
+# # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
+# # for standard widgets of zsh.
+
+# # Option + Left arrow for prev word
+# bindkey '^[^[[D' backward-word
+# # Option + Right arrow for next word
+# bindkey '^[^[[C' forward-word
+# # Will not work on mac: Ctrl + Left/Right arrow
+# bindkey '^[[5D' beginning-of-line
+# bindkey '^[[5C' end-of-line
+# 
+# bindkey '^[[3~' delete-char
 
 # =============================================================================
 # History
 # =============================================================================
+
+# See 2.5.4 of http://zsh.sourceforge.net/Guide/zshguide02.html.
+[ -z "$HISTFILE" ] && HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=$HISTSIZE
 
 # Perform textual history expansion, csh-style, treating the character '!'
 # specially.
@@ -138,11 +213,6 @@ setopt inc_append_history
 # ‘: <beginning time>:<elapsed seconds>;<command>’.
 setopt extended_history
 
-# See 2.5.4 of http://zsh.sourceforge.net/Guide/zshguide02.html.
-[ -z "$HISTFILE" ] && HISTFILE=$HOME/.config/zsh/.zsh_history
-HISTSIZE=10000
-SAVEHIST=$HISTSIZE
-
 # =============================================================================
 # Input/Output
 # =============================================================================
@@ -151,82 +221,6 @@ SAVEHIST=$HISTSIZE
 # (usually assigned to ^S/^Q) is disabled in the shell's editor.
 unsetopt flow_control
 
-# =============================================================================
-# Key Bindings
-# =============================================================================
-# Initialise editing command line
-autoload -U edit-command-line && zle -N edit-command-line
-
-# Enable interactive comments (# on the command line)
-setopt interactivecomments
-
-# The time the shell waits, in hundredths of seconds, for another key to be pressed
-# when reading bound multi-character sequences.
-KEYTIMEOUT=1 # corresponds to 10ms
-
-# bind C-Z to "fg", so the same keybind suspends and resumes
-function fancy_ctrl_z() {
-	if [[ $#BUFFER -eq 0 ]]; then
-		export BUFFER='fg'
-		zle accept-line
-	else
-		zle push-input
-		zle clear-screen
-	fi
-}
-zle -N fancy_ctrl_z
-bindkey '^Z' fancy_ctrl_z
-
-# See
-# http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
-# for the table of terminfo, and see
-# http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
-# for standard widgets of zsh.
-
-# Option + Left arrow for prev word
-bindkey '^[^[[D' backward-word
-# Option + Right arrow for next word
-bindkey '^[^[[C' forward-word
-# Will not work on mac: Ctrl + Left/Right arrow
-bindkey '^[[5D' beginning-of-line
-bindkey '^[[5C' end-of-line
-
-bindkey '^[[3~' delete-char
-
-# Use vim as the editor
-export EDITOR=vim
-
-# Use vim style line editing in zsh
-bindkey -v
-# Movement
-bindkey -a 'gg' beginning-of-buffer-or-history
-bindkey -a 'G' end-of-buffer-or-history
-# Undo
-bindkey -a 'u' undo
-bindkey -a '^R' redo
-# Edit line
-bindkey -a '^V' edit-command-line
-# Backspace
-bindkey '^?' backward-delete-char
-bindkey '^H' backward-delete-char
-# FIXME: Option + Backspace doesn't work
-bindkey '^[^?' backward-delete-word
-# Ctrl-U
-bindkey "^U" backward-kill-line
-
-# Use incremental search
-bindkey "^R" history-incremental-search-backward
-
-# Print previous command with Alt-N, where N is the number of arguments
-bindkey -s '\e1' "!:0 \t"
-bindkey -s '\e2' "!:0-1 \t"
-bindkey -s '\e3' "!:0-2 \t"
-bindkey -s '\e4' "!:0-3 \t"
-bindkey -s '\e5' "!:0-4 \t"
-bindkey -s '\e`' "!:0- \t"     # all but the last word
-
-# automatically escape pasted URLs
-autoload -Uz bracketed-paste-magic
-zle -N bracketed-paste bracketed-paste-magic
-autoload -Uz url-quote-magic
-zle -N self-insert url-quote-magic
+# https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#index-r
+# Disable zsh builtin redo command alias. Use `fc -e -` or `!!` if needed.
+disable r
