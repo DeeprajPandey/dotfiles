@@ -786,7 +786,7 @@ defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
 # Specify custom directory to load iTerm2 Prefs
 # Note: dir will be created later when `run` invokes dotbot install.
-defaults write com.googlecode.iterm2 PrefsCustomFolder -string "{$HOME}/iterm/Preferences"
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.config/iterm/Preferences"
 
 # Enable use for this pref file
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
