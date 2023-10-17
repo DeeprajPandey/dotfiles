@@ -60,6 +60,8 @@ With the prerequisites in place, follow these steps to get the dotfiles up and r
 1. Restart your device for changes to apply.
 2. Open iTerm, go to `General -> Preferences` Change `Save changes` to **Automatically**.
 
+   <img src="./assets/iterm_pref_autosave.png" alt="Screenshot of iTerm preferences pane where we have to modify `save changes` to automatically from the dropdown." width="70%"/>
+
 ## Gotchas
 
 Keeping a friendly log of control flow assumptions. I will get around to refactoring these into more elegant solutions if I get some time. Until then, this section serves as the first place to check if something awry comes up during installation.
