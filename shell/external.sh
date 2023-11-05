@@ -12,3 +12,7 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 
 # Docker
 export DOCKER_SCAN_SUGGEST=false
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
