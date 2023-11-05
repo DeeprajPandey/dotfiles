@@ -12,7 +12,7 @@ Welcome to the backbone of my MacOS setup! This repository contains my personall
   - Navigate to `System Preferences -> Privacy & Security -> Full Disk Access`
   - Locate your current terminal in the list and check it, or click the `+` button to add your terminal application.
   - If the terminal application was open during this process, quit and restart it to ensure changes take effect.
-  <img src="./assets/full-disk.png" alt="MacOS Ventura full disk access" width="70%"/>
+  <img src="./assets/full_disk.png" alt="MacOS Ventura full disk access" width="70%"/>
 - `git` installed. If you need to install Homebrew first, see lines 60-61 in `run.m4` for installation commands.
 
 ### The _Runner_
@@ -61,6 +61,12 @@ With the prerequisites in place, follow these steps to get the dotfiles up and r
 2. Open iTerm, go to `General -> Preferences` Change `Save changes` to **Automatically**.
 
    <img src="./assets/iterm_pref_autosave.png" alt="Screenshot of iTerm preferences pane where we have to modify `save changes` to automatically from the dropdown." width="70%"/>
+
+### Additional App-Specific Steps
+
+On first run of Shottr, make sure you turn off the default screenshot keybindings for full screen and area screenshots. Go to `System Preferences -> Keyboard -> Keyboard Shortcuts -> Screenshots`
+
+<img src="./assets/screenshot_keybindings.png" alt="Screenshot of iTerm preferences pane where we have to modify `save changes` to automatically from the dropdown." width="70%"/>
 
 ## Gotchas
 

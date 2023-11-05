@@ -11,6 +11,7 @@ tap "spicetify/homebrew-tap"        # spicetify
 
 # Install essential tools
 brew "amber"                        # tap danopia
+brew "android-platform-tools"       # adb
 brew "ansifilter"
 brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
@@ -29,13 +30,16 @@ brew "gnupg"
 brew "gpg" if OS.mac?
 brew "gping"
 brew "helix"
-brew "hexyl"
+brew "hexyl"                        # hex viewer + auto formatter
 # brew "imagemagick"                  # cli image editor
 brew "kondo"
 # brew "lynx"
 brew "moreutils"
 brew "neofetch"                     # prettyprint system-info
 brew "nvim"                         # neovim
+brew "nvm"                          # node version manager
+brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
+brew "openoffice"                   # really didn't like numbers; hence OSS spreadsheets
 brew "openssh"
 brew "openssl@1.1"
 brew "paperkey"
@@ -46,8 +50,10 @@ brew "pv"
 brew "ripgrep"
 brew "rustscan"
 brew "sccache"
+brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
+# brew "sloc"                         # lines of code
 brew "spicetify-cli"                # customise spotify
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
@@ -67,6 +73,7 @@ brew "d2"                           # tap terrastruct
 
 # Install essential casks
 cask "aldente"
+cask "autodesk-fusion-360"
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
 cask "firefox"
@@ -94,6 +101,7 @@ cask "screens-connect"
 # mas "sequel-ace", id: 1518036000
 cask "shottr"
 # cask "spotify"                    # noinstall: checksum undefined
+cask "superslicer"
 # mas "unifi", id: 1057750338
 cask "visual-studio-code"
 cask "zoom"
@@ -184,6 +192,7 @@ vscode "teabyii.ayu"
 vscode "ms-vscode.cmake-tools"
 vscode "ms-vscode.cpptools"
 vscode "ms-vscode.cpptools-extension-pack"
+vscode "ms-vscode.makefile-tools"                    # makefile syntax highlighting
 vscode "twxs.cmake"
 
 # Python
