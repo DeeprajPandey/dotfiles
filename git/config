@@ -54,7 +54,7 @@
 	sfs = show --format=fuller --stat
 	showtool = ! "st() { if [ -z $1 ]; then c='HEAD'; else c=$1; fi; git difftool $c~..$c; }; st"
 	st = status
-  stb = status -sb
+  	stb = status -sb
 	undo = reset HEAD~1
 	update-submodules = submodule update --init --recursive
 	upgrade-submodules = submodule update --init --remote
