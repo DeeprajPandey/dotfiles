@@ -42,8 +42,10 @@ brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
 brew "openoffice"                   # really didn't like numbers; hence OSS spreadsheets
 brew "openssh"
 brew "openssl@1.1"
+brew "orbstack"                     # docker desktop alt
 brew "paperkey"
 brew "pinentry-mac"
+brew "pipenv"
 brew "procs"
 brew "pv"
 # brew "rename"
@@ -121,6 +123,9 @@ cask "font-inter"
 # cask "font-nunito"                # noinstall: checksum undefined
 # cask "font-nunito-sans"           # noinstall: checksum undefined
 
+# Install daily practice tools
+brew "lua"
+brew "luarocks"
 
 # # Install some CTF tools; see https://github.com/ctfs/write-ups.
 # brew "aircrack-ng"

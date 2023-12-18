@@ -4,6 +4,7 @@
 path_prepend "/usr/local/sbin"
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/.dotfiles/bin"
+path_append "$HOME/.luarocks/bin"
 
 # Reduces delay when entering vi-mode
 export KEYTIMEOUT=1
