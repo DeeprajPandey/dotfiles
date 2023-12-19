@@ -92,6 +92,7 @@ cask "keepassxc", greedy: true      # always upgrade
 # cask "logi-options-plus"          # iff 3S is on the desk
 cask "logseq"
 cask "magicavoxel"                  # 8-bit 3D voxel editor and renderer
+cask "mixxx"
 cask "monitorcontrol"
 # mas "nextdns", id: 1464122853
 # Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
