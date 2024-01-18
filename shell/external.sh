@@ -16,3 +16,7 @@ export DOCKER_SCAN_SUGGEST=false
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Create pipenv virtualenvs in project directory to avoid pipenv install on project path restructures
+# https://pipenv.pypa.io/en/latest/installation.html#virtualenv-mapping-caveat
+export PIPENV_VENV_IN_PROJECT=1
