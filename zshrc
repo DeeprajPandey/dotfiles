@@ -11,6 +11,9 @@ if [ -f ~/.zshrc_local_before ]; then
     source ~/.zshrc_local_before
 fi                                                                                              
 
+# External plugins (initialized before)
+source ~/.config/zsh/plugins_before.zsh
+
 # Settings
 source ~/.config/zsh/settings.zsh
 
@@ -25,6 +28,9 @@ source ~/.shell/aliases.sh
 
 # Init the shell prompt
 eval "$(starship init zsh)"
+
+# External plugins (initialized after)
+source ~/.config/zsh/plugins_after.zsh
 
 # CLI Tools - non-standard invocation
 source ~/.shell/tools.sh
