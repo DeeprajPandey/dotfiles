@@ -42,11 +42,48 @@ setopt notify
 # This way, we ensure only the relevant files are autoloaded, keeping the environment uncluttered.
 autoload -Uz ${0:h}/plugins/completions*(.:t)
 
+
+# Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/; Init completion
+
+# if compdump is less than 20 hours old,
+# consider it fresh and shortcut it with `compinit -C`
+#
+# Glob magic explained:
+#   #q expands globs in conditional expressions
+#   N - sets null_glob option (no error on 0 results)
+#   mh-20 - modified less than 20 hours ago
+if [[ $force -ne 1 ]] && [[ $zcompdump(#qNmh-20) ]]; then
+  # -C (skip function check) implies -i (skip security check).
+  compinit -C -d "$zcompdump"
+else
+  compinit -i -d "$zcompdump"
+  touch "$zcompdump"
+fi
+
+# Compile zcompdump, if modified, in background to increase startup speed.
+{
+  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
+    if command mkdir "${zcompdump}.zwc.lock" 2>/dev/null; then
+      zcompile "$zcompdump"
+      command rmdir  "${zcompdump}.zwc.lock" 2>/dev/null
+    fi
+  fi
+} &!
+
+# Since we are using menu-select, we need to load complist before calling compinit.
+# See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Use-of-compinit
+zmodload zsh/complist
 # Use vim style keybinds in menu completion
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
+# Menu selection will be started unconditionally.
+zstyle ':completion:*' menu select=4
+
+local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
+[[ -d "$zcompdump:h" ]] || mkdir -p "$zcompdump:h"
+autoload -Uz compinit
 
 # Shift-Tab: Perform menu completion, like menu-complete, except that if a menu
 # completion is already in progress, move to the previous completion rather than

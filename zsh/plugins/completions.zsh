@@ -31,10 +31,6 @@ unsetopt list_beep
 # See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
 WORDCHARS=${WORDCHARS/\/}
 
-# Since we are using menu-select, we need to load complist before calling compinit.
-# See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Use-of-compinit
-zmodload zsh/complist
-
 emulate -L zsh
 setopt localoptions extendedglob
 
@@ -43,40 +39,6 @@ if [[ "$1" == "-f" ]]; then
   force=1
   shift
 fi
-
-local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
-[[ -d "$zcompdump:h" ]] || mkdir -p "$zcompdump:h"
-autoload -Uz compinit
-
-# Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/; Init completion
-
-# if compdump is less than 20 hours old,
-# consider it fresh and shortcut it with `compinit -C`
-#
-# Glob magic explained:
-#   #q expands globs in conditional expressions
-#   N - sets null_glob option (no error on 0 results)
-#   mh-20 - modified less than 20 hours ago
-if [[ $force -ne 1 ]] && [[ $zcompdump(#qNmh-20) ]]; then
-  # -C (skip function check) implies -i (skip security check).
-  compinit -C -d "$zcompdump"
-else
-  compinit -i -d "$zcompdump"
-  touch "$zcompdump"
-fi
-
-# Compile zcompdump, if modified, in background to increase startup speed.
-{
-  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
-    if command mkdir "${zcompdump}.zwc.lock" 2>/dev/null; then
-      zcompile "$zcompdump"
-      command rmdir  "${zcompdump}.zwc.lock" 2>/dev/null
-    fi
-  fi
-} &!
-
-# Menu selection will be started unconditionally.
-zstyle ':completion:*' menu select=4
 
 # Try smart-case completion, then case-insensitive, then partial-word, and then
 # substring completion.
