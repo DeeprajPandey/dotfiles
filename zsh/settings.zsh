@@ -1,6 +1,16 @@
 # ZSH Options ref: http://zsh.sourceforge.net/Doc/Release/Options.html.
 # From https://github.com/yous/vanilli.sh/blob/master/vanilli.zsh
 
+# Ensure the variable '0' holds the absolute path of the running script.
+# This approach helps in situations where '0' might be unset or null.
+0=${(%):-%N}
+
+# Expand 'fpath' to include our custom 'plugins' directory.
+# The '0:h' modifier is used to get the directory of the current script, respecting
+# the structure within '$HOME/.config/zsh'. It helps maintain a clean and consistent
+# environment, especially when dealing with symlinked directories.
+fpath=(${0:h}/plugins $fpath)
+
 # =============================================================================
 # Changing Directories
 # =============================================================================
@@ -27,47 +37,10 @@ setopt notify
 # Completion
 # =============================================================================
 
-# If a completion is performed with the cursor within a word, and a full
-# completion is inserted, the cursor is moved to the end of the word.
-setopt always_to_end
-
-# If unset, the cursor is set to the end of the word if completion is started.
-# Otherwise it stays there and completion is done from both ends.
-setopt complete_in_word
-
-# Don't beep on an ambiguous completion.
-unsetopt list_beep
-
-# Characters which are also part of a word.
-# See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
-WORDCHARS=${WORDCHARS/\/}
-
-# See http://zsh.sourceforge.net/Doc/Release/Completion-System.html.
-zmodload zsh/complist
-
-# Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/; Init completion
-autoload -Uz compinit && compinit -i
-
-# Menu selection will be started unconditionally.
-zstyle ':completion:*' menu select=4
-
-# Try smart-case completion, then case-insensitive, then partial-word, and then
-# substring completion.
-# See http://zsh.sourceforge.net/Doc/Release/Completion-Widgets.html#Completion-Matching-Control.
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Z}{a-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' completer _expand _complete _ignored _approximate
-# zstyle ':completion:*' max-errors 3 numeric
-zstyle ':completion:*' group-name ''
-
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
-zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
-zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
-
-# pasting with tabs doesn't perform completion
-zstyle ':completion:*' insert-tab pending
+# Autoload functions from the 'plugins' directory prefixed with 'bf_'.
+# The ':t' modifier is used in the pattern to only get the tail of the path, i.e., the filename.
+# This way, we ensure only the relevant files are autoloaded, keeping the environment uncluttered.
+autoload -Uz ${0:h}/plugins/completions*(.:t)
 
 # Use vim style keybinds in menu completion
 bindkey -M menuselect 'h' vi-backward-char
@@ -184,6 +157,10 @@ SAVEHIST=$HISTSIZE
 # specially.
 unsetopt bang_hist
 
+setopt hist_ignore_all_dups    # Delete an old recorded event if a new event is a duplicate.
+setopt hist_ignore_space       # Do not record an event starting with a space.
+setopt hist_reduce_blanks      # Remove extra blanks from commands added to the history list.
+setopt hist_save_no_dups       # Do not write a duplicate event to the history file.
 # If the internal history needs to be trimmed to add the current command line,
 # setting this option will cause the oldest history event that has a duplicate
 # to be lost before losing a unique event from the list.
@@ -212,6 +189,9 @@ setopt inc_append_history
 # duration (in seconds) to the history file. The format of this prefixed data is:
 # ‘: <beginning time>:<elapsed seconds>;<command>’.
 setopt extended_history
+
+setopt NO_hist_beep            # Don't beep when accessing non-existent history.
+setopt NO_share_history        # Don't share history between all sessions.
 
 # =============================================================================
 # Input/Output
