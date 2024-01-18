@@ -11,7 +11,6 @@ tap "spicetify/homebrew-tap"        # spicetify
 
 # Install essential tools
 brew "amber"                        # tap danopia
-brew "android-platform-tools"       # adb
 brew "ansifilter"
 brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
@@ -39,10 +38,8 @@ brew "neofetch"                     # prettyprint system-info
 brew "nvim"                         # neovim
 brew "nvm"                          # node version manager
 brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
-brew "openoffice"                   # really didn't like numbers; hence OSS spreadsheets
 brew "openssh"
 brew "openssl@1.1"
-brew "orbstack"                     # docker desktop alt
 brew "paperkey"
 brew "pinentry-mac"
 brew "pipenv"
@@ -74,8 +71,9 @@ brew "d2"                           # tap terrastruct
 
 
 # Install essential casks
+cask "android-platform-tools"       # adb
 cask "aldente"
-cask "autodesk-fusion-360"
+cask "autodesk-fusion360"
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
 cask "firefox"
@@ -95,6 +93,8 @@ cask "magicavoxel"                  # 8-bit 3D voxel editor and renderer
 cask "mixxx"
 cask "monitorcontrol"
 # mas "nextdns", id: 1464122853
+cask "openoffice"                   # really didn't like numbers; hence OSS spreadsheets
+cask "orbstack"                     # docker desktop alt
 # Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
 cask "pika"
 cask "protonvpn"
