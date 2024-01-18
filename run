@@ -242,6 +242,9 @@ function setup_environment_and_shell() {
 function apply_macos_configurations() {
     # Set macOS preferences - we will run this last because this will reload the shell
     echo -e "\\n${YELLOW}[INFO] Applying MacOS configurations...${NC}"
+
+    # InternetServices (setting timezone), destroy fv key on standby outputs can be safely ignored
+    # https://github.com/LnL7/nix-darwin/issues/359#issuecomment-1721755685
     # shellcheck source=/dev/null
     source "$DIR/init/macos.sh"
     log_success "MacOS configurations applied."
