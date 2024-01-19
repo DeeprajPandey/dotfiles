@@ -23,6 +23,7 @@ set autoindent
 " Basic editing config
 "---------------------
 set shortmess+=I " disable startup message
+set shortmess-=S " show current match position of total search matches
 set nu " number lines
 set rnu " relative line numbers
 set incsearch " incremental search (as string is being typed)
@@ -50,3 +51,60 @@ if &term =~ '^screen'
     set ttymouse=xterm2
 endif
 set nofoldenable " disable folding by default
+
+"--------------------
+" Misc configurations
+"--------------------
+
+" disable audible bell
+set noerrorbells visualbell t_vb=
+
+" open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" movement relative to display lines
+nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
+function SetMovementByDisplayLines()
+    noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
+    noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
+    noremap <buffer> <silent> 0 g0
+    noremap <buffer> <silent> $ g$
+endfunction
+function ToggleMovementByDisplayLines()
+    if !exists('b:movement_by_display_lines')
+        let b:movement_by_display_lines = 0
+    endif
+    if b:movement_by_display_lines
+        let b:movement_by_display_lines = 0
+        silent! nunmap <buffer> k
+        silent! nunmap <buffer> j
+        silent! nunmap <buffer> 0
+        silent! nunmap <buffer> $
+    else
+        let b:movement_by_display_lines = 1
+        call SetMovementByDisplayLines()
+    endif
+endfunction
+
+" toggle relative numbering
+nnoremap <C-n> :set rnu!<CR>
+
+" save read-only files
+command -nargs=0 Sudow w !sudo tee % >/dev/null
+
+"---------------------
+" Local customisations
+"---------------------
+
+" local customisations in ~/.vimrc_local
+let $LOCALFILE=expand("~/.vimrc_local")
+if filereadable($LOCALFILE)
+    source $LOCALFILE
+endif
