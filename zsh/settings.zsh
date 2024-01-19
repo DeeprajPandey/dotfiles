@@ -36,39 +36,45 @@ setopt notify
 # =============================================================================
 # Completion
 # =============================================================================
-
-# Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/; Init completion
-
-# Set the completion dump file path.
-local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
-[[ -d "$zcompdump:h" ]] || mkdir -p "$zcompdump:h"
+# Ref: https://thevaluable.dev/zsh-completion-guide-examples/
 
 # Since we are using menu-select, we need to load complist before calling compinit.
 # See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Use-of-compinit
 zmodload zsh/complist
 
+# Set the completion dump file path.
+# Utilises the XDG_CACHE_HOME if available, falls back to home directory.
+local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
+[[ -d "$zcompdump:h" ]] || mkdir -p "$zcompdump:h"
+
 # Initialise completion system.
 autoload -Uz compinit
 
-# Conditionally initialise completions based on the modification time of the
-# dump file. If the dump file is older than 20 hours, run `compinit -i` to
-# regenerate the dump file. Otherwise, shortcut with `compinit -C` to use
-# the cached dumpfile.
+# Determine whether to regenerate the completion dump file.
+# If the dump file is older than 20 hours or if the force flag is set, it is regenerated.
+# The force flag allows manual overriding of the default behavior for troubleshooting or updates.
 # See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Initialization
-#
+local force=0
+
+if [[ "$1" == "-f" ]]; then
+  force=1
+  shift
+fi
+
 # Glob magic explained:
 #   #q expands globs in conditional expressions
 #   N - sets null_glob option (no error on 0 results)
 #   mh-20 - modified less than 20 hours ago
 if [[ $force -ne 1 ]] && [[ $zcompdump(#qNmh-20) ]]; then
-  # -C (skip function check) implies -i (skip security check).
+  # -C (cached) implies -i.
   compinit -C -d "$zcompdump"
 else
   compinit -i -d "$zcompdump" # -i (ignore insecure directories)
   touch "$zcompdump"
 fi
 
-# Compile zcompdump, if modified, in background to increase startup speed.
+# Asynchronously compile the completion dump on modification for better performance.
+# This step is skipped if the dump is up-to-date or currently being compiled by another process.
 {
   if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
     if command mkdir "${zcompdump}.zwc.lock" 2>/dev/null; then
@@ -93,8 +99,7 @@ bindkey -M menuselect 'l' vi-forward-char
 # See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
 [ -n "${terminfo[kcbt]}" ] && bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
-# Make sure the terminal is in application mode, which zle is active. Only then
-# are the values from $terminfo valid.
+# Configure terminal in application mode for accurate key code interpretation.
 # See http://zshwiki.org/home/zle/bindkeys#reading_terminfo.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init() {
@@ -130,31 +135,29 @@ unsetopt list_beep
 # See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
 WORDCHARS=${WORDCHARS/\/}
 
+
+# Advanced completion styles
+# See http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-Styles.
 emulate -L zsh
 setopt localoptions extendedglob
-
-local force=0
-if [[ "$1" == "-f" ]]; then
-  force=1
-  shift
-fi
 
 # Try smart-case completion, then case-insensitive, then partial-word, and then
 # substring completion.
 # See http://zsh.sourceforge.net/Doc/Release/Completion-Widgets.html#Completion-Matching-Control.
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Z}{a-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
-# zstyle ':completion:*' max-errors 3 numeric
+
+# Number of errors allowed before completion is stopped.
+# https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Standard-Tags
+zstyle ':completion:*' max-errors 3 numeric
 zstyle ':completion:*' group-name ''
-
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
 zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
 zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
-# pasting with tabs doesn't perform completion
+# Pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
 
 # =============================================================================
