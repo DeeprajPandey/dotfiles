@@ -12,6 +12,7 @@
 # exactly where to find all autoloadable functions, including those nested deeper in directories.
 
 source /Users/vieuler/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
+source /Users/vieuler/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # fpath=(${0:h}/plugins/zsh-completions/src $fpath)
 
 # autoload -Uz compinit && compinit
