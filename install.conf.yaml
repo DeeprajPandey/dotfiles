@@ -33,6 +33,7 @@
     ~/.gnupg/gpg-agent.conf:
       path: gnupg/gpg-agent.conf
     ~/.shell:
+    ~/.tmux.conf:
     # ~/.vim:
     ~/.vimrc:
     ~/.zshrc:
