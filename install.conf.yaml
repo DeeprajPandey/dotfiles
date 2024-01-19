@@ -34,7 +34,7 @@
       path: gnupg/gpg-agent.conf
     ~/.shell:
     # ~/.vim:
-    # ~/.vimrc:
+    ~/.vimrc:
     ~/.zshrc:
     ~/.zprofile:
       force: true
