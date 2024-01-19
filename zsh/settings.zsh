@@ -176,23 +176,23 @@ KEYTIMEOUT=1 # corresponds to 10ms
 # Use vim as the editor
 export EDITOR=vim
 
-# Use vim style line editing in zsh
-bindkey -v
-# Movement
-bindkey -a 'gg' beginning-of-buffer-or-history
-bindkey -a 'G' end-of-buffer-or-history
-# Undo
-bindkey -a 'u' undo
-bindkey -a '^R' redo
-# Edit line
-bindkey -a '^V' edit-command-line
-# Backspace
-bindkey '^?' backward-delete-char
-bindkey '^H' backward-delete-char
-# FIXME: Option + Backspace doesn't work
-bindkey '^[^?' backward-delete-word
-# Ctrl-U
-bindkey "^U" backward-kill-line
+# # Use vim style line editing in zsh
+# bindkey -v
+# # Movement
+# bindkey -a 'gg' beginning-of-buffer-or-history
+# bindkey -a 'G' end-of-buffer-or-history
+# # Undo
+# bindkey -a 'u' undo
+# bindkey -a '^R' redo
+# # Edit line
+# bindkey -a '^V' edit-command-line
+# # Backspace
+# bindkey '^?' backward-delete-char
+# bindkey '^H' backward-delete-char
+# Option + Backspace doesn't work
+# bindkey '^[^?' backward-delete-word
+# # Ctrl-U
+# bindkey "^U" backward-kill-line
 
 # Use incremental search
 bindkey "^R" history-incremental-search-backward
@@ -218,7 +218,7 @@ function fancy_ctrl_z() {
 zle -N fancy_ctrl_z
 bindkey '^Z' fancy_ctrl_z
 
-# Update: switch entirely to vim keybinds. Removing everything else.
+# # Update: switch entirely to vim keybinds. Removing everything else.
 # # See
 # # http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
 # # for the table of terminfo, and see
@@ -232,7 +232,6 @@ bindkey '^Z' fancy_ctrl_z
 # # Will not work on mac: Ctrl + Left/Right arrow
 # bindkey '^[[5D' beginning-of-line
 # bindkey '^[[5C' end-of-line
-# 
 # bindkey '^[[3~' delete-char
 
 # =============================================================================
