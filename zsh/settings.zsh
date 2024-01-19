@@ -37,16 +37,24 @@ setopt notify
 # Completion
 # =============================================================================
 
-# Autoload functions from the 'plugins' directory prefixed with 'bf_'.
-# The ':t' modifier is used in the pattern to only get the tail of the path, i.e., the filename.
-# This way, we ensure only the relevant files are autoloaded, keeping the environment uncluttered.
-autoload -Uz ${0:h}/plugins/completions*(.:t)
-
-
 # Completion ref: https://thevaluable.dev/zsh-completion-guide-examples/; Init completion
 
-# if compdump is less than 20 hours old,
-# consider it fresh and shortcut it with `compinit -C`
+# Set the completion dump file path.
+local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
+[[ -d "$zcompdump:h" ]] || mkdir -p "$zcompdump:h"
+
+# Since we are using menu-select, we need to load complist before calling compinit.
+# See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Use-of-compinit
+zmodload zsh/complist
+
+# Initialise completion system.
+autoload -Uz compinit
+
+# Conditionally initialise completions based on the modification time of the
+# dump file. If the dump file is older than 20 hours, run `compinit -i` to
+# regenerate the dump file. Otherwise, shortcut with `compinit -C` to use
+# the cached dumpfile.
+# See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Initialization
 #
 # Glob magic explained:
 #   #q expands globs in conditional expressions
@@ -56,7 +64,7 @@ if [[ $force -ne 1 ]] && [[ $zcompdump(#qNmh-20) ]]; then
   # -C (skip function check) implies -i (skip security check).
   compinit -C -d "$zcompdump"
 else
-  compinit -i -d "$zcompdump"
+  compinit -i -d "$zcompdump" # -i (ignore insecure directories)
   touch "$zcompdump"
 fi
 
@@ -70,20 +78,14 @@ fi
   fi
 } &!
 
-# Since we are using menu-select, we need to load complist before calling compinit.
-# See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Use-of-compinit
-zmodload zsh/complist
+# Menu selection will be started unconditionally.
+zstyle ':completion:*' menu select=4
+
 # Use vim style keybinds in menu completion
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
-# Menu selection will be started unconditionally.
-zstyle ':completion:*' menu select=4
-
-local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
-[[ -d "$zcompdump:h" ]] || mkdir -p "$zcompdump:h"
-autoload -Uz compinit
 
 # Shift-Tab: Perform menu completion, like menu-complete, except that if a menu
 # completion is already in progress, move to the previous completion rather than
@@ -105,6 +107,55 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   zle -N zle-line-init
   zle -N zle-line-finish
 fi
+
+# If a completion is performed with the cursor within a word, and a full
+# completion is inserted, the cursor is moved to the end of the word.
+setopt always_to_end
+
+# If unset, the cursor is set to the end of the word if completion is started.
+# Otherwise it stays there and completion is done from both ends.
+setopt complete_in_word
+
+setopt auto_menu            # Show completion menu on a successive tab press.
+setopt auto_list            # Automatically list choices on ambiguous completion.
+setopt auto_param_slash     # If completed parameter is a directory, add a trailing slash.
+setopt extended_glob        # Needed for file modification glob modifiers with compinit.
+setopt NO_menu_complete     # Do not autoselect the first completion entry.
+setopt NO_flow_control      # Disable start/stop characters in shell editor.
+
+# Don't beep on an ambiguous completion.
+unsetopt list_beep
+
+# Adjust WORDCHARS to treat certain characters as part of words.
+# See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
+WORDCHARS=${WORDCHARS/\/}
+
+emulate -L zsh
+setopt localoptions extendedglob
+
+local force=0
+if [[ "$1" == "-f" ]]; then
+  force=1
+  shift
+fi
+
+# Try smart-case completion, then case-insensitive, then partial-word, and then
+# substring completion.
+# See http://zsh.sourceforge.net/Doc/Release/Completion-Widgets.html#Completion-Matching-Control.
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Z}{a-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+# zstyle ':completion:*' max-errors 3 numeric
+zstyle ':completion:*' group-name ''
+
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
+zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
+zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
+
+# pasting with tabs doesn't perform completion
+zstyle ':completion:*' insert-tab pending
 
 # =============================================================================
 # Key Bindings
