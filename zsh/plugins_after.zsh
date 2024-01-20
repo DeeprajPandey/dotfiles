@@ -2,7 +2,10 @@
 
 # Syntax highlighting
 
-source ~/.config/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fpath=($fpath ${0:h}/plugins/zsh-autosuggestions)
+fpath=($fpath ${0:h}/plugins/zsh-syntax-highlighting)
+source ${0:h}/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source ${0:h}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 

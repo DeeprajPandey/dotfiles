@@ -11,8 +11,8 @@
 # The 'fpath' variable doesn't inherently apply recursively, and we need to ensure Zsh knows
 # exactly where to find all autoloadable functions, including those nested deeper in directories.
 
-source /Users/vieuler/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
-source /Users/vieuler/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-# fpath=(${0:h}/plugins/zsh-completions/src $fpath)
-
-# autoload -Uz compinit && compinit
+# zsh-completions.plugin.zsh adds itself to fpath using the absolute modifier (:A). We would
+# rather have the $HOME path in the fpath, so we add it manually here and skip sourcing the
+# plugin script.
+fpath=($fpath ${0:h}/plugins/zsh-completions/src)
+# source /Users/vieuler/.config/zsh/plugins/zsh-completions/zsh-completions.plugin.zsh
