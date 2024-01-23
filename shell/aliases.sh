@@ -185,13 +185,17 @@ serve() {
   start_server
 
   # Watch for changes in the directory
+  # Start fswatch and while loop in their own process group
+  set -m                  # enable job control
+  (
   fswatch -o "$dir" | while read -r num_changes; do
     echo "File changed. Restarting server..."
     stop_server
     echo "Current server_pid (should be empty): $(cat "$pidfile")"
     start_server
     echo "Current server_pid (should be new): $(cat "$pidfile")"
-  done &
+  done
+  ) &
 
   # Save PID of fswatch loop
   fswatch_pid=$!
@@ -201,13 +205,13 @@ serve() {
   # Handle script exit (gets invoked by trap)
   cleanup() {
     stop_server
-    echo "Stopping fswatch[$1]..."
-    [ -n "$1" ] && kill "$1"
+    kill -- -$$           # kill process group
+    rm -f "$pidfile"      # remove temp file
     exit 0
   }
   
   # Trap SIGINT (Ctrl+C) and SIGTERM
-  trap 'cleanup $fswatch_pid' SIGINT SIGTERM
+  trap cleanup SIGINT SIGTERM
 
   # Wait indefinitely
   wait
