@@ -152,25 +152,25 @@ fpr() {
 serve() {
   local port=${1:-8000}
   local dir=${2:-.}
-  local pidfile
+  local server_pidfile
   local fswatch_pid
   
-  # Create temp file to pass PID to and from fswatch subshell
-  pidfile=$(mktemp -t serve_"$port".pid)
+  # Create temp files to pass PIDs to and from fswatch subshell
+  server_pidfile=$(mktemp -t serve_"$port".pid)
 
   # Function to start the server
   start_server() {
     pushd "$dir" > /dev/null || exit
     python3 -m http.server "$port" &
-    echo $! > "$pidfile"
+    echo $! > "$server_pidfile"
     popd > /dev/null || exit
   }
 
   # Function to stop the server
   stop_server() {
-    if [ -f "$pidfile" ]; then
+    if [ -f "$server_pidfile" ]; then
       local server_pid
-      server_pid=$(cat "$pidfile")
+      server_pid=$(cat "$server_pidfile")
 
       if [ -n "$server_pid" ]; then
         echo "Stopping server[$server_pid]..."
@@ -191,12 +191,12 @@ serve() {
   fswatch -o "$dir" | while read -r num_changes; do
     echo "File changed. Restarting server..."
     stop_server
-    echo "Current server_pid (should be empty): $(cat "$pidfile")"
+    echo "Current server_pid (should be older): $(cat "$server_pidfile")"
     start_server
-    echo "Current server_pid (should be new): $(cat "$pidfile")"
+    echo "Current server_pid (should be new): $(cat "$server_pidfile")"
   done
   ) &
-
+  
   # Save PID of fswatch loop
   fswatch_pid=$!
   echo "fswatch_pid: $fswatch_pid"
@@ -205,9 +205,8 @@ serve() {
   # Handle script exit (gets invoked by trap)
   cleanup() {
     stop_server
-    kill -- -$$           # kill process group
-    rm -f "$pidfile"      # remove temp file
-    exit 0
+    pkill -P $$                   # kill process group
+    rm -f "$server_pidfile"       # remove temp file
   }
   
   # Trap SIGINT (Ctrl+C) and SIGTERM
