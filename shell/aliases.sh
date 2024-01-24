@@ -204,6 +204,17 @@ serve() {
 
   # Start the server and watch for changes
   start_server
+
+  # Open the default browser to the server address
+  # TODO: flag to disable this (in case it's just a backend server)
+  if command -v open &> /dev/null; then
+      open "http://localhost:$port"
+  elif command -v xdg-open &> /dev/null; then
+      xdg-open "http://localhost:$port"
+  else
+      echo "Could not detect 'xdg-open' or 'open' command to launch the browser."
+  fi
+  
   watch_directory &
   # Save PID of fswatch loop
   local fswatch_pid=$!
