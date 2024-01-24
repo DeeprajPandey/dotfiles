@@ -153,17 +153,18 @@ serve() {
   local port=${1:-8000}
   local dir=${2:-.}
   local server_pidfile
-  local fswatch_pid
   
   # Create temp files to pass PIDs to and from fswatch subshell
   server_pidfile=$(mktemp -t serve_"$port".pid)
 
   # Function to start the server
   start_server() {
-    pushd "$dir" > /dev/null || exit
+    pushd "$dir" > /dev/null || return
     python3 -m http.server "$port" &
-    echo $! > "$server_pidfile"
-    popd > /dev/null || exit
+    local server_pid=$!
+    echo "$server_pid" > "$server_pidfile"
+    popd > /dev/null || return
+    echo "[$server_pid]:Server started on http://localhost:$port"
   }
 
   # Function to stop the server
@@ -171,48 +172,44 @@ serve() {
     if [ -f "$server_pidfile" ]; then
       local server_pid
       server_pid=$(cat "$server_pidfile")
-
       if [ -n "$server_pid" ]; then
-        echo "Stopping server[$server_pid]..."
-        kill "$server_pid"
-        wait "$server_pid" 2>/dev/null
+        echo "[$server_pid]:Stopping server..."
+        kill "$server_pid" && wait "$server_pid" 2>/dev/null
       fi
-
     fi
   }
 
-  # Start the server initially
-  start_server
-
   # Watch for changes in the directory
-  # Start fswatch and while loop in their own process group
-  set -m                  # enable job control
-  (
-  fswatch -o "$dir" | while read -r num_changes; do
-    echo "File changed. Restarting server..."
-    stop_server
-    echo "Current server_pid (should be older): $(cat "$server_pidfile")"
-    start_server
-    echo "Current server_pid (should be new): $(cat "$server_pidfile")"
-  done
-  ) &
+  watch_directory() {
+    fswatch -o "$dir" | while read -r _; do
+      echo "File changed. Restarting server..."
+      stop_server
+      start_server
+    done
+  }
   
-  # Save PID of fswatch loop
-  fswatch_pid=$!
-  echo "fswatch_pid: $fswatch_pid"
-
   # shellcheck disable=SC2317
   # Handle script exit (gets invoked by trap)
   cleanup() {
+    trap - SIGINT SIGTERM         # clear the trap
+    printf "\n"
     stop_server
     pkill -P $$                   # kill process group
     rm -f "$server_pidfile"       # remove temp file
+    echo "Cleanup complete."
   }
-  
+
   # Trap SIGINT (Ctrl+C) and SIGTERM
   trap cleanup SIGINT SIGTERM
 
-  # Wait indefinitely
+  # Start the server and watch for changes
+  start_server
+  watch_directory &
+  # Save PID of fswatch loop
+  local fswatch_pid=$!
+  echo "[$fswatch_pid]:fsWatching directory $dir for changes..."
+
+  # Keep the script running until Ctrl+C
   wait
 }
 
