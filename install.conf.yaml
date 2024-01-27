@@ -28,6 +28,8 @@
       path: starship
     ~/.config/zsh:
       path: zsh
+    ~/.config/nvim:
+      path: nvim
     ~/.gnupg/gpg.conf:
       path: gnupg/gpg.conf
     ~/.gnupg/gpg-agent.conf:
