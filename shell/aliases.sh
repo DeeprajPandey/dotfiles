@@ -164,6 +164,7 @@ serve() {
     local server_pid=$!
     echo "$server_pid" > "$server_pidfile"
     popd > /dev/null || return
+    # TODO: silence this on flag (e.g. arg set to 1). Useful on server reloads
     echo "[$server_pid]:Server started on http://localhost:$port"
   }
 
@@ -185,6 +186,8 @@ serve() {
       echo "File changed. Restarting server..."
       stop_server
       start_server
+      # TODO: use osascript to refresh browser on macOS
+      # TODO: use xdotool to refresh browser on Linux
     done
   }
   
