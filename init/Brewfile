@@ -20,6 +20,7 @@ brew "coreutils"
 brew "exa"                          # rust port: ls
 brew "fd"
 brew "findutils"
+brew "fswatch"                      # file system watcher
 brew "fzf"
 brew "git"
 brew "git-delta"
@@ -173,6 +174,7 @@ vscode "DavidAnson.vscode-markdownlint"              # md linting and stylecheck
 vscode "VisualStudioExptTeam.vscodeintellicode"
 vscode "adpyke.codesnap"                             # code screenshots
 vscode "christian-kohler.path-intellisense"          # autocomplete filenames
+vscode "coolbear.systemd-unit-file"                  # syntax highlighting for systemd unit files
 vscode "streetsidesoftware.code-spell-checker"       # helpful for latex
 vscode "timonwong.shellcheck"
 vscode "vscodevim.vim"                               # vim keybindings in vscode (note: enable keyrepeat (check macos.sh for VSCode settings))
