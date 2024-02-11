@@ -76,6 +76,7 @@ brew "d2"                           # tap terrastruct
 cask "android-platform-tools"       # adb
 cask "aldente"
 cask "autodesk-fusion360"
+cask "balenaetcher"                 # flash OS images
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
 cask "firefox"
