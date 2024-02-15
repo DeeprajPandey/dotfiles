@@ -8554,7 +8554,7 @@
 			<key>Rows</key>
 			<integer>25</integer>
 			<key>Screen</key>
-			<integer>0</integer>
+			<integer>-2</integer>
 			<key>Scrollback Lines</key>
 			<integer>10000</integer>
 			<key>Selected Text Color</key>
