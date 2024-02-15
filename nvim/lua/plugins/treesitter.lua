@@ -7,7 +7,7 @@ return {
   config = function()
     local configs = require("nvim-treesitter.configs")
     configs.setup({
-      ensure_installed = {"c", "lua", "vim", "vimdoc", "query", "javascript", "html"},
+      ensure_installed = {"c", "lua", "vim", "vimdoc", "query", "javascript", "typescript", "python", "html"},
 
       sync_install = false,
       -- Automatically install missing parsers when entering buffer
