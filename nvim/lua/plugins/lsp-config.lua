@@ -37,7 +37,7 @@ return {
 
       --- if you want to know more about lsp-zero and mason.nvim
       --- read this: https://github.com/VonHeikemen/lsp-zero.nvim/blob/v3.x/doc/md/guides/integrate-with-mason-nvim.md
-      lsp_zero.on_attach(function(client, bufnr)
+      lsp_zero.on_attach(function(_client, bufnr)
         -- see :help lsp-zero-keybindings
         -- to learn the available actions
         lsp_zero.default_keymaps({buffer = bufnr})
@@ -130,7 +130,7 @@ return {
       -- see: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
       luasnip.filetype_extend("vue", {"vue"})
 
-      -- if not within snippent, unlink snip in favour of performance
+      -- if not within snippet, unlink snip in favour of performance
       vim.api.nvim_create_autocmd("InsertLeave", {
         callback = function()
           if 
@@ -152,9 +152,9 @@ return {
         },
         formatting = lsp_zero.cmp_format(),
         mapping = cmp.mapping.preset.insert({
-          -- confirm selection
+          -- confirm selection. Set to `false` to only confirm explicitly selected items.
           ['<C-y>'] = cmp.mapping.confirm({select = true}),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
           -- navigate completion menu (with autocomplete)
           ['<C-p>'] = cmp.mapping(function()
