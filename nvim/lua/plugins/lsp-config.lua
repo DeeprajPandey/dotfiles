@@ -104,10 +104,7 @@ return {
           'tsserver',
           'yamlls',
           'eslint',
-          'black',
-          'mypy',
-          'ruff',
-          'shellcheck'
+          'mypy'
         },
         handlers = {
           lsp_zero.default_setup,
