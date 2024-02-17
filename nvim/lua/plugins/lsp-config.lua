@@ -21,61 +21,6 @@ return {
     end,
   },
 
-  -- Autocompletion
-  {
-    'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
-    dependencies = {
-      {'L3MON4D3/LuaSnip'},
-    },
-
-    config = function()
-      local lsp_zero = require('lsp-zero')
-      lsp_zero.extend_cmp()
-
-      -- And you can configure cmp even more, if you want to.
-      local cmp = require('cmp')
-      local cmp_action = lsp_zero.cmp_action()
-      local cmp_select_opts = {behavior = cmp.SelectBehavior.Select}
-
-      cmp.setup({
-        formatting = lsp_zero.cmp_format(),
-        mapping = cmp.mapping.preset.insert({
-          -- confirm selection
-          ['<C-y>'] = cmp.mapping.confirm({select = true}),
-          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-
-          -- navigate completion menu (with autocomplete)
-          ['<C-p>'] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.select_prev_item(cmp_select_opts)
-            else
-              cmp.complete()
-            end
-          end),
-          ['<C-n>'] = cmp.mapping(function()
-            if cmp.visible() then
-              cmp.select_next_item(cmp_select_opts)
-            else
-              cmp.complete()
-            end
-          end),
-
-          -- toggle completion menu
-          ['<C-e>'] = cmp_action.toggle_completion(),
-
-          -- scroll documentation window
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-
-          -- jump b/w snippet placeholders
-          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-        })
-      })
-    end
-  },
-
   -- LSP
   {
     'neovim/nvim-lspconfig',
@@ -154,6 +99,62 @@ return {
       --      })
 
     end
-  }
+  },
+
+  -- Autocompletion
+  {
+    'hrsh7th/nvim-cmp',
+    event = 'InsertEnter',
+    dependencies = {
+      {'L3MON4D3/LuaSnip'},
+    },
+
+    config = function()
+      local lsp_zero = require('lsp-zero')
+      lsp_zero.extend_cmp()
+
+      -- And you can configure cmp even more, if you want to.
+      local cmp = require('cmp')
+      local cmp_action = lsp_zero.cmp_action()
+      local cmp_select_opts = {behavior = cmp.SelectBehavior.Select}
+
+      cmp.setup({
+        formatting = lsp_zero.cmp_format(),
+        mapping = cmp.mapping.preset.insert({
+          -- confirm selection
+          ['<C-y>'] = cmp.mapping.confirm({select = true}),
+          ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+          -- navigate completion menu (with autocomplete)
+          ['<C-p>'] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.select_prev_item(cmp_select_opts)
+            else
+              cmp.complete()
+            end
+          end),
+          ['<C-n>'] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.select_next_item(cmp_select_opts)
+            else
+              cmp.complete()
+            end
+          end),
+
+          -- toggle completion menu
+          ['<C-e>'] = cmp_action.toggle_completion(),
+
+          -- scroll documentation window
+          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-d>'] = cmp.mapping.scroll_docs(4),
+
+          -- jump b/w snippet placeholders
+          ['<C-f>'] = cmp_action.luasnip_jump_forward(),
+          ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+        })
+      })
+    end
+  },
+
 }
 
