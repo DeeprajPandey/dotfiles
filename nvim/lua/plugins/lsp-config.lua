@@ -107,18 +107,49 @@ return {
     event = 'InsertEnter',
     dependencies = {
       {'L3MON4D3/LuaSnip'},
+      {'rafamadriz/friendly-snippets'}
     },
 
     config = function()
       local lsp_zero = require('lsp-zero')
       lsp_zero.extend_cmp()
 
-      -- And you can configure cmp even more, if you want to.
       local cmp = require('cmp')
       local cmp_action = lsp_zero.cmp_action()
       local cmp_select_opts = {behavior = cmp.SelectBehavior.Select}
 
+      -- Configure LuaSnip
+      local luasnip = require('luasnip')
+
+      -- trigger update of active node's dependents on every change
+      luasnip.config.set_config({
+        history = true,
+        update_events = 'TextChanged,TextChangedI'
+      })
+      -- add framework snippets (not enabled by default)
+      -- see: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
+      luasnip.filetype_extend("vue", {"vue"})
+
+      -- if not within snippent, unlink snip in favour of performance
+      vim.api.nvim_create_autocmd("InsertLeave", {
+        callback = function()
+          if 
+            require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+            and not require("luasnip").session.jump_active
+          then
+            require("luasnip").unlink_current()
+          end
+        end,
+      })
+
+      require('luasnip.loaders.from_vscode').lazy_load()
+
       cmp.setup({
+        sources = {
+          {name = 'nvim_lsp'},
+          {name = 'nvim_lua'},
+          {name = 'luasnip'}
+        },
         formatting = lsp_zero.cmp_format(),
         mapping = cmp.mapping.preset.insert({
           -- confirm selection
@@ -151,7 +182,15 @@ return {
           -- jump b/w snippet placeholders
           ['<C-f>'] = cmp_action.luasnip_jump_forward(),
           ['<C-b>'] = cmp_action.luasnip_jump_backward(),
-        })
+        }),
+        snippet = {
+          expand = function (args)
+            require('luasnip').lsp_expand(args.body)
+          end,
+        },
+        window = {
+          documentation = cmp.config.window.bordered()
+        }
       })
     end
   },
