@@ -171,9 +171,12 @@
 	# Allow local customizations in the .gitconfig_local file
 [include]
 	path = ~/.gitconfig_local
+
 [sequence]
-	editor = code --wait
+	editor = vim
+
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager
+
 [credential "https://dev.azure.com"]
 	useHttpPath = true
