@@ -65,7 +65,6 @@ return {
           'tsserver',
           'yamlls',
           'eslint',
-          'mypy'
         },
         handlers = {
           lsp_zero.default_setup,
