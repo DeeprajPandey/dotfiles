@@ -21,8 +21,8 @@ vim.opt.undofile = true
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
--- min. 8 lines of scroll offset
-vim.opt.scrolloff = 8
+-- min. 8 lines of scroll offset (+3 for treesitter-context & separator)
+vim.opt.scrolloff = 11
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
