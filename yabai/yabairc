@@ -1,0 +1,32 @@
+# Enable for debugging
+# yabai -m config debug_output on
+
+yabai -m config auto_balance            off           \
+                auto_padding            on            \
+                external_bar            all:35:0      \
+                focus_follows_mouse     off           \
+                mouse_follows_focus     on            \
+                mouse_modifier          alt           \
+                mouse_action1           move          \
+                mouse_action2           resize        \
+                mouse_drop_action       swap          \
+                split_ratio             0.50          \
+                window_placement        second_child  \
+                window_zoom_persist     off           \
+                                                      \
+                top_padding             0             \
+                bottom_padding          8             \
+                left_padding            8             \
+                right_padding           8             \
+                window_gap              10            \
+
+# Disable some apps from being managed
+yabai -m rule --add app="^(Calculator|Software Update|Dictionary|IINA|Karabiner-Elements|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Activity Monitor)$" manage=off
+yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
+yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
+
+# bsp, stack, float
+yabai -m config layout bsp
+

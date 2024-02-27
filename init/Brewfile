@@ -3,11 +3,12 @@ cask_args appdir: "~/Applications", require_sha: true
 
 # All taps
 tap "buo/cask-upgrade"              # `brew cu` for cask updates
-tap "microsoft/git"
-tap "homebrew/cask-fonts"
-tap "terrastruct/d2"
 tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
+tap "homebrew/cask-fonts"
+tap "koekeishiya/formulae"          # yabai
+tap "microsoft/git"
 tap "spicetify/homebrew-tap"        # spicetify
+tap "terrastruct/d2"
 
 # Install essential tools
 brew "amber"                        # tap danopia
@@ -32,6 +33,7 @@ brew "gping"
 brew "helix"
 brew "hexyl"                        # hex viewer + auto formatter
 # brew "imagemagick"                  # cli image editor
+brew "jq"                           # json command line processor
 brew "kondo"
 # brew "lynx"
 brew "moreutils"
@@ -53,6 +55,7 @@ brew "sccache"
 brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
+brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
 # brew "sloc"                         # lines of code
 brew "spicetify-cli"                # customise spotify
 brew "ssh-copy-id"
@@ -64,13 +67,14 @@ brew "tokei"
 brew "vbindiff"
 brew "wget"
 brew "xh"                           # rust port - curl; HTTPie API
+brew "yabai"                        # tiling window manager; koekeishiya/formulae
 brew "yamllint"
 brew "zellij"                       # rust port - tmux; floating panes
 brew "zopfli"
 brew "zoxide"
+
 # Diagram scripting
 brew "d2"                           # tap terrastruct
-
 
 # Install essential casks
 cask "android-platform-tools"       # adb
