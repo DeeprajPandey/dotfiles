@@ -48,16 +48,20 @@ ctrl + lalt - s   : yabai -m window --toggle split
 
 # Moving windows between spaces; ctrl + lalt + {1, 2, 3, 4, p, n } (Assumes 4 Spaces Max per Display)
 ctrl + lalt - 1   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[1] ]] \
-                  && yabai -m window --space $SPACES[1]
+                  && yabai -m window --space $SPACES[1] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 18 using control down)'
+
 
 ctrl + lalt - 2   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[2] ]] \
-                  && yabai -m window --space $SPACES[2]
+                  && yabai -m window --space $SPACES[2] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 19 using control down)'
+
 
 ctrl + lalt - 3   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[3] ]] \
-                  && yabai -m window --space $SPACES[3]
+                  && yabai -m window --space $SPACES[3] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 20 using control down)'
+
 
 ctrl + lalt - 4   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[4] ]] \
-                  && yabai -m window --space $SPACES[4]
+                  && yabai -m window --space $SPACES[4] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 21 using control down)'
+
 
 # Move window to previous or next space
 ctrl + lalt - p   : yabai -m window --space prev && osascript -e 'tell application "System Events" to keystroke (key code 123 using control down)'
