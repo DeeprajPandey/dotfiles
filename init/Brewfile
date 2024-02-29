@@ -16,7 +16,7 @@ brew "amber"                        # tap danopia
 brew "ansifilter"
 brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
-brew "borders"                      # kankyborders: customised window borders
+brew "borders"                      # tap felixkratz/formulae; jankyborders: customised window borders
 brew "bottom"                       # rust port - htop; process monitor
 brew "broot"                        # rust port - tree; truncated output
 brew "coreutils"
@@ -25,6 +25,7 @@ brew "fd"
 brew "findutils"
 brew "fswatch"                      # file system watcher
 brew "fzf"
+brew "gh"                           # github cli; sketchybar setup dependency (notifs)
 brew "git"
 brew "git-delta"
 brew "git-filter-repo"              # clean way to rewrite git history
@@ -57,11 +58,13 @@ brew "sccache"
 brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
+brew "sketchybar"                   # tap felixkratz/formulae; customised status bar
 brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
 # brew "sloc"                         # lines of code
 brew "spicetify-cli"                # customise spotify
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
+brew "switchaudio-osx"              # sketchybar setup dependency
 brew "tldr"
 brew "tmux"                         # terminal multiplexer
 brew "tokei"
@@ -123,7 +126,7 @@ cask "zoom"
 # Font preview: https://www.programmingfonts.org/#source-code-pro
 cask "font-source-code-pro-for-powerline"
 # cask "font-fira-code-nerd-font"
-# cask "font-hack-nerd-font"
+cask "font-hack-nerd-font"          # sketchybar dependency
 cask "font-atkinson-hyperlegible"
 # cask "font-ia-writer-duospace"    # noinstall: checksum undefined
 # cask "font-ia-writer-mono"        # noinstall: checksum undefined
@@ -132,6 +135,7 @@ cask "font-inter"
 # cask "font-lato"                  # noinstall: checksum undefined
 # cask "font-nunito"                # noinstall: checksum undefined
 # cask "font-nunito-sans"           # noinstall: checksum undefined
+cask "sf-symbols"                   # sketchybar setup dependency
 
 # Install daily practice tools
 brew "lua"
