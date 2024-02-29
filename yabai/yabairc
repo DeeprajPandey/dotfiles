@@ -36,6 +36,10 @@ yabai -m rule --add app="^Digital Colou?r Meter$" sticky=on
 # bsp, stack, float
 yabai -m config layout bsp
 
+# Permanently hide menubar. yabai will automatically set it to 100% visibility in native-fullscreen spaces
+# and adjust it back down afterwards.
+yabai -m config menubar_opacity 0.0
+
 # Initialise JankyBorders (pick config from `~/.config/borders/bordersrc`)
 # ref: https://github.com/FelixKratz/JankyBorders?tab=readme-ov-file#bootstrap-with-yabai
 borders &
