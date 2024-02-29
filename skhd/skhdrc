@@ -104,10 +104,6 @@ shift + ctrl - p  : yabai -m window --focus stack.prev 2> /dev/null
 # Enable / Disable gaps in current workspace; ctrl + lalt + g
 ctrl + lalt - g           : yabai -m space --toggle padding; yabai -m space --toggle gap
 
-# Enable / Disable gaps in current workspace; ctrl + lalt + g
-ctrl + lalt - b           : yabai -m config window_border off 
-shift + ctrl + lalt - b   : yabai -m config window_border on
-
 
 ## Rules
 # Show digital colour meter topmost and on all spaces
