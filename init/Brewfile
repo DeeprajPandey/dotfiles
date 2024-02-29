@@ -4,6 +4,7 @@ cask_args appdir: "~/Applications", require_sha: true
 # All taps
 tap "buo/cask-upgrade"              # `brew cu` for cask updates
 tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
+tap "felixkratz/formulae"           # jankyborders
 tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"          # yabai
 tap "microsoft/git"
@@ -15,6 +16,7 @@ brew "amber"                        # tap danopia
 brew "ansifilter"
 brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
+brew "borders"                      # kankyborders: customised window borders
 brew "bottom"                       # rust port - htop; process monitor
 brew "broot"                        # rust port - tree; truncated output
 brew "coreutils"

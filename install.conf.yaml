@@ -11,6 +11,8 @@
 
 - link:
     ~/.dotfiles: ''
+    ~/.config/borders:
+      path: borders
     ~/.config/git:
       force: true
       path: git
