@@ -64,6 +64,7 @@ ctrl + lalt - 4   : SPACES=($(yabai -m query --displays --display | jq '.spaces[
 
 
 # Move window to previous or next space
+# Alternative: https://github.com/koekeishiya/yabai/wiki/Tips-and-tricks#constrain-space-focus-to-current-display-with-optional-cycling
 ctrl + lalt - p   : yabai -m window --space prev && osascript -e 'tell application "System Events" to keystroke (key code 123 using control down)'
 ctrl + lalt - n   : yabai -m window --space next && osascript -e 'tell application "System Events" to keystroke (key code 124 using control down)'
 
@@ -92,8 +93,9 @@ shift + ctrl - k  : yabai -m window north --stack $(yabai -m query --windows --w
 shift + ctrl - l  : yabai -m window  east --stack $(yabai -m query --windows --window | jq -r '.id') && sketchybar --trigger window_focus
 
 # Stack Navigation; shift + ctrl + {n, p}
-shift + ctrl - n  : yabai -m window --focus stack.next
-shift + ctrl - p  : yabai -m window --focus stack.prev
+# Hacky fix to silence errors when we are trying to move beyond the end of stack (in either direction)
+shift + ctrl - n  : yabai -m window --focus stack.next 2> /dev/null
+shift + ctrl - p  : yabai -m window --focus stack.prev 2> /dev/null
 
 
 ## Global Behaviour
