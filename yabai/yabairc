@@ -27,6 +27,16 @@ yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
 
+## Rules
+# Show digital colour meter topmost and on all spaces
+yabai -m rule --add app="^Digital Colou?r Meter$" sticky=on
+
+# TODO: sketchybar updates on signalled events
+
 # bsp, stack, float
 yabai -m config layout bsp
+
+# Initialise JankyBorders (pick config from `~/.config/borders/bordersrc`)
+# ref: https://github.com/FelixKratz/JankyBorders?tab=readme-ov-file#bootstrap-with-yabai
+borders &
 

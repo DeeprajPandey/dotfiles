@@ -102,12 +102,5 @@ shift + ctrl - p  : yabai -m window --focus stack.prev 2> /dev/null
 
 ## Global Behaviour
 # Enable / Disable gaps in current workspace; ctrl + lalt + g
-ctrl + lalt - g           : yabai -m space --toggle padding; yabai -m space --toggle gap
-
-
-## Rules
-# Show digital colour meter topmost and on all spaces
-yabai -m rule --add app="^Digital Colou?r Meter$" sticky=on
-
-# TODO: sketchybar updates on signalled events
+ctrl + lalt - g   : yabai -m space --toggle padding; yabai -m space --toggle gap
 
