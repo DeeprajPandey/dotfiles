@@ -106,6 +106,13 @@ function setup_environment_and_shell() {
     log_info "Setting up the shell using dotbot..."
     # shellcheck source=/dev/null
     source "$DIR/install"
+
+    # Initialise launchd services
+    # SKetchybar: get community font ligatures
+    # curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.23/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
+    # brew services restart sketchybar
+    yabai --restart-service
+    skhd --restart-services
     log_success "Shell set up."
 }
 
