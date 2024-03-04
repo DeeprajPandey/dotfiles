@@ -3,7 +3,7 @@
 
 yabai -m config auto_balance            off           \
                 auto_padding            on            \
-                external_bar            all:35:0      \
+                external_bar            all:0:0      \
                 focus_follows_mouse     off           \
                 mouse_follows_focus     on            \
                 mouse_modifier          alt           \
@@ -31,14 +31,16 @@ yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Selec
 # Show digital colour meter topmost and on all spaces
 yabai -m rule --add app="^Digital Colou?r Meter$" sticky=on
 
-# TODO: sketchybar updates on signalled events
+# Trigger sketchybar on window_focused events
+# ref: https://github.com/koekeishiya/yabai/blob/master/doc/yabai.asciidoc#signal
+# yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 
 # bsp, stack, float
 yabai -m config layout bsp
 
 # Permanently hide menubar. yabai will automatically set it to 100% visibility in native-fullscreen spaces
 # and adjust it back down afterwards.
-yabai -m config menubar_opacity 0.0
+# yabai -m config menubar_opacity 0.0
 
 # Initialise JankyBorders (pick config from `~/.config/borders/bordersrc`)
 # ref: https://github.com/FelixKratz/JankyBorders?tab=readme-ov-file#bootstrap-with-yabai
