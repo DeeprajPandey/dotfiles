@@ -3,7 +3,7 @@
 
 yabai -m config auto_balance            off           \
                 auto_padding            on            \
-                external_bar            all:0:0      \
+                external_bar            all:2:0      \
                 focus_follows_mouse     off           \
                 mouse_follows_focus     on            \
                 mouse_modifier          alt           \
