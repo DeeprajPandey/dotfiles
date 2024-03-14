@@ -18,9 +18,8 @@ brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
 brew "borders"                      # tap felixkratz/formulae; jankyborders: customised window borders
 brew "bottom"                       # rust port - htop; process monitor
-brew "broot"                        # rust port - tree; truncated output
+brew "btop"                         # rust port - htop
 brew "coreutils"
-brew "exa"                          # rust port: ls
 brew "fd"
 brew "findutils"
 brew "fswatch"                      # file system watcher
@@ -41,6 +40,7 @@ brew "kondo"
 # brew "lynx"
 brew "moreutils"
 brew "neofetch"                     # prettyprint system-info
+brew "nnn"                          # tui filemanager
 brew "nvim"                         # neovim
 brew "nvm"                          # node version manager
 brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
@@ -84,7 +84,7 @@ brew "d2"                           # tap terrastruct
 # Install essential casks
 cask "android-platform-tools"       # adb
 cask "aldente"
-cask "autodesk-fusion360"
+# cask "autodesk-fusion360"         # noinstall: checksum undefined
 cask "balenaetcher"                 # flash OS images
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
