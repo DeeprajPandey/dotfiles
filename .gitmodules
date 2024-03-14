@@ -14,3 +14,6 @@
 [submodule "zsh/plugins/zsh-defer"]
 	path = zsh/plugins/zsh-defer
 	url = https://github.com/romkatv/zsh-defer
+[submodule "config/tmux/plugins/tmux-resurrect"]
+	path = config/tmux/plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect
