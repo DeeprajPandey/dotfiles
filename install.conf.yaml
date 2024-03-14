@@ -11,15 +11,7 @@
 
 - link:
     ~/.dotfiles: ''
-    ~/.config/borders:
-      path: borders
-    ~/.config/git:
-      force: true
-      path: git
-    ~/.config/iterm:
-      path: iterm
-    ~/.config/skhd:
-      path: skhd
+    ~/.config:
     ~/.config/spicetify/CustomApps:
       path: spicetify/CustomApps
     ~/.config/spicetify/Extensions:
@@ -28,14 +20,8 @@
       path: spicetify/Themes
     ~/.config/spicetify/config-xpui.ini:
       path: spicetify/config-xpui.ini
-    ~/.config/starship:
-      path: starship
-    ~/.config/yabai:
-      path: yabai
-    ~/.config/zsh:
-      path: zsh
-    ~/.config/nvim:
-      path: nvim
+    ~/.gnupg/common.conf:
+      path: gnupg/common.conf
     ~/.gnupg/gpg.conf:
       path: gnupg/gpg.conf
     ~/.gnupg/gpg-agent.conf:
