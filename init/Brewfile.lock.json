@@ -2879,6 +2879,10 @@
             }
           }
         }
+      },
+      "visidata": {
+        "version": "3.0.2_1",
+        "bottle": false
       }
     },
     "cask": {
@@ -3268,6 +3272,9 @@
       },
       "koekeishiya/formulae": {
         "revision": "c69f65c8848a827b1e42e3dd98dbaf3a30462b1c"
+      },
+      "saulpw/vd": {
+        "revision": "646831ebced1f5cf85abd312d789423ac93adab9"
       }
     },
     "vscode": {
