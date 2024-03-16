@@ -8,6 +8,7 @@ tap "felixkratz/formulae"           # jankyborders
 tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"          # yabai
 tap "microsoft/git"
+tap "saulpw/vd"                     # visidata
 tap "spicetify/homebrew-tap"        # spicetify
 tap "terrastruct/d2"
 
@@ -70,6 +71,7 @@ brew "tmux"                         # terminal multiplexer
 brew "tokei"
 # brew "valgrind"                   # noinstall: not available for Apple Silicon
 brew "vbindiff"
+brew "visidata"                     # tabular data tui explorer
 brew "wget"
 brew "xh"                           # rust port - curl; HTTPie API
 brew "yabai"                        # tiling window manager; koekeishiya/formulae
