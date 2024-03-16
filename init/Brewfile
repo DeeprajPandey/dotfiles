@@ -8,7 +8,7 @@ tap "felixkratz/formulae"           # jankyborders
 tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"          # yabai
 tap "microsoft/git"
-tap "saulpw/vd"                     # visidata
+# tap "saulpw/vd"                     # visidata
 tap "spicetify/homebrew-tap"        # spicetify
 tap "terrastruct/d2"
 
@@ -38,6 +38,7 @@ brew "hexyl"                        # hex viewer + auto formatter
 # brew "imagemagick"                  # cli image editor
 brew "jq"                           # json command line processor
 brew "kondo"
+brew "lnav"                         # log navigator tui
 # brew "lynx"
 brew "moreutils"
 brew "neofetch"                     # prettyprint system-info
@@ -71,7 +72,7 @@ brew "tmux"                         # terminal multiplexer
 brew "tokei"
 # brew "valgrind"                   # noinstall: not available for Apple Silicon
 brew "vbindiff"
-brew "visidata"                     # tabular data tui explorer
+# brew "visidata"                     # tabular data tui explorer
 brew "wget"
 brew "xh"                           # rust port - curl; HTTPie API
 brew "yabai"                        # tiling window manager; koekeishiya/formulae
