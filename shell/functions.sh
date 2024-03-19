@@ -32,3 +32,9 @@ there="$HOME/.shell.here"
 there() {
     cd "$(readlink "${there}")" || exit
 }
+
+colour-test() {
+  for i in {0..256} ; do
+    printf "\x1b[38;5;${i}m${i}  "
+  done
+}
