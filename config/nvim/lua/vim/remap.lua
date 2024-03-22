@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", "<cmd>Lexplore<CR>", {desc = "Open project drawer"})
 
 -- shift+j,k moves selected text down, up
 -- known issue: J,K updates undotree
