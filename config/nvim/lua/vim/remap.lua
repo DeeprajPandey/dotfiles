@@ -16,6 +16,16 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", {noremap = true, desc = "Scroll half-pag
 vim.keymap.set("n", "n", "nzzzv", {noremap = true, desc = "Jump to next search result, center screen, and reselect"})
 vim.keymap.set("n", "N", "Nzzzv", {noremap = true, desc = "Jump to previous search result, center screen, and reselect"})
 
+-- clear search highlights w/ Ctrl+q
+function ClearSearchAndUpdateDiff()
+    vim.cmd("nohlsearch")   -- clear search highlighting
+    if vim.fn.has("diff") == 1 then
+        vim.cmd("diffupdate") -- update diff display
+    end
+    vim.cmd("redraw!")  -- redraw screen
+end
+vim.keymap.set("n", "<C-q>", ClearSearchAndUpdateDiff, {noremap = true, desc = "Clear highlighted search results"})
+
 -- alt paste where delete during paste is mapped to void register to preserve yanked text
 vim.keymap.set("x", "<leader>p", [["_dP]], {noremap = true, desc = "Paste in visual mode without overwriting the yank register"})
 
