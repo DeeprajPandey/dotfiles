@@ -47,3 +47,12 @@ vim.keymap.set("n", "<leader><leader>", function()
 vim.cmd("so")
 end)
 
+-- Misc Configurations
+-- quicker window movement (drop the C-w)
+vim.keymap.set("n", "<C-j>", "<C-w>j")
+vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<C-h>", "<C-w>h")
+vim.keymap.set("n", "<C-l>", "<C-w>l")
+
+-- toggle relative numbering
+vim.keymap.set("n", "<C-n>", ":set rnu!<CR>", {noremap = true, silent = true})
