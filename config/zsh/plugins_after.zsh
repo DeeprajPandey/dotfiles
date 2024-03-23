@@ -4,8 +4,10 @@
 
 fpath=($fpath ${0:h}/plugins/zsh-autosuggestions)
 fpath=($fpath ${0:h}/plugins/zsh-syntax-highlighting)
+fpath=($fpath ${0:h}/plugins/powerlevel10k)
 source ${0:h}/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ${0:h}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source ${0:h}/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 

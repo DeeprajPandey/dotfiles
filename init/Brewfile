@@ -60,13 +60,11 @@ brew "sccache"
 brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
-brew "sketchybar"                   # tap felixkratz/formulae; customised status bar
 brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
 # brew "sloc"                         # lines of code
 brew "spicetify-cli"                # customise spotify
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
-brew "switchaudio-osx"              # sketchybar setup dependency
 brew "tldr"
 brew "tmux"                         # terminal multiplexer
 brew "tokei"
@@ -136,9 +134,10 @@ cask "font-atkinson-hyperlegible"
 cask "font-ibm-plex"
 cask "font-inter"
 # cask "font-lato"                  # noinstall: checksum undefined
+cask "font-meslo-lg-nerd-font"
 # cask "font-nunito"                # noinstall: checksum undefined
 # cask "font-nunito-sans"           # noinstall: checksum undefined
-cask "sf-symbols"                   # sketchybar setup dependency
+# cask "sf-symbols"                   # sketchybar setup dependency
 
 # Install daily practice tools
 brew "lua"
