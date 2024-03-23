@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Functions
 source ~/.shell/functions.sh
 
@@ -27,7 +34,7 @@ source ~/.shell/external.sh
 source ~/.shell/aliases.sh
 
 # Init the shell prompt
-eval "$(starship init zsh)"
+source ~/.config/zsh/prompt.zsh
 
 # External plugins (initialized after)
 source ~/.config/zsh/plugins_after.zsh
@@ -49,3 +56,4 @@ fi
 if [ -f ~/.shell_private ]; then
     source ~/.shell_private
 fi
+
