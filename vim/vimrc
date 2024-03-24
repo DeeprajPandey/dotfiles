@@ -8,32 +8,32 @@ set showmatch " show matching braces when text indicator is over them
 
 " highlight current line, but only in active window
 augroup CursorLineOnlyInActiveWindow
-    autocmd!
-    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-    autocmd WinLeave * setlocal nocursorline
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  autocmd WinLeave * setlocal nocursorline
 augroup END
 
 " vim can autodetect this based on $TERM (e.g. 'xterm-256color')
 " but it can be set to force 256 colors
 " set t_Co=256
 if has('gui_running')
-    colorscheme solarized
-    let g:lightline = {'colorscheme': 'solarized'}
+  colorscheme solarized
+  let g:lightline = {'colorscheme': 'solarized'}
 elseif &t_Co < 256
-    colorscheme default
-    set nocursorline " looks bad in this mode
+  colorscheme default
+  set nocursorline " looks bad in this mode
 else
-    set background=dark
-    let g:solarized_termcolors=256 " instead of 16 color with mapping in terminal
-    colorscheme solarized
-    " customized colors
-    highlight SignColumn ctermbg=234
-    highlight StatusLine cterm=bold ctermfg=245 ctermbg=235
-    highlight StatusLineNC cterm=bold ctermfg=245 ctermbg=235
-    let g:lightline = {'colorscheme': 'dark'}
-    highlight SpellBad cterm=underline
-    " patches
-    highlight CursorLineNr cterm=NONE
+  set background=dark
+  let g:solarized_termcolors=256 " instead of 16 color with mapping in terminal
+  colorscheme solarized8
+  " customized colors
+  highlight SignColumn ctermbg=234
+  highlight StatusLine cterm=bold ctermfg=245 ctermbg=235
+  highlight StatusLineNC cterm=bold ctermfg=245 ctermbg=235
+  let g:lightline = {'colorscheme': 'dark'}
+  highlight SpellBad cterm=underline
+  " patches
+  highlight CursorLineNr cterm=NONE
 endif
 
 filetype plugin indent on " enable file type detection
@@ -51,14 +51,14 @@ set hls " highlight search
 
 " clear search highlights w/ Ctrl-q
 function! ClearSearchAndUpdateDiff()
-    " clear search highlighting
-    nohlsearch
-    if has("diff")
-        " update diff display
-        diffupdate
-    endif
-    " redraw screen
-    redraw!
+  " clear search highlighting
+  nohlsearch
+  if has("diff")
+    " update diff display
+    diffupdate
+  endif
+  " redraw screen
+  redraw!
 endfunction
 nnoremap <silent> <C-q> :call ClearSearchAndUpdateDiff()<CR>
 
@@ -70,9 +70,9 @@ set autochdir " automatically set current directory to directory of last opened 
 set hidden " allow auto-hiding of edited buffers
 " use 4 spaces instead of tabs during formatting
 set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 " smart case-sensitive search
 set ignorecase
 set ruler
@@ -80,7 +80,7 @@ set smartcase
 set smarttab
 
 set nowrap
-set listchars+=leadmultispace:▏\ \ \ ,lead:￮,tab:»\ ,trail:·,extends:›,precedes:‹,nbsp:‿
+set listchars+=leadmultispace:▏\ ,lead:￮,tab:»\ ,trail:·,extends:›,precedes:‹,nbsp:‿
 set list
 set sidescroll=1 " ensure wrap is off
 set sidescrolloff=3 " 1 col is extends and precedes symbols
@@ -91,16 +91,16 @@ set wildmenu " command-line completion
 set wildoptions=pum,tagfile " display completion matches in popup menu
 set mouse+=a " enable mouse mode (scrolling, selection, etc)
 if &term =~ '^screen'
-    " tmux knows the extended mouse mode
-    set ttymouse=xterm2
+  " tmux knows the extended mouse mode
+  set ttymouse=xterm2
 endif
 set nofoldenable " disable folding by default
 set complete-=i " disable completing kyewords in included files (e.g. #include in C)...
 set nrformats-=octal " remove octal numbers from ctrl-a / x calculations
-if ttimeoutlen == -1
-    set ttimeout
-    set ttimeoutlen=100
-endif
+
+set ttimeout
+set ttimeoutlen=100
+
 set laststatus=2 " last window `always` has a status line
 set display+=lastline " as much of last line is displayed
 set formatoptions+=j " remove comment header when joining lines
@@ -133,25 +133,25 @@ nnoremap <C-l> <C-w>l
 " movement relative to display lines
 nnoremap <silent> <Leader>d :call ToggleMovementByDisplayLines()<CR>
 function SetMovementByDisplayLines()
-    noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
-    noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
-    noremap <buffer> <silent> 0 g0
-    noremap <buffer> <silent> $ g$
+  noremap <buffer> <silent> <expr> k v:count ? 'k' : 'gk'
+  noremap <buffer> <silent> <expr> j v:count ? 'j' : 'gj'
+  noremap <buffer> <silent> 0 g0
+  noremap <buffer> <silent> $ g$
 endfunction
 function ToggleMovementByDisplayLines()
-    if !exists('b:movement_by_display_lines')
-        let b:movement_by_display_lines = 0
-    endif
-    if b:movement_by_display_lines
-        let b:movement_by_display_lines = 0
-        silent! nunmap <buffer> k
-        silent! nunmap <buffer> j
-        silent! nunmap <buffer> 0
-        silent! nunmap <buffer> $
-    else
-        let b:movement_by_display_lines = 1
-        call SetMovementByDisplayLines()
-    endif
+  if !exists('b:movement_by_display_lines')
+    let b:movement_by_display_lines = 0
+  endif
+  if b:movement_by_display_lines
+    let b:movement_by_display_lines = 0
+    silent! nunmap <buffer> k
+    silent! nunmap <buffer> j
+    silent! nunmap <buffer> 0
+    silent! nunmap <buffer> $
+  else
+    let b:movement_by_display_lines = 1
+    call SetMovementByDisplayLines()
+  endif
 endfunction
 
 " toggle relative numbering
@@ -172,7 +172,7 @@ nnoremap <Leader>b :BuffergatorToggle<CR>
 " gundo
 nnoremap <Leader>u :GundoToggle<CR>
 if has('python3')
-    let g:gundo_prefer_python3 = 1
+  let g:gundo_prefer_python3 = 1
 endif
 
 " ctrlp
@@ -184,8 +184,8 @@ let g:ctrlp_show_hidden = 1
 command -nargs=+ Gag Gcd | Ack! <args>
 nnoremap K :Gag "\b<C-R><C-W>\b"<CR>:cw<CR>
 if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-    let g:ackprg = 'ag --vimgrep'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+  let g:ackprg = 'ag --vimgrep'
 endif
 
 " syntastic
@@ -193,9 +193,9 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = {
-    \ 'mode': 'passive',
-    \ 'active_filetypes': [],
-    \ 'passive_filetypes': []
+  \ 'mode': 'passive',
+  \ 'active_filetypes': [],
+  \ 'passive_filetypes': []
 \}
 nnoremap <Leader>s :SyntasticCheck<CR>
 nnoremap <Leader>r :SyntasticReset<CR>
@@ -222,21 +222,21 @@ noremap <Leader>x :OverCommandLine<CR>
 
 " markdown
 let g:markdown_fenced_languages = [
-    \ 'asm',
-    \ 'bash=sh',
-    \ 'c',
-    \ 'coffee',
-    \ 'erb=eruby',
-    \ 'javascript',
-    \ 'json',
-    \ 'perl',
-    \ 'python',
-    \ 'ruby',
-    \ 'yaml',
-    \ 'go',
-    \ 'racket',
-    \ 'haskell',
-    \ 'rust',
+  \ 'asm',
+  \ 'bash=sh',
+  \ 'c',
+  \ 'coffee',
+  \ 'erb=eruby',
+  \ 'javascript',
+  \ 'json',
+  \ 'perl',
+  \ 'python',
+  \ 'ruby',
+  \ 'yaml',
+  \ 'go',
+  \ 'racket',
+  \ 'haskell',
+  \ 'rust',
 \]
 let g:markdown_syntax_conceal = 0
 let g:markdown_folding = 1
@@ -251,5 +251,5 @@ set tags^=.git/tags;~
 " local customisations in ~/.vimrc_local
 let $LOCALFILE=expand("~/.vimrc_local")
 if filereadable($LOCALFILE)
-    source $LOCALFILE
+  source $LOCALFILE
 endif
