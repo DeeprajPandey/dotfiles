@@ -72,6 +72,7 @@
 	editor = vim
 	excludesfile = ~/.config/git/ignore
 	pager = delta
+	sparseCheckout = true
 
 [include]
 	path = ./delta.themes.gitconfig
