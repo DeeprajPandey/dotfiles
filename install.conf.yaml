@@ -44,10 +44,13 @@
 
 - shell:
     - ["git submodule update --init --recursive", "Installing submodules"]
-
-  # - git submodule sync --recursive
+  # - ["chmod +x scripts/add_to_sparse_checkout.sh && scripts/add_to_sparse_checkout.sh vim/colors/solarized colors/solarized.vim", "Setting up sparse-checkout to keep only the colors dir in `vim/colors/solarized`"]
+  # symlink source paths are relative to linked file location
+  # - ["chmod +x scripts/git-hooks/vim_solarized_post-checkout && ln -s -f ../../../../../../scripts/git-hooks/vim_solarized_post-checkout .git/modules/vim/colors/solarized/hooks/post-checkout", "Setting up post-checkout hook to move `solarized.vim` to submodule root `vim/colors/solarized`"]
+  # - ["sh .git/modules/vim/colors/solarized/hooks/post-checkout vim/colors/solarized", "Invoking `vim/colors/solarized` post-checkout hook manually"]
+    - git submodule sync --recursive
   # the following have to run after linking ~/.gitconfig
-  # - git update-submodules
+    - git update-submodules
   # - >
   #   git cleanall -f
   #   vim/pack/vendor/start/
