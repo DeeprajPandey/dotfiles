@@ -8,7 +8,7 @@ vim.g.have_nerd_font = true
 -- keep config concise
 local keymap = vim.keymap
 
--- Basic Keymaps
+-- [[ Basic Keymaps ]]
 -- turn off Ex mode
 keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode mapping to Q', noremap = true })
 
@@ -34,7 +34,7 @@ end
 keymap.set('n', '<C-c>', ClearSearchAndUpdateDiff, { desc = 'Clear highlighted search results', noremap = true })
 
 
--- Register Keymaps
+-- [[ Register Keymaps ]]
 -- alt paste: map delete during paste to void register; preserve yanked text
 keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste in visual mode without overwriting the yank register', noremap = true })
 
@@ -49,7 +49,7 @@ keymap.set({'n', 'v'}, '<leader>d', [["_d]], { desc = 'Delete without affecting 
 -- keymap.set('n', 'x', '"_x', { desc = 'Delete character into null register', noremap = true })
 
 
--- Movement Keymaps
+-- [[ Movement Keymaps ]]
 -- <Ctrl+d>, <Ctrl+u> scrolls half-page down, up w/ centered cursor
 keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll half-page down and center cursor', noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll half-page up and center cursor', noremap = true })
@@ -81,7 +81,7 @@ keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
 keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 
--- Misc Keymaps
+-- [[ Misc Keymaps ]]
 -- keep cursor at current position when appending lines
 keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines without changing cursor position', noremap = true })
 
@@ -107,7 +107,18 @@ end, {desc = 'Source the current file'})
 keymap.set('n', '<C-n>', ':set rnu!<CR>', { desc = 'Toggle relative numbering', noremap = true, silent = true })
 
 
--- Diagnostic Keymaps
+-- [[ Autocommands ]]
+-- Highlight when yanking (copying) text; ref: `:help vim.highlight.on_yank()`
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+
+-- [[ Diagnostic Keymaps ]]
 -- keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message', noremap = true })
 -- keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message', noremap = true })
 -- keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages', noremap = true })
