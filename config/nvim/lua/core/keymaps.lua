@@ -12,7 +12,14 @@ local keymap = vim.keymap
 -- ref: paste in visual block mode (C-v) works iff we exit mode w/ <Esc>
 keymap.set('i', '<C-c>', '<Esc>', { desc = 'Map Ctrl+C to Escape in insert mode', noremap = true })
 
--- clear search highlights: <C-c>
+-- netrw file explorer as a toggleable vertical left split
+keymap.set('n', '<C-e>', '<cmd>Lexplore<CR>', { desc = 'Explore(toggle) file dir', noremap = true, silent = true })
+
+-- keep search results in the middle of the screen
+keymap.set('n', 'n', 'nzzzv', { desc = 'Jump to next search result, center screen, and reselect', noremap = true })
+keymap.set('n', 'N', 'Nzzzv', { desc = 'Jump to previous search result, center screen, and reselect', noremap = true })
+
+-- clear search highlights: <Ctrl+c>
 function ClearSearchAndUpdateDiff()
   vim.cmd('nohlsearch')   -- clear search highlighting
   if vim.fn.has('diff') == 1 then
@@ -22,9 +29,16 @@ function ClearSearchAndUpdateDiff()
 end
 keymap.set('n', '<C-c>', ClearSearchAndUpdateDiff, { desc = 'Clear highlighted search results', noremap = true })
 
+-- keep cursor at current position when appending lines
+keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines without changing cursor position', noremap = true })
+
 -- increment/decrement numbers
 keymap.set('n', '<leader>+', '<C-a>', { desc = 'Increment number', noremap = true })
 keymap.set('n', '<leader>-', '<C-x>', { desc = 'Decrement number', noremap = true })
+
+-- <Ctrl+d>, <Ctrl+u> scrolls half-page down, up w/ centered cursor
+keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll half-page down and center cursor', noremap = true })
+keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll half-page up and center cursor', noremap = true })
 
 
 -- quickfix & location list traversal: <F7> and <F9> are usually media keys
@@ -34,7 +48,7 @@ keymap.set('n', '<F7>', '<cmd>cprev<CR>zz', { desc = 'Go to previous item in qui
 keymap.set('n', '<leader>F9', '<cmd>lnext<CR>zz', { desc = 'Go to next item in location list and center on screen', noremap = true, silent = true })
 keymap.set('n', '<leader>F7', '<cmd>lprev<CR>zz', { desc = 'Go to previous item in location list and center on screen', noremap = true, silent = true })
 
--- quicker window movement (drop the C-w)
+-- quicker window movement (drop the <Ctrl+w>)
 keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move cursor to the window below', noremap = true })
 keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move cursor to the window above', noremap = true })
 keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move cursor to the left window', noremap = true })
