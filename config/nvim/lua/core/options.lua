@@ -67,7 +67,7 @@ opt.undofile = true
 
 -- vim behaviour config
 opt.updatetime = 200
-opt.timeoutlen = 300        -- waittime for mapped sequence to complete
+opt.timeoutlen = 650        -- waittime for mapped sequence to complete
 opt.ttimeoutlen = 50        -- wait time for keycode sequence to complete
 opt.lazyredraw = true
 opt.hidden = true           -- allow auto-hiding of edited buffers
