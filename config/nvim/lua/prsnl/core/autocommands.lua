@@ -34,3 +34,30 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Automatically trim trailing whitespace on save
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*',
+  callback = function()
+    local save_cursor = vim.fn.getpos('.')
+    vim.cmd [[%s/\s\+$//e]]
+    vim.fn.setpos('.', save_cursor)
+  end,
+})
+
+-- Disable line numbers in terminal mode
+vim.api.nvim_create_autocmd({'TermOpen'}, {
+  pattern = '*',
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+  end,
+})
+
+-- Set spell checking for certain file types
+vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'}, {
+  pattern = {'*.txt', '*.md'},
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+})
+
