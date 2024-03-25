@@ -54,16 +54,9 @@ keymap.set({'n', 'v'}, '<leader>d', [["_d]], { desc = 'Delete without affecting 
 keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll half-page down and center cursor', noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll half-page up and center cursor', noremap = true })
 
--- quickfix & location list traversal: <F7> and <F9> are usually media keys
--- read about diff & usage: https://stackoverflow.com/questions/20933836/what-is-the-difference-between-location-list-and-quickfix-list-in-vim
-keymap.set('n', '<F9>', '<cmd>cnext<CR>zz', { desc = 'Go to next item in quickfix list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<F7>', '<cmd>cprev<CR>zz', { desc = 'Go to previous item in quickfix list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<leader>F9', '<cmd>lnext<CR>zz', { desc = 'Go to next item in location list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<leader>F7', '<cmd>lprev<CR>zz', { desc = 'Go to previous item in location list and center on screen', noremap = true, silent = true })
-
 -- quicker window movement (drop the <Ctrl+w>)
-keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move cursor to the window below', noremap = true })
-keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move cursor to the window above', noremap = true })
+keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Move cursor to the lower window', noremap = true })
+keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Move cursor to the upper window', noremap = true })
 keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Move cursor to the left window', noremap = true })
 keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Move cursor to the right window', noremap = true })
 
@@ -73,6 +66,19 @@ keymap.set('n', '<leader>tx', '<cmd>tabclose<CR>', { desc = 'Close current tab',
 keymap.set('n', '<leader>tn', '<cmd>tabn<CR>', { desc = 'Go to next tab', noremap = true })
 keymap.set('n', '<leader>tp', '<cmd>tabp<CR>', { desc = 'Go to previous tab', noremap = true })
 keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current buffer in new tab', noremap = true })
+
+-- quickfix & location list traversal: <F7> and <F9> are usually media keys
+-- read about diff & usage: https://stackoverflow.com/questions/20933836/what-is-the-difference-between-location-list-and-quickfix-list-in-vim
+keymap.set('n', '<F9>', '<cmd>cnext<CR>zz', { desc = 'Go to next item in quickfix list and center on screen', noremap = true, silent = true })
+keymap.set('n', '<F7>', '<cmd>cprev<CR>zz', { desc = 'Go to previous item in quickfix list and center on screen', noremap = true, silent = true })
+keymap.set('n', '<leader>F9', '<cmd>lnext<CR>zz', { desc = 'Go to next item in location list and center on screen', noremap = true, silent = true })
+keymap.set('n', '<leader>F7', '<cmd>lprev<CR>zz', { desc = 'Go to previous item in location list and center on screen', noremap = true, silent = true })
+
+-- disable arrow keys in normal mode
+keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 
 -- Misc Keymaps
