@@ -1,1 +1,2 @@
-require 'core'
+require 'prsnl.core'
+
