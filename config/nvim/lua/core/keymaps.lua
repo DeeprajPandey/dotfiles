@@ -8,6 +8,10 @@ vim.g.have_nerd_font = true
 -- keep config concise
 local keymap = vim.keymap
 
+-- Basic Keymaps
+-- turn off Ex mode
+keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode mapping to Q', noremap = true })
+
 -- remap <Ctrl+c> -> <Esc>
 -- ref: paste in visual block mode (C-v) works iff we exit mode w/ <Esc>
 keymap.set('i', '<C-c>', '<Esc>', { desc = 'Map Ctrl+C to Escape in insert mode', noremap = true })
@@ -29,17 +33,26 @@ function ClearSearchAndUpdateDiff()
 end
 keymap.set('n', '<C-c>', ClearSearchAndUpdateDiff, { desc = 'Clear highlighted search results', noremap = true })
 
--- keep cursor at current position when appending lines
-keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines without changing cursor position', noremap = true })
 
--- increment/decrement numbers
-keymap.set('n', '<leader>+', '<C-a>', { desc = 'Increment number', noremap = true })
-keymap.set('n', '<leader>-', '<C-x>', { desc = 'Decrement number', noremap = true })
+-- Register Keymaps
+-- alt paste: map delete during paste to void register; preserve yanked text
+keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste in visual mode without overwriting the yank register', noremap = true })
 
+-- alt yank: map to + register (sys clipboard)
+keymap.set({'n', 'v'}, '<leader>y', [["+y]], { desc = 'Yank to system clipboard', noremap = true })
+keymap.set('n', '<leader>Y', [["+Y]], { desc = 'Yank entire line to system clipboard', noremap = true })
+
+-- alt delete: map to void register in normal and visual modes; preserve yank register
+keymap.set({'n', 'v'}, '<leader>d', [["_d]], { desc = 'Delete without affecting the yank register', noremap = true })
+
+-- delete single character: map to void register; preserve yank register
+-- keymap.set('n', 'x', '"_x', { desc = 'Delete character into null register', noremap = true })
+
+
+-- Movement Keymaps
 -- <Ctrl+d>, <Ctrl+u> scrolls half-page down, up w/ centered cursor
 keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Scroll half-page down and center cursor', noremap = true })
 keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Scroll half-page up and center cursor', noremap = true })
-
 
 -- quickfix & location list traversal: <F7> and <F9> are usually media keys
 -- read about diff & usage: https://stackoverflow.com/questions/20933836/what-is-the-difference-between-location-list-and-quickfix-list-in-vim
@@ -61,10 +74,34 @@ keymap.set('n', '<leader>tn', '<cmd>tabn<CR>', { desc = 'Go to next tab', norema
 keymap.set('n', '<leader>tp', '<cmd>tabp<CR>', { desc = 'Go to previous tab', noremap = true })
 keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current buffer in new tab', noremap = true })
 
--- delete single character without copying into register
--- keymap.set('n', 'x', '"_x', { desc = 'Delete character into null register', noremap = true })
 
--- Diagnostic keymaps
+-- Misc Keymaps
+-- keep cursor at current position when appending lines
+keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines without changing cursor position', noremap = true })
+
+-- increment/decrement numbers
+keymap.set('n', '<leader>+', '<C-a>', { desc = 'Increment number', noremap = true })
+keymap.set('n', '<leader>-', '<C-x>', { desc = 'Decrement number', noremap = true })
+
+-- substitute current word across files
+keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute the current word globally with prompt for replacement', noremap = true })
+
+-- close buffer w/o closing the window
+keymap.set('n', '<leader>bd', '<cmd>bp|bd #<CR>', { desc = 'Close buffer without closing the window', noremap = true, silent = true })
+
+-- make current file executable
+keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { desc = 'Add executable permissions to current file', noremap = true, silent = true })
+
+-- press leader twice to source current file
+keymap.set('n', '<leader><leader>', function()
+vim.cmd('so %')
+end, {desc = 'Source the current file'})
+
+-- toggle relative numbering
+keymap.set('n', '<C-n>', ':set rnu!<CR>', { desc = 'Toggle relative numbering', noremap = true, silent = true })
+
+
+-- Diagnostic Keymaps
 -- keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message', noremap = true })
 -- keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message', noremap = true })
 -- keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages', noremap = true })
