@@ -1,12 +1,18 @@
+-- [[ Vim Global Table ]]
 -- set <space> as leader key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+-- ensure Netrw changes the current working directory to the directory of the file being edited
+-- this makes move cmds more intuitive
+vim.g.netrw_keepdir = 0
 
 -- indicate nerd font use
 vim.g.have_nerd_font = true
 
 -- keep config concise
 local keymap = vim.keymap
+
 
 -- [[ Basic Keymaps ]]
 -- turn off Ex mode
