@@ -39,6 +39,10 @@ function ClearSearchAndUpdateDiff()
 end
 keymap.set('n', '<C-c>', ClearSearchAndUpdateDiff, { desc = 'Clear highlighted search results', noremap = true })
 
+-- stay in visual mode after indent ops
+keymap.set('v', '>', '>gv', { desc = 'Move back to visual mode after right indent', noremap = true })
+keymap.set('v', '<', '<gv', { desc = 'Move back to visual mode after left indent', noremap = true })
+
 
 -- [[ Register Keymaps ]]
 -- alt paste: map delete during paste to void register; preserve yanked text
