@@ -1,4 +1,9 @@
 {
-  "lazy.nvim": { "branch": "main", "commit": "af6afefbb46ab29a8a1db69536b04290a9403876" },
-  "tokyonight.nvim": { "branch": "main", "commit": "623c3cd60a8081b68edcaf544856c053249a659e" }
+  "catppuccin": { "branch": "main", "commit": "07679af1af4f446655682ee2557b5840ac551504" },
+  "kanagawa": { "branch": "master", "commit": "bfa818c7bf6259152f1d89cf9fbfba3554c93695" },
+  "lazy.nvim": { "branch": "main", "commit": "68941b7b13861ca44ad5d4caf7296d9160b4732f" },
+  "melange": { "branch": "master", "commit": "ec15b091304580f1d37e711c3a54bc828b09e255" },
+  "nightfly": { "branch": "master", "commit": "e6be35b24e5ff3736aa9be0d9f39f5c105069f98" },
+  "nightfox": { "branch": "main", "commit": "e352a32e0f54feb2550ebdab815ae8f7f26ed63b" },
+  "tokyonight": { "branch": "main", "commit": "f4b415bfbce390866a83277db42cf6aa94230728" }
 }
