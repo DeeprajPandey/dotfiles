@@ -7,9 +7,25 @@ vim.g.maplocalleader = ' '
 -- this makes move cmds more intuitive and [S,L,V]Ex opens current file dir
 -- Gotcha: telescope builtin searches get restricted to current file's dir :/
 vim.api.nvim_create_user_command('PanelFileDir', function()
-  local current_file_dir = vim.fn.expand('%:p:h')
-  vim.cmd('Lexplore ' .. current_file_dir)
-end, {})
+  -- check if a Netrw window is open by looking for buffers with the 'netrw' filetype
+  local is_netrw_open = false
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+    if ft == 'netrw' then
+      is_netrw_open = true
+      -- if found, close the window containing the Netrw buffer
+      vim.api.nvim_win_close(win, false)
+      break
+    end
+  end
+
+  -- if no Netrw window was found, open Netrw in the directory of the current file
+  if not is_netrw_open then
+    local current_file_dir = vim.fn.expand('%:p:h')
+    vim.cmd('Lexplore ' .. current_file_dir)
+  end
+end, {desc = "Toggle Netrw in the directory of the current file"})
 -- vim.g.netrw_keepdir = 0
 
 -- indicate nerd font use
