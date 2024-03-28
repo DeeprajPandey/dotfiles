@@ -4,8 +4,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- ensure Netrw changes the current working directory to the directory of the file being edited
--- this makes move cmds more intuitive
-vim.g.netrw_keepdir = 0
+-- this makes move cmds more intuitive and [S,L,V]Ex opens current file dir
+-- Gotcha: telescope builtin searches get restricted to current file's dir :/
+-- vim.g.netrw_keepdir = 0
 
 -- indicate nerd font use
 vim.g.have_nerd_font = true
@@ -100,7 +101,7 @@ keymap.set('n', '<leader>+', '<C-a>', { desc = 'Increment number', noremap = tru
 keymap.set('n', '<leader>-', '<C-x>', { desc = 'Decrement number', noremap = true })
 
 -- substitute current word across files
-keymap.set('n', '<leader>s', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute the current word globally with prompt for replacement', noremap = true })
+keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute the current word globally with prompt for replacement', noremap = true })
 
 -- close buffer w/o closing the window
 keymap.set('n', '<leader>bd', '<cmd>bp|bd #<CR>', { desc = 'Close buffer without closing the window', noremap = true, silent = true })
@@ -110,7 +111,7 @@ keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { desc = 'Add executable pe
 
 -- press leader twice to source current file
 keymap.set('n', '<leader><leader>', function()
-vim.cmd('so %')
+  vim.cmd('so %')
 end, {desc = 'Source the current file'})
 
 -- toggle relative numbering
