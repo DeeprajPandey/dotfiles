@@ -6,6 +6,10 @@ vim.g.maplocalleader = ' '
 -- ensure Netrw changes the current working directory to the directory of the file being edited
 -- this makes move cmds more intuitive and [S,L,V]Ex opens current file dir
 -- Gotcha: telescope builtin searches get restricted to current file's dir :/
+vim.api.nvim_create_user_command('PanelFileDir', function()
+  local current_file_dir = vim.fn.expand('%:p:h')
+  vim.cmd('Lexplore ' .. current_file_dir)
+end, {})
 -- vim.g.netrw_keepdir = 0
 
 -- indicate nerd font use
@@ -24,7 +28,7 @@ keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode mapping to Q', noremap =
 keymap.set('i', '<C-c>', '<Esc>', { desc = 'Map Ctrl+C to Escape in insert mode', noremap = true })
 
 -- netrw file explorer as a toggleable vertical left split
-keymap.set('n', '<C-e>', '<cmd>Lexplore<CR>', { desc = 'Explore(toggle) file dir', noremap = true, silent = true })
+keymap.set('n', '<C-e>', '<cmd>PanelFileDir<CR>', { desc = 'Explore(toggle) file dir', noremap = true, silent = true })
 
 -- keep search results in the middle of the screen
 keymap.set('n', 'n', 'nzzzv', { desc = 'Jump to next search result, center screen, and reselect', noremap = true })
