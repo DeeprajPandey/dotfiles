@@ -28,6 +28,21 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+-- Remap netrw's <C-l> (NetrwRefresh) with window nav right within netrw buffer
+-- netrw autorefreshes on navigating b/w directories and on ever `:(*)explore` call
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'netrw',
+  group = vim.api.nvim_create_augroup('NetrwGroup', { clear = true }),
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.keymap.set('n', '<C-l>', '<C-w>l', {
+      desc = '(Netrw Overwrite) Move cursor to the right window. Prev: NetrwRefresh',
+      noremap = true,
+      buffer = bufnr,
+    })
+  end,
+})
+
 -- Automatically trim trailing whitespace on save
 vim.api.nvim_create_autocmd('BufWritePre', {
   desc = 'Trim trailing whitespace on save',
