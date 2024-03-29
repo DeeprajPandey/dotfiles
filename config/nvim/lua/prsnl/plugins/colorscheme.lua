@@ -521,7 +521,7 @@ end
 
 M[6].lazy = false
 M[6].priority = true
-M[6].config = function(_, opts)
+M[6].config= function(_, opts)
   -- substitution: `.,+1s/tokyonight/catppuccin/g`
   require('catppuccin').setup(opts)
   vim.cmd.colorscheme 'catppuccin'
