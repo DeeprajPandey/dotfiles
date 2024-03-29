@@ -506,6 +506,19 @@ local M = {
   },
 }
 
+-- toggle catppuccin background transparency
+-- TODO: generalise this functionality:
+--    - add transparent background opts to every colorscheme config in `M`
+--    - update this function to check for current colorscheme
+--    - update M index and toggle transparency based on how the theme expects it (from 1)
+local function toggleCatppuccinTransparency()
+  local isTransparent = M[6].opts.transparent_background
+  M[6].opts.transparent_background = not isTransparent
+
+  require('catppuccin').setup(M[6].opts)
+  vim.cmd.colorscheme 'catppuccin'
+end
+
 M[6].lazy = false
 M[6].priority = true
 M[6].config = function(_, opts)
@@ -519,6 +532,10 @@ M[6].config = function(_, opts)
   -- vim.opt.termguicolors = true
 
   -- vim.cmd.hi 'Comment gui=none'
+
+  vim.keymap.set('n', '<leader>0', toggleCatppuccinTransparency, {
+    desc = 'Toggle Catppuccin transparency', noremap = true, silent = true,
+  })
 end
 
 return M
