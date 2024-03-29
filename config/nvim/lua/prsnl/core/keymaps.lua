@@ -6,6 +6,10 @@ vim.g.maplocalleader = ' '
 -- ensure Netrw changes the current working directory to the directory of the file being edited
 -- this makes move cmds more intuitive and [S,L,V]Ex opens current file dir
 -- Gotcha: telescope builtin searches get restricted to current file's dir :/
+-- Update: replaced with custom user function that tracks netrw buffer status
+-- IMP: ensure command name does not start with letters similar to existing command.
+-- For instance, if this were named `LexFileDir`, `:Lex` would fail with "E464: ambiguous
+-- use of user-defined command"
 vim.api.nvim_create_user_command('PanelFileDir', function()
   -- check if a Netrw window is open by looking for buffers with the 'netrw' filetype
   local is_netrw_open = false
