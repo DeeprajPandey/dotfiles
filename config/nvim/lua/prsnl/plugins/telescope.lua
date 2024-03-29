@@ -11,6 +11,7 @@ local M = {
         return vim.fn.executable 'make' == 1
       end,
     },
+    'nvim-telescope/telescope-symbols.nvim',
     'nvim-telescope/telescope-ui-select.nvim',
   },
   opts = {
@@ -65,13 +66,16 @@ function M.config(_, opts)
 
   keymap.set('n', '<C-p>', builtin.git_files, { desc = '[P]roject files tracked by git', noremap = true })
   keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles in cwd', noremap = true })
-  keymap.set('n', '<leader>sr', builtin.oldfiles, { desc = '[S]earch [R]ecent files in cwd ("." for repeat)', noremap = true })
   keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep in cwd', noremap = true })
   keymap.set('n', '<leader>sw', function(word)
     builtin.grep_string({ search = word})
   end, { desc = '[S]earch current [W]ord in cwd', noremap = true })
-  keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp tags', noremap = true })
   keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps', noremap = true })
+  keymap.set('n', '<leader>sm', builtin.man_pages, { desc = '[S]earch [M]an pages', noremap = true })
+  keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp tags', noremap = true })
+  keymap.set('n', '<leader>sC', builtin.commands, { desc = '[S]earch [C]ommands', noremap = true })
+  keymap.set('n', '<leader>sE', builtin.symbols, { desc = '[S]earch [E]mojis', noremap = true })
+  keymap.set('n', '<leader>sR', builtin.registers, { desc = '[S]earch [R]egisters', noremap = true })
   keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[S]earch [B]uffers', noremap = true })
   keymap.set('n', '<leader>/', function()
     builtin.current_buffer_fuzzy_find(themes.get_dropdown {
