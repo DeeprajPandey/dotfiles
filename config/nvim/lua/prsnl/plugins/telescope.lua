@@ -27,7 +27,9 @@ local M = {
         '--hidden',
       },
       path_display = { 'smart' },
-      file_ignore_patterns = { '.spl', 'target/', '*.pdf' }
+      -- use lua patterns, not regex: https://www.lua.org/manual/5.1/manual.html#5.4.1
+      -- ref: https://github.com/nvim-telescope/telescope.nvim/blob/1bb28df3cfc241b961331f00dcb8d5b45fe3e4f0/lua/telescope/config.lua#L777
+      file_ignore_patterns = { '.*/undo%-history/.*', '.*.pdf' }
     },
     pickers = {
       find_files = {
