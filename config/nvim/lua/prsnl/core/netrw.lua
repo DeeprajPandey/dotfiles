@@ -1,6 +1,10 @@
 -- for concise reference to vim global table
 local g = vim.g
 
+-- IMP: using nvim-tree, disable netrw
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+
 g.netrw_winsize = 30                    -- set window size to 30%
 g.netrw_banner = 1                      -- keep the top banner enabled
 

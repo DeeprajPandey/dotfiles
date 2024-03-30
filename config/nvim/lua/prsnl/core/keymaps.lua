@@ -3,35 +3,6 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- ensure Netrw changes the current working directory to the directory of the file being edited
--- this makes move cmds more intuitive and [S,L,V]Ex opens current file dir
--- Gotcha: telescope builtin searches get restricted to current file's dir :/
--- Update: replaced with custom user function that tracks netrw buffer status
--- IMP: ensure command name does not start with letters similar to existing command.
--- For instance, if this were named `LexFileDir`, `:Lex` would fail with "E464: ambiguous
--- use of user-defined command"
-vim.api.nvim_create_user_command('PanelFileDir', function()
-  -- check if a Netrw window is open by looking for buffers with the 'netrw' filetype
-  local is_netrw_open = false
-  for _, win in ipairs(vim.api.nvim_list_wins()) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
-    if ft == 'netrw' then
-      is_netrw_open = true
-      -- if found, close the window containing the Netrw buffer
-      vim.api.nvim_win_close(win, false)
-      break
-    end
-  end
-
-  -- if no Netrw window was found, open Netrw in the directory of the current file
-  if not is_netrw_open then
-    local current_file_dir = vim.fn.expand('%:p:h')
-    vim.cmd('Lexplore ' .. current_file_dir)
-  end
-end, {desc = "Toggle Netrw in the directory of the current file"})
--- vim.g.netrw_keepdir = 0
-
 -- indicate nerd font use
 vim.g.have_nerd_font = true
 
@@ -46,9 +17,6 @@ keymap.set('n', 'Q', '<nop>', { desc = 'Disable Ex mode mapping to Q', noremap =
 -- remap <Ctrl+c> -> <Esc>
 -- ref: paste in visual block mode (C-v) works iff we exit mode w/ <Esc>
 keymap.set('i', '<C-c>', '<Esc>', { desc = 'Map Ctrl+C to Escape in insert mode', noremap = true })
-
--- netrw file explorer as a toggleable vertical left split
-keymap.set('n', '<C-e>', '<cmd>PanelFileDir<CR>', { desc = 'Explore(toggle) file dir', noremap = true, silent = true })
 
 -- keep search results in the middle of the screen
 keymap.set('n', 'n', 'nzzzv', { desc = 'Jump to next search result, center screen, and reselect', noremap = true })
@@ -147,4 +115,36 @@ keymap.set('n', '<C-n>', ':set rnu!<CR>', { desc = 'Toggle relative numbering', 
 -- keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message', noremap = true })
 -- keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages', noremap = true })
 -- keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list', noremap = true })
+
+-- IMP: disable netrw. Ctrl+e is set in nvim-tree for encapsulation
+-- -- ensure Netrw changes the current working directory to the directory of the file being edited
+-- -- this makes move cmds more intuitive and [S,L,V]Ex opens current file dir
+-- -- Gotcha: telescope builtin searches get restricted to current file's dir :/
+-- -- Update: replaced with custom user function that tracks netrw buffer status
+-- -- IMP: ensure command name does not start with letters similar to existing command.
+-- -- For instance, if this were named `LexFileDir`, `:Lex` would fail with "ambiguous
+-- -- use of user-defined command"
+-- vim.api.nvim_create_user_command('PanelFileDir', function()
+--   -- check if a Netrw window is open by looking for buffers with the 'netrw' filetype
+--   local is_netrw_open = false
+--   for _, win in ipairs(vim.api.nvim_list_wins()) do
+--     local buf = vim.api.nvim_win_get_buf(win)
+--     local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+--     if ft == 'netrw' then
+--       is_netrw_open = true
+--       -- if found, close the window containing the Netrw buffer
+--       vim.api.nvim_win_close(win, false)
+--       break
+--     end
+--   end
+--
+--   -- if no Netrw window was found, open Netrw in the directory of the current file
+--   if not is_netrw_open then
+--     local current_file_dir = vim.fn.expand('%:p:h')
+--     vim.cmd('Lexplore ' .. current_file_dir)
+--   end
+-- end, {desc = "Toggle Netrw in the directory of the current file"})
+--
+-- -- netrw file explorer as a toggleable vertical left split
+-- keymap.set('n', '<C-e>', '<cmd>PanelFileDir<CR>', { desc = 'Explore(toggle) file dir', noremap = true, silent = true })
 
