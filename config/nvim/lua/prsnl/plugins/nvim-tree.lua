@@ -1,6 +1,7 @@
 M = {
   'nvim-tree/nvim-tree.lua',
   event = 'VimEnter',
+  -- dependencies = { 'nvim-tree/nvim-web-devicons' },
   opts = {
     sort = {
       sorter = 'case_sensitive',
@@ -67,7 +68,7 @@ function M.config(_, opts)
   end
 
   -- set up custom mappings to be enabled within this buffer
-  M.opts.on_attach = my_on_attach
+  opts.on_attach = my_on_attach
 
   -- setup nvim-tree with updated opts
   nvimtree.setup(opts)
