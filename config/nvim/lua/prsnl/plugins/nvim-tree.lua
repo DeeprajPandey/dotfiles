@@ -55,7 +55,39 @@ function M.config(_, opts)
   vim.cmd([[ highlight NvimTreeFolderArrowClosed guifg=#3FC5FF ]])
   vim.cmd([[ highlight NvimTreeFolderArrowOpen guifg=#3FC5FF ]])
 
-  local function my_on_attach(bufnr)
+  local function edit_or_open()
+    local node = api.tree.get_node_under_cursor()
+
+    if node.nodes ~= nil then
+      -- expand or collapse folder
+      api.node.open.edit()
+    else
+      -- open file
+      api.node.open.edit()
+      -- Close the tree if file was opened
+      api.tree.close()
+    end
+  end
+
+  -- open as vsplit on current node
+  local function vsplit_preview()
+    local node = api.tree.get_node_under_cursor()
+
+    if node.nodes ~= nil then
+      -- expand or collapse folder
+      api.node.open.edit()
+    else
+      -- open file as vsplit
+      -- TODO: use the same buffer for multiple previews
+      api.node.open.vertical()
+    end
+
+    -- Finally refocus on tree if it was lost
+    api.tree.focus()
+  end
+
+  -- custom on_attach mappings
+  local function on_attach_custom_maps(bufnr)
     local function opts(desc)
       return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
@@ -63,20 +95,25 @@ function M.config(_, opts)
     -- default mappings
     api.config.mappings.default_on_attach(bufnr)
 
-    -- custom mappings
-    keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
+    -- clear <C-e> mapping. Don't need to open anything in place. Need C-e for toggle.
+    vim.api.nvim_buf_del_keymap(bufnr, 'n', '<C-e>')
+
+    -- intuitive mappings with direction keys
+    keymap.set('n', '?', api.tree.toggle_help,  opts('Help'))
+    keymap.set('n', 'l', edit_or_open,          opts('Edit Or Open'))
+    keymap.set('n', 'L', vsplit_preview,        opts('Vsplit Preview'))
+    keymap.set('n', 'h', api.tree.close,        opts('Close'))
+    keymap.set('n', 'H', api.tree.collapse_all, opts('Collapse All'))
   end
 
   -- set up custom mappings to be enabled within this buffer
-  opts.on_attach = my_on_attach
+  opts.on_attach = on_attach_custom_maps
 
   -- setup nvim-tree with updated opts
   nvimtree.setup(opts)
 
   -- set global keymaps
-  keymap.set('n', '<C-e>', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'Toggle file explorer on current file', noremap = true, silent = true }) -- toggle file explorer on current file
-  keymap.set('n', '<leader>ec', '<cmd>NvimTreeCollapse<CR>', { desc = 'Collapse file explorer', noremap = true, silent = true }) -- collapse file explorer
-  keymap.set('n', '<leader>er', '<cmd>NvimTreeRefresh<CR>', { desc = 'Refresh file explorer', noremap = true, silent = true }) -- refresh file explorer
+  keymap.set('n', '<C-e>', api.tree.toggle, { desc = 'Toggle file explorer on current file', noremap = true, silent = true }) -- toggle file explorer on current file
 end
 
 return M
