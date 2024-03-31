@@ -14,9 +14,8 @@ local M = {
       enable = true,
       additional_vim_regex_highlighting = false,
     },
+    -- experimental
     indent = { enable = true },
-
-
   },
 }
 
