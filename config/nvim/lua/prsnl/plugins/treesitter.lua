@@ -1,11 +1,13 @@
+-- TODO: look into treesitter-textobjects, treesitter-context, and incremental selection
 local M = {
   'nvim-treesitter/nvim-treesitter',
+  event = 'VeryLazy',
   build = ':TSUpdate',
   dependencies = {
-    "nvim-treesitter/playground"
+    'nvim-treesitter/playground'
   },
   opts = {
-    ensure_installed = {"c", "lua", "vim", "vimdoc", "query" },
+    ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'query' },
 
     sync_install = false,
     auto_install = true,
@@ -20,10 +22,10 @@ local M = {
 }
 
 function M.config(_, opts)
-  local configs = require("nvim-treesitter.configs")
+  local configs = require('nvim-treesitter.configs')
 
   -- disable specific languages
-  -- opts.highlight.disable = { "c", "rust" },
+  -- opts.highlight.disable = { 'c', 'rust' },
   -- OR use a function
   -- disable highlights on files larger than 850 KB
   function opts.highlight.disable(lang, buf)
