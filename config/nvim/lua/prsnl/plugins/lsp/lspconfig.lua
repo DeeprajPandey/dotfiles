@@ -1,5 +1,6 @@
 M = {
   'neovim/nvim-lspconfig',
+  cmd = {'LspInfo', 'LspInstall', 'LspStart'},
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     'williamboman/mason.nvim',
@@ -18,6 +19,7 @@ function M.config(_, opts)
   vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('prsnl-lsp-attach', { clear = true }),
     callback = function(event)
+      -- buffer local keybindings since they only work if language server is active
       local builtin = require('telescope.builtin')
 
       local map = function(keys, func, desc)
@@ -53,6 +55,43 @@ function M.config(_, opts)
         })
       end
     end,
+  })
+
+  local signs = {
+    { name = 'DiagnosticSignError', text = '' },
+    { name = 'DiagnosticSignWarn', text = '' },
+    { name = 'DiagnosticSignHint', text = '' },
+    { name = 'DiagnosticSignInfo', text = '' },
+  }
+
+  for _, sign in ipairs(signs) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
+  end
+
+  vim.diagnostic.config({
+    virtual_text = true, -- virtual text
+    signs = {
+      active = signs, -- show signs
+    },
+    update_in_insert = true,
+    underline = true,
+    severity_sort = true,
+    float = {
+      focusable = true,
+      style = 'minimal',
+      border = 'rounded',
+      source = 'always',
+      header = '',
+      prefix = '',
+    },
+  })
+
+  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = 'rounded',
+  })
+
+  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = 'rounded',
   })
 
   -- LSP servers and clients are able to communicate to each other what features they support.
