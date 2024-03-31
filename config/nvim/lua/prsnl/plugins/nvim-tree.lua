@@ -45,6 +45,9 @@ M = {
 }
 
 function M.config(_, opts)
+  -- Global variable to keep track of the vsplit window
+  _G.vsplit_preview_window = nil
+
   local nvimtree = require('nvim-tree')
   local api = require 'nvim-tree.api'
 
@@ -74,16 +77,30 @@ function M.config(_, opts)
     local node = api.tree.get_node_under_cursor()
 
     if node.type == 'directory' then
-      -- expand or collapse folder
       api.node.open.edit()
-    else
-      -- open file as vsplit
-      -- TODO: use the same buffer for multiple previews
-      api.node.open.vertical()
+      return
     end
 
+    -- store nvim-tree window id to return focus to after opening preview
+    -- :: might not need this, api.tree.focus() could work
+    local tree_win = vim.api.nvim_get_current_win()
+
+
+    -- if the vsplit window exists and is valid, use it
+    if _G.vsplit_preview_window and vim.api.nvim_win_is_valid(_G.vsplit_preview_window) then
+      vim.api.nvim_set_current_win(_G.vsplit_preview_window)
+    else
+      -- create a new vsplit window and store its window ID
+      vim.cmd('vsplit')
+      _G.vsplit_preview_window = vim.api.nvim_get_current_win()
+    end
+
+    -- open file in the vsplit window
+    api.node.open.edit()
+
     -- Finally refocus on tree if it was lost
-    api.tree.focus()
+    vim.api.nvim_set_current_win(tree_win)
+    -- api.tree.focus()
   end
 
   -- custom on_attach mappings
