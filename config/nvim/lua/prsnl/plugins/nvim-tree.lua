@@ -58,7 +58,7 @@ function M.config(_, opts)
   local function edit_or_open()
     local node = api.tree.get_node_under_cursor()
 
-    if node.nodes ~= nil then
+    if node.type == 'directory' then
       -- expand or collapse folder
       api.node.open.edit()
     else
@@ -73,7 +73,7 @@ function M.config(_, opts)
   local function vsplit_preview()
     local node = api.tree.get_node_under_cursor()
 
-    if node.nodes ~= nil then
+    if node.type == 'directory' then
       -- expand or collapse folder
       api.node.open.edit()
     else
