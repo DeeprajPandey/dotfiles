@@ -73,6 +73,8 @@ function M.config(_, opts)
   end
 
   -- open as vsplit on current node
+  -- BUG: this is breaking nvim-tree's internal buffer management due to a custom naming scheme they use
+  -- TODO: use nvim-tree api to open preview and update only the window buffer bit
   local function vsplit_preview()
     local node = api.tree.get_node_under_cursor()
 
