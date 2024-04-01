@@ -107,7 +107,7 @@ function M.config(_, opts)
 
   -- custom on_attach mappings
   local function on_attach_custom_maps(bufnr)
-    local function opts(desc)
+    local function buf_map_opts(desc)
       return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
 
@@ -118,11 +118,11 @@ function M.config(_, opts)
     vim.api.nvim_buf_del_keymap(bufnr, 'n', '<C-e>')
 
     -- intuitive mappings with direction keys
-    keymap.set('n', '?', api.tree.toggle_help,  opts('Help'))
-    keymap.set('n', 'l', edit_or_open,          opts('Edit Or Open'))
-    keymap.set('n', 'L', vsplit_preview,        opts('Vsplit Preview'))
-    keymap.set('n', 'h', api.tree.close,        opts('Close'))
-    keymap.set('n', 'H', api.tree.collapse_all, opts('Collapse All'))
+    keymap.set('n', '?', api.tree.toggle_help,  buf_map_opts('Help'))
+    keymap.set('n', 'l', edit_or_open,          buf_map_opts('Edit Or Open'))
+    keymap.set('n', 'L', vsplit_preview,        buf_map_opts('Vsplit Preview'))
+    keymap.set('n', 'h', api.tree.close,        buf_map_opts('Close'))
+    keymap.set('n', 'H', api.tree.collapse_all, buf_map_opts('Collapse All'))
   end
 
   -- set up custom mappings to be enabled within this buffer
