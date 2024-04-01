@@ -13,6 +13,7 @@ M = {
       component_separators = { left = '', right = '' },
       ]]
       component_separators = { left = '|', right = '|' },
+      globalstatus = true,
     },
     --[[ Available components
       `branch` (git branch)
@@ -33,14 +34,31 @@ M = {
       `tabs` (shows currently available tabs)
       `windows` (shows currently available windows) ]]
     sections = {
-      lualine_a = { 'mode' },
+      lualine_a = {
+        {
+          'fileformat',
+          icon_only = true,
+          padding = { left = 1, right = 0 },
+          separator = ''
+        },
+        'mode',
+      },
       lualine_b = { 'branch', 'diff' },
-      lualine_c = { 'filename', 'lsp_progress' },
-      lualine_x = { 'diagnostics', 'fileformat', 'encoding', 'filetype', 'filesize' },
-      lualine_y = { 'progress' },
-      lualine_z = { 'location' },
+      lualine_c = {
+        { 'filename', path = 1, newfile_status = true },
+        'lsp_progress',
+      },
+      lualine_x = { 'diagnostics', 'encoding', 'filetype', 'filesize' },
+      lualine_y = {
+        {
+          'searchcount',
+          timeout = 3500,
+          separator = ''
+        }
+      },
+      lualine_z = { 'location', 'progress' },
     },
-    extensions = { 'fzf', 'fugitive', 'lazy', 'mason', 'man', 'oil', 'nvim-dap-ui', 'trouble' },
+    extensions = { 'fzf', 'fugitive', 'lazy', 'mason', 'man', 'nvim-dap-ui', 'trouble' },
   },
 }
 
