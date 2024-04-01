@@ -109,13 +109,16 @@ function M.config(_, opts)
   -- ref: for `lua_ls`, https://luals.github.io/wiki/settings/
   local servers = {
     -- ref: `:help lspconfig-all`
+    bashls = {},
     clangd = {},
+    cssls = {},
+    emmet_ls = {},
+    html = {},
+    jsonls = {},
     pyright = {},
     -- gopls = {},
     -- rust_analyzer = {},
 
-    -- typescript lang. plugin, if needed: https://github.com/pmizio/typescript-tools.nvim
-    -- tsserver = {},
 
     lua_ls = {
       -- cmd = {...},
@@ -131,6 +134,9 @@ function M.config(_, opts)
         },
       },
     },
+    texlab = {},
+    -- typescript lang. plugin, if needed: https://github.com/pmizio/typescript-tools.nvim
+    tsserver = {},
   }
 
   require('mason').setup()
@@ -142,6 +148,8 @@ function M.config(_, opts)
   -- require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
   require('mason-lspconfig').setup {
+    automatic_installation = true,
+    automatic_setup = true,
     handlers = {
       function(server_name)
         local server = servers[server_name] or {}
