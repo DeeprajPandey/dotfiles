@@ -43,8 +43,10 @@ function M.config(_, opts)
     },
     completion = { completeopt = 'menu,menuone,noinsert' },
     window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
+      completion = cmp.config.window.bordered({
+        -- winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None'
+      }),
+      documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
       -- ref: https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
@@ -64,7 +66,6 @@ function M.config(_, opts)
 
       -- manually trigger completion - usually not needed
       ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-c>'] = cmp.mapping.abort(),
 
       -- <C-h> & <C-l> to jump b/w snippet expansion locations
       ['<C-l>'] = cmp.mapping(function()
