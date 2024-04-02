@@ -6,10 +6,22 @@ alias _='sudo'
 alias g='git'
 alias l='ls'
 
+
 trash() {
-  local trash_dir="$HOME/.Trash"
-  # we assume trash_dir exists on macos
-  # [ ! -d "$trash_dir" ] && mkdir -p "$trash_dir"
+  local trash_dir
+
+  # Set trash directory based on the operating system
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    trash_dir="$HOME/.Trash"
+  else
+    trash_dir="$HOME/.local/share/Trash/files"
+  fi
+
+  if [ ! -d "$trash_dir" ]; then
+    echo "Error: $trash_dir does not exist."
+    return 1
+    # mkdir -p "$trash_dir"
+  fi
 
   if [ $# -eq 0 ]; then
     echo "Usage: trash <file1> [file2] ..."
