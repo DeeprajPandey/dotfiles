@@ -6,6 +6,38 @@ alias _='sudo'
 alias g='git'
 alias l='ls'
 
+trash() {
+  local trash_dir="$HOME/.Trash"
+  # we assume trash_dir exists on macos
+  # [ ! -d "$trash_dir" ] && mkdir -p "$trash_dir"
+
+  if [ $# -eq 0 ]; then
+    echo "Usage: trash <file1> [file2] ..."
+    return 1
+  fi
+
+  for file in "$@"; do
+    if [ ! -e "$file" ]; then
+      echo "Error: $file does not exist."
+      continue
+    fi
+
+    local base_name=$(basename "$file")
+    local dest_file="$trash_dir/$base_name"
+
+    # if file already exists in trash, add timestamp to filename to avoid overwrite
+    if [ -e "$dest_file" ]; then
+      local timestamp=$(date +%Y%m%d%H%M%S)
+      dest_file="$trash_dir/${base_name}_$timestamp"
+    fi
+
+    # use rsync to preserve metadata, then remove the source file
+    rsync -aE --remove-source-files "$file" "$dest_file"
+    # rsync -aE --remove-source-files "$file" "$dest_file" && echo "Moved $file to $trash_dir"
+  done
+}
+
+
 # Use colors in coreutils utilities output
 alias grep='grep --color'
 
@@ -153,7 +185,7 @@ serve() {
   local port=${1:-8000}
   local dir=${2:-.}
   local server_pidfile
-  
+
   # Create temp files to pass PIDs to and from fswatch subshell
   server_pidfile=$(mktemp -t serve_"$port".pid)
 
@@ -190,7 +222,7 @@ serve() {
       # TODO: use xdotool to refresh browser on Linux
     done
   }
-  
+
   # shellcheck disable=SC2317
   # Handle script exit (gets invoked by trap)
   cleanup() {
@@ -217,7 +249,7 @@ serve() {
   else
       echo "Could not detect 'xdg-open' or 'open' command to launch the browser."
   fi
-  
+
   watch_directory &
   # Save PID of fswatch loop
   local fswatch_pid=$!
