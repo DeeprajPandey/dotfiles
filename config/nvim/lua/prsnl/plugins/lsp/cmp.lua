@@ -26,6 +26,8 @@ M = {
       },
     },
     'saadparwaiz1/cmp_luasnip', -- autocompletions
+    'hrsh7th/cmp-calc',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
   },
 }
 
@@ -83,6 +85,8 @@ function M.config(_, opts)
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
       { name = 'path' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'calc' },
     },
     {
       { name = 'buffer' },
