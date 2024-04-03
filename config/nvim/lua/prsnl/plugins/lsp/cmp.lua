@@ -128,8 +128,7 @@ function M.config(_, opts)
     formatting = {
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
-        vim_item.kind = kind_icons[vim_item.kind]
-        vim_item.menu = ({
+        local short_name = {
           calc = '[calc]',
           nvim_lsp = '[LSP]',
           nvim_lua = '[lua]',
@@ -139,7 +138,11 @@ function M.config(_, opts)
           pypi = '[pypi]',
           env = '[env]',
           buffer = '[buf]',
-        })[entry.source.name]
+        }
+        local menu_name = short_name[entry.source.name] or entry.source.name
+
+        vim_item.kind = kind_icons[vim_item.kind]
+        vim_item.menu = string.format('[%s]', menu_name)
         return vim_item
       end,
       expandable_indicator = true,
