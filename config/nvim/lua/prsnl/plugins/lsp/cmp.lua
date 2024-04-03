@@ -16,14 +16,7 @@ M = {
         return 'make install_jsregexp'
       end
       )(),
-      dependencies = {
-        {
-          'rafamadriz/friendly-snippets', -- useful snippets
-          config = function()
-            require('luasnip.loaders.from_vscode').lazy_load()
-          end,
-        },
-      },
+      dependencies = { 'rafamadriz/friendly-snippets' }, -- useful snippets
     },
     'saadparwaiz1/cmp_luasnip', -- autocompletions
     'hrsh7th/cmp-nvim-lsp-signature-help',
@@ -72,8 +65,31 @@ function M.config(_, opts)
     Codeium = "",
   }
 
-  luasnip.config.setup {}
+  -- Configure luasnip
+  -- trigger update of active node's dependents on every change
+  luasnip.config.set_config({
+    history = true,
+    update_events = 'TextChanged,TextChangedI'
+  })
+  -- add framework snippets (not enabled by default)
+  -- ref: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
+  luasnip.filetype_extend("vue", {"vue"})
 
+  -- if not within snippet, unlink snip in favour of performance
+  vim.api.nvim_create_autocmd("InsertLeave", {
+    callback = function()
+      if
+        require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+        and not require("luasnip").session.jump_active
+      then
+        require("luasnip").unlink_current()
+      end
+    end,
+  })
+
+  require('luasnip.loaders.from_vscode').lazy_load()
+
+  -- Configure nvim-cmp with sources and keymaps
   cmp.setup({
     snippet = {
       expand = function(args)
@@ -87,6 +103,20 @@ function M.config(_, opts)
       }),
       documentation = cmp.config.window.bordered(),
     },
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'path' },
+      { name = 'luasnip' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'calc' },
+      { name = 'dotenv' },
+      { name = 'codeium' },
+      { name = 'css-variables' },
+      { name = 'cmp-sass-variables' },
+    },
+    {
+      { name = 'buffer' },
+    }),
     mapping = cmp.mapping.preset.insert({
       -- ref: https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       -- select [n]ext / [p]revious item
@@ -117,20 +147,6 @@ function M.config(_, opts)
           luasnip.jump(-1)
         end
       end, { 'i', 's' }),
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'path' },
-      { name = 'luasnip' },
-      { name = 'nvim_lsp_signature_help' },
-      { name = 'calc' },
-      { name = 'dotenv' },
-      { name = 'codeium' },
-      { name = 'css-variables' },
-      { name = 'cmp-sass-variables' },
-    },
-    {
-      { name = 'buffer' },
     }),
   })
 
