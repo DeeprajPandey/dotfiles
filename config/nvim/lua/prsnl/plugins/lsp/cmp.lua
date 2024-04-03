@@ -26,14 +26,51 @@ M = {
       },
     },
     'saadparwaiz1/cmp_luasnip', -- autocompletions
-    'hrsh7th/cmp-calc',
     'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-calc',
+    'SergioRibera/cmp-dotenv',
+    {
+      'Exafunction/codeium.nvim',
+      enabled = false,
+      dependencies = { 'nvim-lua/plenary.nvim' },
+      opts= {},
+    },
+    'roginfarrer/cmp-css-variables',
+    'pontusk/cmp-sass-variables',
   },
 }
 
 function M.config(_, opts)
   local cmp = require('cmp')
   local luasnip = require('luasnip')
+  local kind_icons = {
+    Text = "󰉿",
+    Method = "󰆧",
+    Function = "󰊕",
+    Constructor = "",
+    Field = "󰜢",
+    Variable = "󰀫",
+    Class = "󰠱",
+    Interface = "",
+    Module = "",
+    Property = "󰜢",
+    Unit = "󰑭",
+    Value = "󰎠",
+    Enum = "",
+    Keyword = "󰌋",
+    Snippet = "",
+    Color = "󰏘",
+    File = "󰈙",
+    Reference = "󰈇",
+    Folder = "󰉋",
+    EnumMember = "",
+    Constant = "󰏿",
+    Struct = "󰙅",
+    Event = "",
+    Operator = "󰆕",
+    TypeParameter = "",
+    Codeium = "",
+  }
 
   luasnip.config.setup {}
 
@@ -83,10 +120,14 @@ function M.config(_, opts)
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'luasnip' },
       { name = 'path' },
+      { name = 'luasnip' },
       { name = 'nvim_lsp_signature_help' },
       { name = 'calc' },
+      { name = 'dotenv' },
+      { name = 'codeium' },
+      { name = 'css-variables' },
+      { name = 'cmp-sass-variables' },
     },
     {
       { name = 'buffer' },
