@@ -9,7 +9,7 @@ M = {
     {
       'L3MON4D3/LuaSnip',       -- snippet engine
       -- (optional) for regex support in snippets
-      build = ( function()
+      build = (function()
         if vim.fn.executable 'make' == 0 then
           return
         end
@@ -18,16 +18,16 @@ M = {
       )(),
       dependencies = { 'rafamadriz/friendly-snippets' }, -- useful snippets
     },
-    'saadparwaiz1/cmp_luasnip', -- autocompletions
+    'saadparwaiz1/cmp_luasnip',                          -- autocompletions
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
     'SergioRibera/cmp-dotenv',
-    'hrsh7th/cmp-nvim-lua',     -- neovim lua api
+    'hrsh7th/cmp-nvim-lua', -- neovim lua api
     {
       'Exafunction/codeium.nvim',
       enabled = false,
       dependencies = { 'nvim-lua/plenary.nvim' },
-      opts= {},
+      opts = {},
     },
     'roginfarrer/cmp-css-variables',
     'pontusk/cmp-sass-variables',
@@ -38,6 +38,13 @@ M = {
     },
   },
 }
+
+-- ref: CosmicNvim
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+end
 
 function M.config(_, opts)
   local cmp = require('cmp')
@@ -79,14 +86,14 @@ function M.config(_, opts)
   })
   -- add framework snippets (not enabled by default)
   -- ref: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
-  luasnip.filetype_extend('vue', {'vue'})
+  luasnip.filetype_extend('vue', { 'vue' })
 
   -- if not within snippet, unlink snip in favour of performance
   vim.api.nvim_create_autocmd('InsertLeave', {
     callback = function()
       if
-        require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-        and not require('luasnip').session.jump_active
+          require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+          and not require('luasnip').session.jump_active
       then
         require('luasnip').unlink_current()
       end
@@ -110,34 +117,34 @@ function M.config(_, opts)
       documentation = cmp.config.window.bordered(),
     },
     sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'path' },
-      { name = 'luasnip' },
-      { name = 'nvim_lsp_signature_help' },
-      { name = 'calc' },
-      { name = 'dotenv' },
-      { name = 'nvim_lua' },
-      { name = 'codeium' },
-      { name = 'css-variables' },
-      { name = 'cmp-sass-variables' },
-      { name = 'pypi' },
-    },
-    {
-      { name = 'buffer' },
-    }),
+        { name = 'nvim_lsp' },
+        { name = 'path' },
+        { name = 'luasnip' },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'calc' },
+        { name = 'dotenv' },
+        { name = 'nvim_lua' },
+        { name = 'codeium' },
+        { name = 'css-variables' },
+        { name = 'cmp-sass-variables' },
+        { name = 'pypi' },
+      },
+      {
+        { name = 'buffer' },
+      }),
     formatting = {
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
         local short_name = {
           calc = '[calc]',
-          nvim_lsp = '[LSP]',     -- 'λ'
-          nvim_lua = '[lua]',     -- 'Π'
-          path = '[path]',        -- ''
+          nvim_lsp = '[LSP]', -- 'λ'
+          nvim_lua = '[lua]', -- 'Π'
+          path = '[path]',    -- ''
           codeium = '[codeium]',
-          luasnip = '[snip]',     -- '⋗'
+          luasnip = '[snip]', -- '⋗'
           pypi = '[pypi]',
           env = '[env]',
-          buffer = '[buf]',       -- 'Ω'
+          buffer = '[buf]', -- 'Ω'
         }
         local menu_name = short_name[entry.source.name] or entry.source.name
 
@@ -160,9 +167,31 @@ function M.config(_, opts)
       -- confirm ([y]es) completion
       -- (auto-import if LSP supports it, expand snippets if LSP sent a snippe)
       -- set `select` to `false` to only confirm explicitly selected items
-      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-y>'] = cmp.mapping.confirm({ select = false }),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
 
+      -- luasnip_supertab; ref: lsp-zero
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          -- elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
       -- manually trigger completion - usually not needed
       ['<C-Space>'] = cmp.mapping.complete(),
 
@@ -196,17 +225,16 @@ function M.config(_, opts)
   cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = 'path' },
-    },
-    {
-      {
-        name = 'cmdline',
-        option = { ignore_cmds = {'Man', '!' } },
+        { name = 'path' },
       },
-    }),
+      {
+        {
+          name = 'cmdline',
+          option = { ignore_cmds = { 'Man', '!' } },
+        },
+      }),
     matching = { disallow_symbol_nonprefix_matching = false },
   })
 end
 
 return M
-
