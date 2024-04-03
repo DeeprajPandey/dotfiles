@@ -8,7 +8,7 @@
 #
 # Or
 # `skhd -V`
-# 
+#
 # Run `skhd -o` (observe) to print keycodes.
 # ref: https://github.com/koekeishiya/skhd/issues/1#issuecomment-375689733
 ##
@@ -16,7 +16,7 @@
 ## Navigation (lalt + ...)
 
 # Window navigation through display borders; lalt + {h, j, k, l}
-# silencing stderr to declutter error log when we try to move a window beyond a screen 
+# silencing stderr to declutter error log when we try to move a window beyond a screen
 # if there are issues with the keybinding, temporarily stop redirecting sterr to null and check error logs
 lalt - h: yabai -m window --focus west 2> /dev/null || yabai -m display --focus west 2> /dev/null
 lalt - j: yabai -m window --focus south 2> /dev/null || yabai -m display --focus south 2> /dev/null
@@ -34,7 +34,7 @@ shift + lalt - j  : yabai -m window --resize bottom:0:100 || yabai -m window --r
 shift + lalt - k  : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:-100
 shift + lalt - l  : yabai -m window --resize right:100:0 || yabai -m window --resize left:100:0
 
- 
+
 ## Movement (ctrl + lalt + ...)
 # Move windows in spaces and split; shift + lalt + {h, j, k, l}
 # Silence stdout & stderr for query cmds
@@ -71,7 +71,7 @@ ctrl + lalt - n   : yabai -m window --space next && osascript -e 'tell applicati
 # Toggle window zoom; ctrl + lalt + f
 ctrl + lalt - f   : yabai -m window --toggle zoom-fullscreen
 
-# Make window zoom to parent node; lalt + f 
+# Make window zoom to parent node; lalt + f
 lalt - f          : yabai -m window --toggle zoom-parent
 
 # Mirror space on X and Y Axis; ctrl + lalt + {x, y}
@@ -103,4 +103,8 @@ shift + ctrl - p  : yabai -m window --focus stack.prev 2> /dev/null
 ## Global Behaviour
 # Enable / Disable gaps in current workspace; ctrl + lalt + g
 ctrl + lalt - g   : yabai -m space --toggle padding; yabai -m space --toggle gap
+
+# works at the makerspace: needs binaries to be set up separately
+cmd + ctrl + shift - d   : ~/.local/bin/open_mkspc
+cmd + ctrl + shift - a   : ~/.local/bin/mkspc_hvac_toggle
 
