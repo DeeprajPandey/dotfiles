@@ -43,32 +43,32 @@ function M.config(_, opts)
   local cmp = require('cmp')
   local luasnip = require('luasnip')
   local kind_icons = {
-    Text = "󰉿",
-    Method = "󰆧",
-    Function = "󰊕",
-    Constructor = "",
-    Field = "󰜢",
-    Variable = "󰀫",
-    Class = "󰠱",
-    Interface = "",
-    Module = "",
-    Property = "󰜢",
-    Unit = "󰑭",
-    Value = "󰎠",
-    Enum = "",
-    Keyword = "󰌋",
-    Snippet = "",
-    Color = "󰏘",
-    File = "󰈙",
-    Reference = "󰈇",
-    Folder = "󰉋",
-    EnumMember = "",
-    Constant = "󰏿",
-    Struct = "󰙅",
-    Event = "",
-    Operator = "󰆕",
-    TypeParameter = "",
-    Codeium = "",
+    Text = '󰉿',
+    Method = '󰆧',
+    Function = '󰊕',
+    Constructor = '',
+    Field = '󰜢',
+    Variable = '󰀫',
+    Class = '󰠱',
+    Interface = '',
+    Module = '',
+    Property = '󰜢',
+    Unit = '󰑭',
+    Value = '󰎠',
+    Enum = '',
+    Keyword = '󰌋',
+    Snippet = '',
+    Color = '󰏘',
+    File = '󰈙',
+    Reference = '󰈇',
+    Folder = '󰉋',
+    EnumMember = '',
+    Constant = '󰏿',
+    Struct = '󰙅',
+    Event = '',
+    Operator = '󰆕',
+    TypeParameter = '',
+    Codeium = '',
   }
 
   -- Configure luasnip
@@ -79,16 +79,16 @@ function M.config(_, opts)
   })
   -- add framework snippets (not enabled by default)
   -- ref: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
-  luasnip.filetype_extend("vue", {"vue"})
+  luasnip.filetype_extend('vue', {'vue'})
 
   -- if not within snippet, unlink snip in favour of performance
-  vim.api.nvim_create_autocmd("InsertLeave", {
+  vim.api.nvim_create_autocmd('InsertLeave', {
     callback = function()
       if
         require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-        and not require("luasnip").session.jump_active
+        and not require('luasnip').session.jump_active
       then
-        require("luasnip").unlink_current()
+        require('luasnip').unlink_current()
       end
     end,
   })
@@ -130,14 +130,14 @@ function M.config(_, opts)
       format = function(entry, vim_item)
         local short_name = {
           calc = '[calc]',
-          nvim_lsp = '[LSP]',
-          nvim_lua = '[lua]',
-          path = '[path]',
+          nvim_lsp = '[LSP]',     -- 'λ'
+          nvim_lua = '[lua]',     -- 'Π'
+          path = '[path]',        -- ''
           codeium = '[codeium]',
-          luasnip = '[snip]',
+          luasnip = '[snip]',     -- '⋗'
           pypi = '[pypi]',
           env = '[env]',
-          buffer = '[buf]',
+          buffer = '[buf]',       -- 'Ω'
         }
         local menu_name = short_name[entry.source.name] or entry.source.name
 
