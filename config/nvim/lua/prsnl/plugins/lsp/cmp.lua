@@ -22,6 +22,7 @@ M = {
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
     'SergioRibera/cmp-dotenv',
+    'hrsh7th/cmp-nvim-lua',     -- neovim lua api
     {
       'Exafunction/codeium.nvim',
       enabled = false,
@@ -30,6 +31,11 @@ M = {
     },
     'roginfarrer/cmp-css-variables',
     'pontusk/cmp-sass-variables',
+    {
+      'vrslev/cmp-pypi',
+      dependencies = { 'nvim-lua/plenary.nvim' },
+      event = { 'BufRead pyproject.toml', 'BufRead requirements.txt', 'BufRead requirements_dev.txt' },
+    },
   },
 }
 
@@ -110,13 +116,34 @@ function M.config(_, opts)
       { name = 'nvim_lsp_signature_help' },
       { name = 'calc' },
       { name = 'dotenv' },
+      { name = 'nvim_lua' },
       { name = 'codeium' },
       { name = 'css-variables' },
       { name = 'cmp-sass-variables' },
+      { name = 'pypi' },
     },
     {
       { name = 'buffer' },
     }),
+    formatting = {
+      fields = { 'abbr', 'kind', 'menu' },
+      format = function(entry, vim_item)
+        vim_item.kind = kind_icons[vim_item.kind]
+        vim_item.menu = ({
+          calc = '[calc]',
+          nvim_lsp = '[LSP]',
+          nvim_lua = '[lua]',
+          path = '[path]',
+          codeium = '[codeium]',
+          luasnip = '[snip]',
+          pypi = '[pypi]',
+          env = '[env]',
+          buffer = '[buf]',
+        })[entry.source.name]
+        return vim_item
+      end,
+      expandable_indicator = true,
+    },
     mapping = cmp.mapping.preset.insert({
       -- ref: https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
       -- select [n]ext / [p]revious item
@@ -148,6 +175,10 @@ function M.config(_, opts)
         end
       end, { 'i', 's' }),
     }),
+
+    experimental = {
+      ghost_text = true,
+    },
   })
 
   -- completions for `/` & `?` searches: buffer source
