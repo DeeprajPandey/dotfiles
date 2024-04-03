@@ -1,6 +1,6 @@
 M = {
   'neovim/nvim-lspconfig',
-  cmd = {'LspInfo', 'LspInstall', 'LspStart'},
+  cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     'williamboman/mason.nvim',
@@ -32,6 +32,13 @@ function M.config(_, opts)
       map('gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
       map('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
       map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+      map('<leader>f', function()
+        -- never request typescript language server for formatting
+        vim.lsp.buf.format({
+          async = true,
+          filter = function(client) return client.name ~= "tsserver" end
+        })
+      end, '[F]ormat Document')
       map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
       -- fuzzy find all symbols in current document
@@ -71,7 +78,7 @@ function M.config(_, opts)
   vim.diagnostic.config({
     virtual_text = true, -- virtual text
     signs = {
-      active = signs, -- show signs
+      active = signs,    -- show signs
     },
     update_in_insert = true,
     underline = true,
@@ -163,4 +170,3 @@ function M.config(_, opts)
 end
 
 return M
-
