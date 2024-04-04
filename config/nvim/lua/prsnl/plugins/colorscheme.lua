@@ -519,14 +519,14 @@ local function toggleCatppuccinTransparency()
   vim.cmd.colorscheme 'catppuccin'
 end
 
-M[6].lazy = false
-M[6].priority = true
-M[6].config= function(_, opts)
+M[2].lazy = false
+M[2].priority = true
+M[2].config= function(_, opts)
   -- substitution: `.,+1s/tokyonight/catppuccin/g`
-  require('catppuccin').setup(opts)
-  vim.cmd.colorscheme 'catppuccin'
+  -- require('catppuccin').setup(opts)
+  -- vim.cmd.colorscheme 'catppuccin'
 
-  -- vim.cmd.colorscheme 'nightfly'
+  vim.cmd.colorscheme 'nightfly'
 
   -- vim.cmd.colorscheme 'melange'
   -- vim.opt.termguicolors = true
