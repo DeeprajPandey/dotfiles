@@ -33,9 +33,12 @@ local M = {
     },
     pickers = {
       find_files = {
+        disable_devicons = true, -- icons affect performance
         -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
         find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*', '--unrestricted' },
-        disable_devicons = true
+      },
+      git_files = {
+        disable_devicons = true, -- icons affect performance
       },
     },
   },
@@ -51,7 +54,7 @@ function M.config(_, opts)
     i = {
       ['<C-enter>'] = 'to_fuzzy_refine',
       ['<C-k>'] = actions.move_selection_previous, -- move to prev result
-      ['<C-j>'] = actions.move_selection_next, -- move to next result
+      ['<C-j>'] = actions.move_selection_next,     -- move to next result
       ['<C-q>'] = actions.send_selected_to_qflist + actions.open_qflist,
     },
   }
@@ -71,7 +74,7 @@ function M.config(_, opts)
   keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles in cwd', noremap = true })
   keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep in cwd', noremap = true })
   keymap.set('n', '<leader>sw', function(word)
-    builtin.grep_string({ search = word})
+    builtin.grep_string({ search = word })
   end, { desc = '[S]earch current [W]ord in cwd', noremap = true })
   keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps', noremap = true })
   keymap.set('n', '<leader>sm', builtin.man_pages, { desc = '[S]earch [M]an pages', noremap = true })
@@ -89,4 +92,3 @@ function M.config(_, opts)
 end
 
 return M
-
