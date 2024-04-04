@@ -23,7 +23,6 @@ M = {
     popup_border_style = 'single',
     enable_git_status = true,
     enable_diagnostics = true,
-    enable_normal_mode_for_inputs = false, -- enable normal mode for input dialogs
     open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' }, -- skip windows with these file/buffers
     sort_case_insensitive = false,
     default_component_configs = {
