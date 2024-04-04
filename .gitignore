@@ -1,1 +1,5 @@
 .DS_Store
+
+# github-copilot env
+config/github-copilot/hosts.json
+
