@@ -2,12 +2,12 @@ M = {
   'hrsh7th/nvim-cmp',
   event = { 'InsertEnter' },
   dependencies = {
-    'hrsh7th/cmp-nvim-lsp',     -- source for builtin lsp client
-    'hrsh7th/cmp-buffer',       -- source for text in buffer
-    'hrsh7th/cmp-path',         -- source for filesystem paths
-    'hrsh7th/cmp-cmdline',      -- source for vim cmdline
+    'hrsh7th/cmp-nvim-lsp', -- source for builtin lsp client
+    'hrsh7th/cmp-buffer',   -- source for text in buffer
+    'hrsh7th/cmp-path',     -- source for filesystem paths
+    'hrsh7th/cmp-cmdline',  -- source for vim cmdline
     {
-      'L3MON4D3/LuaSnip',       -- snippet engine
+      'L3MON4D3/LuaSnip',   -- snippet engine
       -- (optional) for regex support in snippets
       build = (function()
         if vim.fn.executable 'make' == 0 then
@@ -23,12 +23,13 @@ M = {
     'hrsh7th/cmp-calc',
     'SergioRibera/cmp-dotenv',
     'hrsh7th/cmp-nvim-lua', -- neovim lua api
-    {
-      'Exafunction/codeium.nvim',
-      enabled = false,
-      dependencies = { 'nvim-lua/plenary.nvim' },
-      opts = {},
-    },
+    -- {
+    --   'Exafunction/codeium.nvim',
+    --   enabled = false,
+    --   dependencies = { 'nvim-lua/plenary.nvim' },
+    --   opts = {},
+    -- },
+    -- { "zbirenbaum/copilot-cmp", opts = {}, dependencies = { "zbirenbaum/copilot.lua" } },
     'roginfarrer/cmp-css-variables',
     'pontusk/cmp-sass-variables',
     {
@@ -75,7 +76,8 @@ function M.config(_, opts)
     Event = '',
     Operator = '󰆕',
     TypeParameter = '',
-    Codeium = '',
+    -- Copilot = "",
+    -- Codeium = '',
   }
 
   -- Configure luasnip
@@ -124,7 +126,8 @@ function M.config(_, opts)
         { name = 'calc' },
         { name = 'dotenv' },
         { name = 'nvim_lua' },
-        { name = 'codeium' },
+        -- { name = 'copilot' },
+        -- { name = 'codeium' },
         { name = 'css-variables' },
         { name = 'cmp-sass-variables' },
         { name = 'pypi' },
@@ -140,7 +143,8 @@ function M.config(_, opts)
           nvim_lsp = '[LSP]', -- 'λ'
           nvim_lua = '[lua]', -- 'Π'
           path = '[path]',    -- ''
-          codeium = '[codeium]',
+          -- copilot = '[copilot]',
+          -- codeium = '[codeium]',
           luasnip = '[snip]', -- '⋗'
           pypi = '[pypi]',
           env = '[env]',
@@ -167,31 +171,9 @@ function M.config(_, opts)
       -- confirm ([y]es) completion
       -- (auto-import if LSP supports it, expand snippets if LSP sent a snippe)
       -- set `select` to `false` to only confirm explicitly selected items
-      ['<C-y>'] = cmp.mapping.confirm({ select = false }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+      ['<CR>'] = cmp.mapping.confirm({ select = false }), -- newline instead of accepting preselected cmp
 
-      -- luasnip_supertab; ref: lsp-zero
-      ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          -- elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-          fallback()
-        end
-      end, { 'i', 's' }),
-      ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
       -- manually trigger completion - usually not needed
       ['<C-Space>'] = cmp.mapping.complete(),
 
@@ -206,6 +188,30 @@ function M.config(_, opts)
           luasnip.jump(-1)
         end
       end, { 'i', 's' }),
+
+      -- luasnip_supertab; ref: lsp-zero
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_locally_jumpable() then
+          luasnip.expand_or_jump()
+          -- endofline tab ends up triggering completion menu
+          -- elseif has_words_before() then
+          --   cmp.complete()
+        else
+          -- elseif col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+          fallback()
+        end
+      end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.locally_jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { 'i', 's' }),
     }),
 
     experimental = {
@@ -215,7 +221,18 @@ function M.config(_, opts)
 
   -- completions for `/` & `?` searches: buffer source
   cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
+    -- use tab-complete
+    mapping = cmp.mapping.preset.cmdline({
+      ['<Tab>'] = {
+        c = function(default)
+          if cmp.visible() then
+            return cmp.confirm({ select = false })
+          end
+
+          default()
+        end,
+      },
+    }),
     sources = {
       { name = 'buffer' },
     },
@@ -223,7 +240,18 @@ function M.config(_, opts)
 
   -- completions for `:` command mode: cmdline and path source
   cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
+    -- use tab-complete
+    mapping = cmp.mapping.preset.cmdline({
+      ['<Tab>'] = {
+        c = function(default)
+          if cmp.visible() then
+            return cmp.confirm({ select = false })
+          end
+
+          default()
+        end,
+      },
+    }),
     sources = cmp.config.sources({
         { name = 'path' },
       },
