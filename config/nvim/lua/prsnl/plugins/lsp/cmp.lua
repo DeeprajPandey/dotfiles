@@ -106,12 +106,19 @@ function M.config(_, opts)
 
   -- Configure nvim-cmp with sources and keymaps
   cmp.setup({
+    performance = {
+      debounce = 100,
+      throttle = 80,
+      fetching_timeout = 80,
+    },
+    preselect = cmp.PreselectMode.None, -- do not auto-select items, need <CR> for newline otherwise
     snippet = {
       expand = function(args)
         luasnip.lsp_expand(args.body)
       end,
     },
-    completion = { completeopt = 'menu,menuone,noinsert' },
+    -- to enable preselection, remove `noselect`
+    completion = { completeopt = 'menu,menuone,noinsert,noselect' },
     window = {
       completion = cmp.config.window.bordered({
         -- winhighlight = 'Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None'
@@ -152,6 +159,7 @@ function M.config(_, opts)
         }
         local menu_name = short_name[entry.source.name] or entry.source.name
 
+
         vim_item.kind = kind_icons[vim_item.kind]
         vim_item.menu = string.format('[%s]', menu_name)
         return vim_item
@@ -172,7 +180,10 @@ function M.config(_, opts)
       -- (auto-import if LSP supports it, expand snippets if LSP sent a snippe)
       -- set `select` to `false` to only confirm explicitly selected items
       ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      ['<CR>'] = cmp.mapping.confirm({ select = false }), -- newline instead of accepting preselected cmp
+
+      -- we have turned off preselection (noselect). now, only accept selected entry.
+      -- visual cues match behaviour.
+      ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
       -- manually trigger completion - usually not needed
       ['<C-Space>'] = cmp.mapping.complete(),
@@ -240,6 +251,7 @@ function M.config(_, opts)
 
   -- completions for `:` command mode: cmdline and path source
   cmp.setup.cmdline(':', {
+    completion = { completeopt = 'menu,menuone,noinsert' },
     -- use tab-complete
     mapping = cmp.mapping.preset.cmdline({
       ['<Tab>'] = {
