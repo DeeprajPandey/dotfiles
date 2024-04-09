@@ -26,7 +26,7 @@ opt.shiftwidth = 2
 opt.expandtab = true        -- expand to spaces
 opt.smartindent = true
 opt.autoindent = true       -- copy indent from current line when starting next
-opt.wrap = false
+opt.wrap = true
 
 -- vertical lines to mark indent levels; alternative symbols: extends:▶,precedes:◀
 opt.listchars = { leadmultispace = '▏ ', lead = '·', tab = '» ', trail = '￮', extends = '›', precedes = '‹', nbsp = '‿' }
@@ -46,6 +46,7 @@ opt.background = 'dark'
 opt.cursorline = true       -- highlight current cursor line
 opt.colorcolumn = '110'     -- mark column to limit text to 110 chars
 opt.signcolumn = 'number'   -- signcolumn in number col by default
+opt.showmode = false        -- turn off default statusline (using lualine)
 
 -- min. 8 lines of `scrolloff` opt (+3 for treesitter-context & separator)
 opt.scrolloff = 11
