@@ -594,6 +594,14 @@ local function toggleNightflyTransparency()
   vim.g.nightflyTransparent = not isTransparent
 end
 
+local function toggleRosePineTransparency()
+  local isTransparent = M[2].opts.styles.transparency
+  M[2].opts.styles.transparency = not isTransparent
+
+  require('rose-pine').setup(M[2].opts)
+  vim.cmd.colorscheme 'rose-pine'
+end
+
 M[2].lazy = false
 M[2].priority = true
 M[2].config = function(_, opts)
@@ -601,9 +609,9 @@ M[2].config = function(_, opts)
   require('rose-pine').setup(opts)
   vim.cmd.colorscheme 'rose-pine'
 
-  -- vim.keymap.set('n', '<leader>0', toggleCatppuccinTransparency, {
-  --   desc = 'Toggle Catppuccin transparency', noremap = true, silent = true,
-  -- })
+  vim.keymap.set('n', '<leader>0', toggleRosePineTransparency, {
+    desc = 'Toggle rose-pine transparency', noremap = true, silent = true,
+  })
 
   -- vim.cmd.colorscheme 'nightfly'
 
