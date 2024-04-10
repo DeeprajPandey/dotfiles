@@ -13,7 +13,7 @@ function M.config(_, opts)
   local function save_session()
     local cwd = vim.fn.getcwd()
     local default_session_name = cwd:match('([^/]+)$')  -- last part of cwd is dir_name
-    local session_name = vim.fn.input('Session name: ', session_dir .. '/' .. default_session_name)
+    local session_name = vim.fn.input('Session name: ', session_dir .. '/' .. 'session.' .. default_session_name .. '.vim', 'file')
 
     if session_name and #session_name > 0 then
       vim.cmd('Obsession ' .. session_name)
@@ -23,7 +23,7 @@ function M.config(_, opts)
   local function restore_session()
     local cwd = vim.fn.getcwd()
     local default_session_file = cwd:match('([^/]+)$')  -- last part of cwd is dir_file
-    local session_file = vim.fn.input('Session file: ', session_dir .. '/' .. default_session_file)
+    local session_file = vim.fn.input('Session file: ', session_dir .. '/' .. 'session.' .. default_session_file .. '.vim', 'file')
     if session_file and #session_file > 0 then
       vim.cmd('source ' .. session_file)
     end
