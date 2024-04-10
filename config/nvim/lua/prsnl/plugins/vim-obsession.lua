@@ -35,6 +35,8 @@ function M.config(_, opts)
 
   nmap('<leader>os', save_session, '[O]bsession [S]ave')
   nmap('<leader>or', restore_session, '[O]bsession [R]estore')
+  nmap('<leader>op', '<cmd>Obsession<CR>', '[O]bsession [P]ause')
+  nmap('<leader>ox', '<cmd>Obsession!<CR>', '[O]bsession Close and Delete[x]')
 end
 
 return M
