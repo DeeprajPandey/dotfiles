@@ -10,31 +10,36 @@ function M.config(_, opts)
   -- set session options
   vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
 
-  local function save_session()
+  local function get_default_session_file()
     local cwd = vim.fn.getcwd()
-    local default_session_name = cwd:match('([^/]+)$')  -- last part of cwd is dir_name
-    local session_name = vim.fn.input('Session name: ', session_dir .. '/' .. 'session.' .. default_session_name .. '.vim', 'file')
-
-    if session_name and #session_name > 0 then
-      vim.cmd('Obsession ' .. session_name)
-    end
+    local dir_name = cwd:match('([^/]+)$') -- last part of cwd is dir_name
+    return session_dir .. '/session.' .. dir_name .. '.vim'
   end
 
-  local function restore_session()
-    local cwd = vim.fn.getcwd()
-    local default_session_file = cwd:match('([^/]+)$')  -- last part of cwd is dir_file
-    local session_file = vim.fn.input('Session file: ', session_dir .. '/' .. 'session.' .. default_session_file .. '.vim', 'file')
-    if session_file and #session_file > 0 then
+  local function load_session(session_file)
+    if vim.fn.filereadable(session_file) == 1 then
       vim.cmd('source ' .. session_file)
     end
   end
 
-  local nmap = function (keys, func, desc)
+  local function session_save()
+    local session_file = vim.fn.input('Session file: ', get_default_session_file(), 'file')
+    if session_file and #session_file > 0 then
+      vim.cmd('Obsession ' .. session_file)
+    end
+  end
+
+  local function session_restore()
+    local session_file = vim.fn.input('Session file: ', get_default_session_file(), 'file')
+    load_session(session_file)
+  end
+
+  local nmap = function(keys, func, desc)
     vim.keymap.set('n', keys, func, { desc = desc, noremap = true, silent = true })
   end
 
-  nmap('<leader>os', save_session, '[O]bsession [S]ave')
-  nmap('<leader>or', restore_session, '[O]bsession [R]estore')
+  nmap('<leader>os', session_save, '[O]bsession [S]ave')
+  nmap('<leader>or', session_restore, '[O]bsession [R]estore')
   nmap('<leader>op', '<cmd>Obsession<CR>', '[O]bsession [P]ause')
   nmap('<leader>ox', '<cmd>Obsession!<CR>', '[O]bsession Close and Delete[x]')
 end
