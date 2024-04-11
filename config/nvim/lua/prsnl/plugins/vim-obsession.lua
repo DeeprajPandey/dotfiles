@@ -10,6 +10,13 @@ function M.config(_, opts)
   -- set session options
   vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
 
+  local function restore_filetypes()
+    print('running')
+    if vim.bo.filetype == '' then
+      vim.cmd('filetype detect')
+    end
+  end
+
   local function get_default_session_file()
     local cwd = vim.fn.getcwd()
     local dir_name = cwd:match('([^/]+)$') -- last part of cwd is dir_name
@@ -19,6 +26,7 @@ function M.config(_, opts)
   local function load_session(session_file)
     if vim.fn.filereadable(session_file) == 1 then
       vim.cmd('source ' .. session_file)
+      restore_filetypes()
     else
       print('Session `' .. session_file .. '` not found.')
     end
