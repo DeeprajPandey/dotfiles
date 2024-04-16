@@ -87,6 +87,7 @@ cask "android-platform-tools"       # adb
 cask "aldente"
 # cask "autodesk-fusion360"         # noinstall: checksum undefined
 cask "balenaetcher"                 # flash OS images
+cask "calibre"                      # ebook management + reader
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
 cask "firefox"
