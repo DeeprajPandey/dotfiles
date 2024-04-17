@@ -1,6 +1,6 @@
 M = {
   'tpope/vim-surround',
-  event = { 'BufRead', 'BufNewFile' }
+  event = { 'BufRead', 'BufNewFile', 'BufWinEnter' }
 }
 
 return M
