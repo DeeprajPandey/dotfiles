@@ -119,13 +119,13 @@ function M.config(_, opts)
     bashls = {},
     clangd = {},
     cssls = {},
+    debugpy = {}, -- for python dap
     emmet_ls = {},
     html = {},
     jsonls = {},
     pyright = {},
     -- gopls = {},
     -- rust_analyzer = {},
-
 
     lua_ls = {
       -- cmd = {...},
