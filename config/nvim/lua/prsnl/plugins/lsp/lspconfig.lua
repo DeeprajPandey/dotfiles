@@ -117,6 +117,7 @@ function M.config(_, opts)
   local servers = {
     -- ref: `:help lspconfig-all`
     bashls = {},
+    biome = {},
     clangd = {},
     cssls = {},
     debugpy = {}, -- for python dap
@@ -163,6 +164,21 @@ function M.config(_, opts)
         -- override values passed by the server config above
         -- e.g. turn off LSP formatters for certain servers
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+
+        if server_name == 'tsserver' then
+          server.init_options = {
+            preferences = {
+              -- change to `true` to reduce non-actionable suggestions
+              disableSuggestions = false,
+            }
+          }
+          -- IMP: don't need this. Filter in formatting keymap skips tsserver
+          -- function server.on_attach(client)
+          --   -- this is important, otherwise tsserver will format ts/js
+          --   -- files which we *really* don't want.
+          --   client.server_capabilities.documentFormattingProvider = false
+          -- end
+        end
         require('lspconfig')[server_name].setup(server)
       end,
     },
