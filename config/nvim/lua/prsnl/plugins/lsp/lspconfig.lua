@@ -118,7 +118,11 @@ function M.config(_, opts)
     -- ref: `:help lspconfig-all`
     bashls = {},
     biome = {},
-    clangd = {},
+    clangd = {
+    capabilities = {
+        offsetEncoding = 'utf-16',
+      },
+    },
     cssls = {},
     debugpy = {}, -- for python dap
     emmet_ls = {},
