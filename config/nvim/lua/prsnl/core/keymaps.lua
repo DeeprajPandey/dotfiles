@@ -109,6 +109,34 @@ end, {desc = 'Source the current file'})
 -- toggle relative numbering
 keymap.set('n', '<C-n>', ':set rnu!<CR>', { desc = 'Toggle relative numbering', noremap = true, silent = true })
 
+-- HACK: format js files using biome in a floating terminal
+-- TODO: remove this after neovim v0.10 is released. Dynamic attach will allow lsp formatting w/ biome
+function biome_format_in_floating_terminal()
+  -- calculate floating window size
+  local width = math.floor(vim.o.columns * 0.65)
+  local height = math.floor(vim.o.lines * 0.5)
+  local col = math.floor((vim.o.columns - width) / 2)
+  local row = math.floor((vim.o.lines - height) / 2)
+
+  -- create a floating window
+  local buf = vim.api.nvim_create_buf(false, true)
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = 'editor',
+    width = width,
+    height = height,
+    col = col,
+    row = row,
+    border = 'rounded',
+  })
+
+  -- start terminal in the floating window
+  vim.fn.termopen("~/.local/share/nvim/mason/bin/biome check --apply .")
+end
+
+keymap.set('n', '<leader>tb', '<cmd>lua biome_format_in_floating_terminal()<CR>', { desc = '[T]erminal [b]iome format', noremap = true, silent = true })
+keymap.set('t', '<C-w>q', '<C-\\><C-n>:q!<CR>', { desc = 'Terminal [C-w]indow [q]uit', noremap = true, silent = true })
+
+
 
 -- [[ Diagnostic Keymaps ]]
 -- keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message', noremap = true })
