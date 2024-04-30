@@ -22,3 +22,6 @@ export NVM_DIR="$HOME/.nvm"
 # Create pipenv virtualenvs in project directory to avoid pipenv install on project path restructures
 # https://pipenv.pypa.io/en/latest/installation.html#virtualenv-mapping-caveat
 export PIPENV_VENV_IN_PROJECT=1
+
+# Enable IDF virtual environment when needed
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
