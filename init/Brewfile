@@ -20,7 +20,10 @@ brew "bat"                          # rust port - cat; highlight, git
 brew "borders"                      # tap felixkratz/formulae; jankyborders: customised window borders
 brew "bottom"                       # rust port - htop; process monitor
 brew "btop"                         # rust port - htop
+brew "ccache"
+brew "cmake"
 brew "coreutils"
+brew "dfu-util"
 brew "fd"
 brew "findutils"
 brew "fswatch"                      # file system watcher
