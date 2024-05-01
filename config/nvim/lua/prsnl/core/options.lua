@@ -28,6 +28,10 @@ opt.smartindent = true
 opt.autoindent = true       -- copy indent from current line when starting next
 opt.wrap = true
 
+-- reload file from disk on change
+-- works with `reload-file-on-update` autocmd
+opt.autoread = true
+
 -- vertical lines to mark indent levels; alternative symbols: extends:▶,precedes:◀
 opt.listchars = { leadmultispace = '▏ ', lead = '·', tab = '» ', trail = '￮', extends = '›', precedes = '‹', nbsp = '‿' }
 opt.list = true
