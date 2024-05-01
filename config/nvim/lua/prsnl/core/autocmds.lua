@@ -1,4 +1,13 @@
 -- [[ Autocommands ]]
+-- Update buffer contents when file is updated outside vim
+-- Ref: https://stackoverflow.com/questions/2490227/how-does-vims-autoread-work
+vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter'}, {
+  desc = 'Automatically check for reloading file when it\'s changed externally. Fixes autoread behaviour',
+  group = vim.api.nvim_create_augroup('reload-file-on-update', { clear = true }),
+  pattern = '*',  -- apply to all buffers
+  command = 'checktime'
+})
+
 -- Highlight when yanking (copying) text; ref: `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
