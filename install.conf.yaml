@@ -9,6 +9,8 @@
     ~/.config:
       recursive: true
 
+- clean: ['~/.ssh']
+
 - link:
     ~/.dotfiles: ''
     ~/.config:
@@ -27,6 +29,7 @@
     ~/.gnupg/gpg-agent.conf:
       path: gnupg/gpg-agent.conf
     ~/.shell:
+    ~/.ssh/config: ssh/config
     ~/.vim:
     ~/.zshrc:
     ~/.zprofile:
