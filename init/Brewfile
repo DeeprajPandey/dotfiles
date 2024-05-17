@@ -36,7 +36,7 @@ brew "glibc" if OS.linux?
 brew "gnupg"
 brew "gpg" if OS.mac?
 brew "gping"
-brew "helix"
+# brew "helix"
 brew "hexyl"                        # hex viewer + auto formatter
 # brew "imagemagick"                  # cli image editor
 brew "jq"                           # json command line processor
@@ -65,6 +65,7 @@ brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
 brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
 # brew "sloc"                         # lines of code
+brew "spacer"                       # insert spacers when command output stops
 brew "spicetify-cli"                # customise spotify
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
