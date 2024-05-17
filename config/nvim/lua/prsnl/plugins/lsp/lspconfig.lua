@@ -149,6 +149,7 @@ function M.config(_, opts)
     texlab = {},
     -- typescript lang. plugin, if needed: https://github.com/pmizio/typescript-tools.nvim
     tsserver = {},
+    yamlfmt = {},
   }
 
   require('mason').setup()
