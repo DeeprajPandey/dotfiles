@@ -5,6 +5,7 @@ M = {
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
     'hrsh7th/cmp-nvim-lsp',
 
     -- LSP status updates
@@ -44,8 +45,6 @@ function M.config(_, opts)
       -- fuzzy find all symbols in current document
       map('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
       map('<leader>ws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-      map('K', vim.lsp.buf.hover, 'Hover Documentation')
 
       -- highlight references of the word under cursor after a small delay; cleared on move
       -- ref: `:help CursorHold`
@@ -169,7 +168,7 @@ function M.config(_, opts)
   vim.list_extend(ensure_installed, {
     'stylua', -- lua formatter
   })
-  -- require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+  require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
   require('mason-lspconfig').setup {
     automatic_installation = true,
