@@ -28,8 +28,9 @@ function ClearSearchAndUpdateDiff()
   if vim.fn.has('diff') == 1 then
     vim.cmd('diffupdate') -- update diff display
   end
-  vim.cmd('redraw!')  -- redraw screen
+  vim.cmd('redraw!')      -- redraw screen
 end
+
 keymap.set('n', '<C-c>', ClearSearchAndUpdateDiff, { desc = 'Clear highlighted search results', noremap = true })
 
 -- stay in visual mode after indent ops
@@ -39,14 +40,15 @@ keymap.set('v', '<', '<gv', { desc = 'Move back to visual mode after left indent
 
 -- [[ Register Keymaps ]]
 -- alt paste: map delete during paste to void register; preserve yanked text
-keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste in visual mode without overwriting the yank register', noremap = true })
+keymap.set('x', '<leader>p', [["_dP]],
+  { desc = 'Paste in visual mode without overwriting the yank register', noremap = true })
 
 -- alt yank: map to + register (sys clipboard)
-keymap.set({'n', 'v'}, '<leader>y', [["+y]], { desc = 'Yank to system clipboard', noremap = true })
+keymap.set({ 'n', 'v' }, '<leader>y', [["+y]], { desc = 'Yank to system clipboard', noremap = true })
 keymap.set('n', '<leader>Y', [["+Y]], { desc = 'Yank entire line to system clipboard', noremap = true })
 
 -- alt delete: map to void register in normal and visual modes; preserve yank register
-keymap.set({'n', 'v'}, '<leader>d', [["_d]], { desc = 'Delete without affecting the yank register', noremap = true })
+keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = 'Delete without affecting the yank register', noremap = true })
 
 -- delete single character: map to void register; preserve yank register
 -- keymap.set('n', 'x', '"_x', { desc = 'Delete character into null register', noremap = true })
@@ -72,10 +74,14 @@ keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current buffer
 
 -- quickfix & location list traversal: <F7> and <F9> are usually media keys
 -- read about diff & usage: https://stackoverflow.com/questions/20933836/what-is-the-difference-between-location-list-and-quickfix-list-in-vim
-keymap.set('n', '<F9>', '<cmd>cnext<CR>zz', { desc = 'Go to next item in quickfix list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<F7>', '<cmd>cprev<CR>zz', { desc = 'Go to previous item in quickfix list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<leader>F9', '<cmd>lnext<CR>zz', { desc = 'Go to next item in location list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<leader>F7', '<cmd>lprev<CR>zz', { desc = 'Go to previous item in location list and center on screen', noremap = true, silent = true })
+keymap.set('n', '<F9>', '<cmd>cnext<CR>zz',
+  { desc = 'Go to next item in quickfix list and center on screen', noremap = true, silent = true })
+keymap.set('n', '<F7>', '<cmd>cprev<CR>zz',
+  { desc = 'Go to previous item in quickfix list and center on screen', noremap = true, silent = true })
+keymap.set('n', '<leader>F9', '<cmd>lnext<CR>zz',
+  { desc = 'Go to next item in location list and center on screen', noremap = true, silent = true })
+keymap.set('n', '<leader>F7', '<cmd>lprev<CR>zz',
+  { desc = 'Go to previous item in location list and center on screen', noremap = true, silent = true })
 
 -- disable arrow keys in normal mode
 keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
@@ -93,18 +99,21 @@ keymap.set('n', '<leader>+', '<C-a>', { desc = 'Increment number', noremap = tru
 keymap.set('n', '<leader>-', '<C-x>', { desc = 'Decrement number', noremap = true })
 
 -- substitute current word across files
-keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'Substitute the current word globally with prompt for replacement', noremap = true })
+keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = 'Substitute the current word globally with prompt for replacement', noremap = true })
 
 -- close buffer w/o closing the window
-keymap.set('n', '<leader>bd', '<cmd>bp|bd #<CR>', { desc = 'Close buffer without closing the window', noremap = true, silent = true })
+keymap.set('n', '<leader>bd', '<cmd>bp|bd #<CR>',
+  { desc = 'Close buffer without closing the window', noremap = true, silent = true })
 
 -- make current file executable
-keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { desc = 'Add executable permissions to current file', noremap = true, silent = true })
+keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>',
+  { desc = 'Add executable permissions to current file', noremap = true, silent = true })
 
 -- press leader twice to source current file
 keymap.set('n', '<leader><leader>', function()
   vim.cmd('so %')
-end, {desc = 'Source the current file'})
+end, { desc = 'Source the current file' })
 
 -- toggle relative numbering
 keymap.set('n', '<C-n>', ':set rnu!<CR>', { desc = 'Toggle relative numbering', noremap = true, silent = true })
@@ -133,7 +142,8 @@ function biome_format_in_floating_terminal()
   vim.fn.termopen("~/.local/share/nvim/mason/bin/biome check --apply .")
 end
 
-keymap.set('n', '<leader>tb', '<cmd>lua biome_format_in_floating_terminal()<CR>', { desc = '[T]erminal [b]iome format', noremap = true, silent = true })
+keymap.set('n', '<leader>tb', '<cmd>lua biome_format_in_floating_terminal()<CR>',
+  { desc = '[T]erminal [b]iome format', noremap = true, silent = true })
 keymap.set('t', '<C-w>q', '<C-\\><C-n>:q!<CR>', { desc = 'Terminal [C-w]indow [q]uit', noremap = true, silent = true })
 
 
@@ -175,4 +185,3 @@ keymap.set('t', '<C-w>q', '<C-\\><C-n>:q!<CR>', { desc = 'Terminal [C-w]indow [q
 --
 -- -- netrw file explorer as a toggleable vertical left split
 -- keymap.set('n', '<C-e>', '<cmd>PanelFileDir<CR>', { desc = 'Explore(toggle) file dir', noremap = true, silent = true })
-
