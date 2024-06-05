@@ -11,7 +11,6 @@ function M.config(_, opts)
   vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
 
   local function restore_filetypes()
-    print('running')
     if vim.bo.filetype == '' then
       vim.cmd('filetype detect')
     end
