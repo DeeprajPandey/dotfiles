@@ -135,6 +135,7 @@ function M.config(_, opts)
         { name = 'nvim_lua' },
         -- { name = 'copilot' },
         -- { name = 'codeium' },
+        -- { name = 'crates' },
         { name = 'css-variables' },
         { name = 'cmp-sass-variables' },
         { name = 'pypi' },
@@ -274,6 +275,16 @@ function M.config(_, opts)
         },
       }),
     matching = { disallow_symbol_nonprefix_matching = false },
+  })
+
+  -- buffer-specific completions for rust crate version in Cargo.toml files
+  vim.api.nvim_create_autocmd('BufRead', {
+    desc = 'Lazy load crate version completions when opening Cargo.toml',
+    group = vim.api.nvim_create_augroup('CmpSourceCargo', { clear = true }),
+    pattern = 'Cargo.toml',
+    callback = function()
+      cmp.setup.buffer({ sources = { { name = 'crates' } } })
+    end,
   })
 end
 
