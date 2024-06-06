@@ -153,6 +153,10 @@ function M.config(_, opts)
           },
           -- toggle below to ignore Lua_LS's noisy `missing-fields` warnings
           -- diagnostics = { disable = { 'missing-fields' } },
+          -- do not send any telemetry data
+          telemetry = {
+            enable = false,
+          },
         },
       },
     },
