@@ -118,6 +118,29 @@ end, { desc = 'Source the current file' })
 -- toggle relative numbering
 keymap.set('n', '<C-n>', ':set rnu!<CR>', { desc = 'Toggle relative numbering', noremap = true, silent = true })
 
+local function show_documentation()
+  local filetype = vim.bo.filetype
+  local cword = vim.fn.expand('<cword>') -- get word under cursor once
+
+  if vim.tbl_contains({ 'vim', 'help' }, filetype) then
+    vim.cmd('h ' .. cword)
+  elseif vim.tbl_contains({ 'man' }, filetype) then
+    vim.cmd('Man ' .. cword)
+  elseif filetype == 'toml' and vim.fn.expand('%:t') == 'Cargo.toml' then
+    if require('crates').popup_available() then
+      require('crates').show_popup()
+    else
+      vim.notify('Crates popup not available', vim.log.levels.INFO)
+    end
+  elseif vim.lsp.buf_is_attached(0, 1) then
+    vim.lsp.buf.hover()
+  else
+    vim.notify('No hover information available', vim.log.levels.INFO)
+  end
+end
+
+keymap.set('n', 'K', show_documentation, { desc = 'Show Context-Aware Documentation', noremap = true, silent = true })
+
 -- HACK: format js files using biome in a floating terminal
 -- TODO: remove this after neovim v0.10 is released. Dynamic attach will allow lsp formatting w/ biome
 function biome_format_in_floating_terminal()
