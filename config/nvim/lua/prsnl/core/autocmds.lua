@@ -1,10 +1,33 @@
 -- [[ Autocommands ]]
+local function update_listchars()
+  local ts = vim.opt.softtabstop:get()
+  local current_listchars = vim.opt.listchars:get()
+
+  local spaces = string.rep(' ', math.max(ts - 1, 0))
+  -- print("Tabstop:", ts, "Spaces length:", #spaces)
+  current_listchars['leadmultispace'] = '▏' .. spaces
+
+  -- BUG: `»` (U+00BB) followed by 3 spaces is not accepted as a valid value for `tab` in listchars object.
+  -- 1,2,4 spaces are okay. Seems to be an issue with how the character width is rendered by nvim.
+  -- TODO: try with different terminal font and in clean mode. If not resolved, open Issue on neovim repo.
+
+  vim.opt.listchars = current_listchars
+end
+
+-- Update listchars whenever tabstop changes
+vim.api.nvim_create_autocmd({ "OptionSet" }, {
+  desc = 'Update listchars based on the current value of softtabstop when it changes',
+  group = vim.api.nvim_create_augroup('update-listchars', { clear = true }),
+  pattern = 'softtabstop',
+  callback = update_listchars
+})
+
 -- Update buffer contents when file is updated outside vim
 -- Ref: https://stackoverflow.com/questions/2490227/how-does-vims-autoread-work
-vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter'}, {
+vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
   desc = 'Automatically check for reloading file when it\'s changed externally. Fixes autoread behaviour',
   group = vim.api.nvim_create_augroup('reload-file-on-update', { clear = true }),
-  pattern = '*',  -- apply to all buffers
+  pattern = '*', -- apply to all buffers
   command = 'checktime'
 })
 
@@ -65,7 +88,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 })
 
 -- Disable line numbers in terminal mode
-vim.api.nvim_create_autocmd({'TermOpen'}, {
+vim.api.nvim_create_autocmd({ 'TermOpen' }, {
   desc = 'Disable line numbers in terminal mode',
   group = vim.api.nvim_create_augroup('terminal-settings', { clear = true }),
   pattern = '*',
@@ -76,10 +99,10 @@ vim.api.nvim_create_autocmd({'TermOpen'}, {
 })
 
 -- Set spell checking for certain file types
-vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'}, {
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   desc = 'Enable spell checking for text and markdown files',
   group = vim.api.nvim_create_augroup('spellcheck', { clear = true }),
-  pattern = {'*.txt', '*.md'},
+  pattern = { '*.txt', '*.md' },
   callback = function()
     vim.opt_local.spell = true
   end,
@@ -116,4 +139,3 @@ vim.api.nvim_create_autocmd('VimResized', {
 --     vim.wo.statusline = '%f - word count: %w'
 --   end,
 -- })
-
