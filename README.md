@@ -126,7 +126,7 @@ I use [argbash](https://github.com/matejak/argbash) to generate the `run` script
 
    > _Psst... if you have used my dotfiles, `bat` should be installed; otherwise, replace it with `cat`_
    >
-   > Note: I use `ripgrep` in the pre-commit script. If you have modififed the brewfile and don't have ripgrep, change `rg "run.m4$"` to `grep "run.m4$"` on line 7 of the `./assets/git_hooks/pre-commit` file.
+   > Note: I use `ripgrep` in the pre-commit script. If you have modififed the brewfile and don't have ripgrep, change `rg "run.m4$"` to `grep "run.m4$"` on line 7 of `./assets/git_hooks/pre-commit`.
 
 ## Support & Contributions
 

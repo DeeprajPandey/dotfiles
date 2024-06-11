@@ -73,7 +73,7 @@ function install_core_dependencies() {
     # Run Docker if it's not running
     if ! type -a docker > /dev/null 2>&1; then
         open /Applications/Docker.app
-        
+
         # Wait until Docker daemon is running and has completed initialisation
         until docker stats --no-stream &> /dev/null; do
             echo -e "\\n${YELLOW}[INFO] Waiting for Docker to launch...${NC}"
@@ -89,6 +89,8 @@ function install_core_dependencies() {
     mkdir -p "$HOME/.gnupg"
     mkdir -p "$HOME/.config/spicetify"
     log_success "Directories initialised and linked."
+
+    log_info "Install rustup and rust. Ref: https://www.rust-lang.org/learn/get-started"
 }
 
 # Installs Brew formulae and casks from Brewfile and sets up the shell using Dotbot.
@@ -120,7 +122,7 @@ function setup_environment_and_shell() {
 function apply_macos_configurations() {
     # Set macOS preferences - we will run this last because this will reload the shell
     echo -e "\\n${YELLOW}[INFO] Applying MacOS configurations...${NC}"
-    
+
     # InternetServices (setting timezone), destroy fv key on standby outputs can be safely ignored
     # https://github.com/LnL7/nix-darwin/issues/359#issuecomment-1721755685
     # shellcheck source=/dev/null
@@ -144,4 +146,4 @@ else
     apply_macos_configurations
 fi
 
-# ] <-- needed because of Argbash 
+# ] <-- needed because of Argbash
