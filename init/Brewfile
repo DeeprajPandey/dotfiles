@@ -58,7 +58,7 @@ brew "procs"
 brew "pv"
 # brew "rename"
 brew "ripgrep"
-brew "rustscan"
+brew "rustscan"                     # rust port - nmap
 brew "sccache"
 brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
