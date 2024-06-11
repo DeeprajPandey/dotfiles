@@ -25,3 +25,7 @@ export PIPENV_VENV_IN_PROJECT=1
 
 # Enable IDF virtual environment when needed
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
+
+# Setup fzf shell integration
+# shellcheck source=/opt/homebrew/bin/fzf
+source <(fzf --zsh)
