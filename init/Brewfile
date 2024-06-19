@@ -94,6 +94,8 @@ cask "balenaetcher"                 # flash OS images
 cask "calibre"                      # ebook management + reader
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
+cask "darktable"                    # raw photo editor
+cask "digikam"                      # digital photo manager
 cask "firefox"
 cask "git-credential-manager"
 cask "google-drive"
