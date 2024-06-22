@@ -76,7 +76,7 @@ M = {
         ensure_installed = {
           -- update with external debuggers when needed
           'python',
-          -- 'codelldb',
+          'codelldb', -- for rustaceanvim
           -- 'delve',
         },
       },
