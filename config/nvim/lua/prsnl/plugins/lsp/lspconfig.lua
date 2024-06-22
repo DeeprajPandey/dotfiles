@@ -140,7 +140,21 @@ function M.config(_, opts)
     jsonls = {},
     pyright = {},
     -- gopls = {},
-    -- rust_analyzer = {},
+    -- rust_analyzer = {
+    --   filetypes = { 'rust' },
+    --   root_dir = require('lspconfig').util.root_pattern('Cargo.toml', 'rust-project.json'),
+    --   single_file_support = true,
+    --   settings = {
+    --     ['rust-analyzer'] = {
+    --       -- cargo = {
+    --       --   allFeatures = true, -- crate autocompletes
+    --       -- },
+    --       diagnostics = {
+    --         enable = true,
+    --       }
+    --     }
+    --   }
+    -- },
 
     lua_ls = {
       -- cmd = {...},
@@ -170,6 +184,7 @@ function M.config(_, opts)
 
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
+    'codelldb', -- for rustaceanvim
     'stylua', -- lua formatter
   })
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -184,6 +199,10 @@ function M.config(_, opts)
         -- e.g. turn off LSP formatters for certain servers
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
 
+        -- mason-lspconfig assumes we are using nvim-lspconfig.rust_analyzer. Explicitly return non for this to prevent
+        -- two instances of rust_analyzer LSP servers for rust buffers
+        -- if server_name == 'rust_analyzer' then
+        --   server = function() end
         if server_name == 'tsserver' then
           server.init_options = {
             preferences = {
