@@ -4,7 +4,9 @@ Include ~/.ssh/config_local
 # outside version control
 Include ~/.ssh/config_extra
 
-Host * ServerAliveInterval 120
+Host *
+  IgnoreUnknown AddKeysToAgent,UseKeychain
+  ServerAliveInterval 120
 
 Host oracle-tempadmin
   HostName 144.24.97.5
@@ -18,6 +20,14 @@ Host oracle-ubuntu
 Host gitlab.com
   PreferredAuthentications publickey
   IdentityFile ~/.ssh/gitlab_ed25519
+
+# GitHub.com
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  User git
+  AddKeysToAgent yes
+  UseKeychain yes
 
 # Lab M2 MBP
 Host workpc
