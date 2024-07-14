@@ -91,7 +91,7 @@ cask "android-platform-tools"       # adb
 cask "aldente"
 # cask "autodesk-fusion360"         # noinstall: checksum undefined
 cask "balenaetcher"                 # flash OS images
-cask "calibre"                      # ebook management + reader
+# cask "calibre"                      # ebook management + reader
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
 cask "darktable"                    # raw photo editor
@@ -188,49 +188,49 @@ brew "whalebrew"
 
 # Install VSCode extensions
 
-# Generic
-vscode "DavidAnson.vscode-markdownlint"              # md linting and stylechecking
-# vscode "MS-vsliveshare.vsliveshare"
-vscode "VisualStudioExptTeam.vscodeintellicode"
-vscode "adpyke.codesnap"                             # code screenshots
-vscode "christian-kohler.path-intellisense"          # autocomplete filenames
-vscode "coolbear.systemd-unit-file"                  # syntax highlighting for systemd unit files
-vscode "streetsidesoftware.code-spell-checker"       # helpful for latex
-vscode "timonwong.shellcheck"
-vscode "vscodevim.vim"                               # vim keybindings in vscode (note: enable keyrepeat (check macos.sh for VSCode settings))
-vscode "wayou.vscode-todo-highlight"
-vscode "yzhang.markdown-all-in-one"                  # preview, shortcuts, ToC for writing md
-
-# Themes & Icons
-vscode "Catppuccin.catppuccin-vsc"
-vscode "Catppuccin.catppuccin-vsc-icons"
-vscode "Equinusocio.vsc-material-theme"
-vscode "GulajavaMinistudio.mayukaithemevsc"
-vscode "Nimda.deepdark-material"
-vscode "PKief.material-icon-theme"
-vscode "alexdauenhauer.catppuccin-noctis"            # catppuccin colour + noctis highlighting
-vscode "dnicolson.binary-plist"                      # opens new editor with xml and writes to binary plist on the fly
-vscode "dracula-theme.theme-dracula"
-vscode "ftsamoyed.theme-pink-cat-boo"
-vscode "liviuschera.noctis"
-vscode "ryanolsonx.solarized"
-vscode "teabyii.ayu"
-# vscode "webrender.synthwave-x-fluoromachine"       # true synthwave, needs custom css; goes with Operator Mono
-
-# C/C++
-vscode "ms-vscode.cmake-tools"
-vscode "ms-vscode.cpptools"
-vscode "ms-vscode.cpptools-extension-pack"
-vscode "ms-vscode.makefile-tools"                    # makefile syntax highlighting
-vscode "twxs.cmake"
-
-# Python
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"                    # py lsp
-vscode "njpwerner.autodocstring"
-vscode "KevinRose.vsc-python-indent"
-vscode "donjayamanne.python-environment-manager"
-
-# Containerised
-vscode "ms-azuretools.vscode-docker"
-vscode "ms-vscode-remote.remote-containers"          # dev containers
+# # Generic
+# vscode "DavidAnson.vscode-markdownlint"              # md linting and stylechecking
+# # vscode "MS-vsliveshare.vsliveshare"
+# vscode "VisualStudioExptTeam.vscodeintellicode"
+# vscode "adpyke.codesnap"                             # code screenshots
+# vscode "christian-kohler.path-intellisense"          # autocomplete filenames
+# vscode "coolbear.systemd-unit-file"                  # syntax highlighting for systemd unit files
+# vscode "streetsidesoftware.code-spell-checker"       # helpful for latex
+# vscode "timonwong.shellcheck"
+# vscode "vscodevim.vim"                               # vim keybindings in vscode (note: enable keyrepeat (check macos.sh for VSCode settings))
+# vscode "wayou.vscode-todo-highlight"
+# vscode "yzhang.markdown-all-in-one"                  # preview, shortcuts, ToC for writing md
+#
+# # Themes & Icons
+# vscode "Catppuccin.catppuccin-vsc"
+# vscode "Catppuccin.catppuccin-vsc-icons"
+# vscode "Equinusocio.vsc-material-theme"
+# vscode "GulajavaMinistudio.mayukaithemevsc"
+# vscode "Nimda.deepdark-material"
+# vscode "PKief.material-icon-theme"
+# vscode "alexdauenhauer.catppuccin-noctis"            # catppuccin colour + noctis highlighting
+# vscode "dnicolson.binary-plist"                      # opens new editor with xml and writes to binary plist on the fly
+# vscode "dracula-theme.theme-dracula"
+# vscode "ftsamoyed.theme-pink-cat-boo"
+# vscode "liviuschera.noctis"
+# vscode "ryanolsonx.solarized"
+# vscode "teabyii.ayu"
+# # vscode "webrender.synthwave-x-fluoromachine"       # true synthwave, needs custom css; goes with Operator Mono
+#
+# # C/C++
+# vscode "ms-vscode.cmake-tools"
+# vscode "ms-vscode.cpptools"
+# vscode "ms-vscode.cpptools-extension-pack"
+# vscode "ms-vscode.makefile-tools"                    # makefile syntax highlighting
+# vscode "twxs.cmake"
+#
+# # Python
+# vscode "ms-python.python"
+# vscode "ms-python.vscode-pylance"                    # py lsp
+# vscode "njpwerner.autodocstring"
+# vscode "KevinRose.vsc-python-indent"
+# vscode "donjayamanne.python-environment-manager"
+#
+# # Containerised
+# vscode "ms-azuretools.vscode-docker"
+# vscode "ms-vscode-remote.remote-containers"          # dev containers
