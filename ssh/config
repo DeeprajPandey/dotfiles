@@ -1,5 +1,29 @@
+# host-specific customisations
+Include ~/.ssh/config_local
+
+# outside version control
+Include ~/.ssh/config_extra
+
+Host * ServerAliveInterval 120
+
+Host oracle-tempadmin
+  HostName 144.24.97.5
+  User tempadmin
+
+Host oracle-ubuntu
+  HostName 144.24.97.5
+  User unwired-cluster-admin
+
 # GitLab.com
 Host gitlab.com
   PreferredAuthentications publickey
   IdentityFile ~/.ssh/gitlab_ed25519
+
+# Lab M2 MBP
+Host workpc
+  Hostname vi-mbp.local
+
+# Personal
+Host air
+  Hostname po-mba.local
 
