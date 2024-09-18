@@ -7,19 +7,11 @@ Include ~/.ssh/config_extra
 Host *
   IgnoreUnknown AddKeysToAgent,UseKeychain
   ServerAliveInterval 120
-
-Host oracle-tempadmin
-  HostName 144.24.97.5
-  User tempadmin
-
-Host oracle-ubuntu
-  HostName 144.24.97.5
-  User unwired-cluster-admin
+  ServerAliveCountMax 30
 
 # GitLab.com
 Host gitlab.com
   PreferredAuthentications publickey
-  IdentityFile ~/.ssh/gitlab_ed25519
 
 # GitHub.com
 Host github.com
@@ -36,4 +28,28 @@ Host workpc
 # Personal
 Host air
   Hostname po-mba.local
+
+###########
+## ho.me ##
+###########
+Host koala-tailscale
+  HostName 100.126.140.35
+
+Host koala-wg
+  HostName 172.16.172.3
+
+Host tulip-wg
+  HostName 172.16.172.2
+
+Host tulip-local
+  HostName 192.168.1.2
+
+Host dns-local
+  HostName 192.168.1.3
+
+Host oracle-tempadmin
+  HostName 144.24.97.5
+
+Host oracle-ubuntu
+  HostName 144.24.97.5
 
