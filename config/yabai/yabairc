@@ -1,7 +1,7 @@
 # Enable for debugging
 # yabai -m config debug_output on
 
-yabai -m config auto_balance            off           \
+yabai -m config auto_balance            on           \
                 auto_padding            on            \
                 external_bar            all:2:0      \
                 focus_follows_mouse     off           \
