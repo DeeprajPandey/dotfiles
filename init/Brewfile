@@ -76,6 +76,8 @@ brew "tokei"
 brew "vbindiff"
 # brew "visidata"                     # tabular data tui explorer
 brew "wget"
+brew "wireguard-go"                 # wireguard vpn
+brwe "wireguard-tools"              # wireguard vpn tools
 brew "xh"                           # rust port - curl; HTTPie API
 brew "yabai"                        # tiling window manager; koekeishiya/formulae
 brew "yamllint"
@@ -96,6 +98,7 @@ cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
 cask "darktable"                    # raw photo editor
 cask "digikam"                      # digital photo manager
+cask "drawio"                       # draw.io desktop client
 cask "firefox"
 cask "git-credential-manager"
 cask "google-drive"
