@@ -1,140 +1,110 @@
 # ~/.deepraj 🖥️
 
-Welcome to the backbone of my MacOS setup! This repository contains my personally curated dotfiles, optimised for MacOS. The setup is managed using [Dotbot](https://github.com/anishathalye/dotbot) and a custom `run` script, streamlining the process to set up a new system or to synchronise existing setups.
+This repository is my toolkit for setting up and managing my Mac. It handles the heavy lifting of configuring everything I need for a clean macOS environment. I use [Dotbot](https://github.com/anishathalye/dotbot) and a custom `run` script to keep everything in sync. Whether you're here to explore my setup or to look for ideas for your own dotfiles, feel free to dive in and make it your own.
 
 ## Getting Started
 
 ### Prerequisites
 
-- A MacOS system.
-- A working internet connection.
-- A terminal with Full Disk Access, necessary for writing MacOS defaults:
-  - Navigate to `System Preferences -> Privacy & Security -> Full Disk Access`
-  - Locate your current terminal in the list and check it, or click the `+` button to add your terminal application.
-  - If the terminal application was open during this process, quit and restart it to ensure changes take effect.
+- **macOS system:** These dotfiles are specifically tailored for macOS.
+- **Terminal with Full Disk Access:** For modifying macOS defaults, ensure your terminal has Full Disk Access.
+  - Navigate to `System Preferences -> Privacy & Security -> Full Disk Access`.
+  - Check your terminal application in the list, or add it if needed.
+  - Restart your terminal for changes to take effect.
   <img src="./assets/full_disk.png" alt="MacOS Ventura full disk access" width="70%"/>
-- `git` installed. If you need to install Homebrew first, see lines 60-61 in `run.m4` for installation commands.
+- **`git` installed:**  If you need to install Homebrew first, check `run.m4` (lines 60-61) for commands.
 
-### The _Runner_
+### The `run` Script
 
-The `run` script is the centerpiece of this repository. It automates the setup and offers command-line arguments for the usual use-cases:
+The `run` script is the core of this repository, offering automated setup and command-line arguments for various tasks:
 
-- `-i, --install`: Perform a fresh installation. This is the default behavior.
-- `-u, --update`: Update the installed tools and applications.
-- `-c, --configure-os`: Reconfigure the operating system settings.
-- `-h, --help`: Print help.
+- `-i, --install`: Perform a fresh installation (default).
+- `-u, --update`: Update installed tools and applications.
+- `-c, --configure-os`: Reconfigure operating system settings.
+- `-h, --help`: Display help information.
 
 ## Installation
 
-With the prerequisites in place, follow these steps to get the dotfiles up and running:
-
-1. **Clone this repository**
+1. Clone the repository:
 
    ```sh
-   git clone https://github.com/DeeprajPandey/dotfiles.git ~/dotfiles
+   git clone https://github.com/[USERNAME]/dotfiles.git ~/dotfiles
    cd ~/dotfiles
    ```
 
-2. **Add execute permissions**
+2. Add execute permissions:
 
    ```sh
    chmod +x run
    ```
 
-3. **Run the script**
+3. Run the setup script:
 
    ```sh
    ./run
    ```
 
-   By default, the script performs a fresh installation, sets up the environment, and applies MacOS configurations. Currently, this is equivalent to _running_ with the `-i` flag.
+   This will perform a fresh installation, set up the environment, and apply macOS configurations.
 
-   ```sh
-   ./run --install
-   ```
+## Post-Installation
 
-   After the first run, there should be no need to run it in this mode again.
-
-## Post Installation
-
-1. Restart your device for changes to apply.
-2. Open iTerm, go to `General -> Preferences` Change `Save changes` to **Automatically**.
-
+1. **Restart your device** for changes to take effect.
+2. **iTerm Settings:** Go to `General -> Preferences` in iTerm and change "Save changes" to **Automatically**.
    <img src="./assets/iterm_pref_autosave.png" alt="Screenshot of iTerm preferences pane where we have to modify `save changes` to automatically from the dropdown." width="70%"/>
 
-### Additional App-Specific Steps
-
-On first run of Shottr, make sure you turn off the default screenshot keybindings for full screen and area screenshots. Go to `System Preferences -> Keyboard -> Keyboard Shortcuts -> Screenshots`
-
-<img src="./assets/screenshot_keybindings.png" alt="Screenshot of iTerm preferences pane where we have to modify `save changes` to automatically from the dropdown." width="70%"/>
+3. **Shottr Settings:** Disable default screenshot keybindings in `System Preferences -> Keyboard -> Keyboard Shortcuts -> Screenshots` after your first run of Shottr.
+   <img src="./assets/screenshot_keybindings.png" alt="Screenshot of iTerm preferences pane where we have to modify `save changes` to automatically from the dropdown." width="70%"/>
 
 ## Gotchas
 
-Keeping a friendly log of control flow assumptions. I will get around to refactoring these into more elegant solutions if I get some time. Until then, this section serves as the first place to check if something awry comes up during installation.
+- **iTerm2 Configuration:**  The script configures iTerm2 with a custom preferences path (`~/.config/iterm/Preferences`) that's created later in the installation process. If iTerm2 encounters errors, rerun the script with `./run -u`.
 
-1. iTerm section of `macos.sh` sets a custom prefs path to `~/.config/iterm/Preferences`. Only, this directory will not be created until dotbot `install` script completes setting up symlinks to `~/.config`. If iTerm throws any errors, it's possible `run` was terminated before it could finish. Just rerun with `/.run -u` and it should work.
-
-## Customisations
+## Customizations
 
 ### Dotfile Modifications
 
-Updating the dotfiles is straightforward. Edit any of the files and, to propagate modifications to the Brewfile and the rest of the dotfiles, run with the `-u` flag. This triggers a `brew upgrade`, reruns Dotbot to symlink the dotfiles, and executes any setup scripts to ensure your environment is correctly configured.
+Update dotfiles with these steps:
 
-```sh
-./run --update
-```
+1. Edit any file in the repository.
+2. Run `./run --update` to propagate changes to the Brewfile, symlink dotfiles, and run setup scripts.
 
-For modifications to the `macos.sh` script, _run_ with the `-c` flag.
+For modifications to `macos.sh`, run `./run --configure-os`.
 
-```sh
-./run --configure-os
-```
+### `run` Script Modifications
 
-### `run` Modifications
+The `run` script is generated using [argbash](https://github.com/matejak/argbash) from the `run.m4` template.  To modify it:
 
-I use [argbash](https://github.com/matejak/argbash) to generate the `run` script from an argbash template file `run.m4` included in this repository. If you need to update the main `run` script, follow these instructions:
-
-1. [Install argbash](https://argbash.readthedocs.io/en/latest/install.html).
-
-   > _Psst... if you have used my dotfiles, argbash is probably already set up as a Docker container. Run `argbash -h` to check. I use a shell function with fun argument modifications to invoke argbash system-wide - just to avoid keeping up with [individual releases](https://argbash.readthedocs.io/en/latest/install.html#user-installation) manually._
-
-2. Make your changes to the `run.m4` file.
-
-   > _Psst.. use [bash syntax highlighting](https://argbash.readthedocs.io/en/latest/guide.html#your-script) in your IDE._
-
-3. Use argbash to generate the run script.
-
+1. Install argbash: [https://argbash.readthedocs.io/en/latest/install.html](https://argbash.readthedocs.io/en/latest/install.html). If dotfiles were set up using this `run` script, check if argbash is installed already as a docker container with `argbash -h`.
+2. Edit the `run.m4` file (using bash syntax highlighting for better clarity).
+3. Generate the `run` script:
    ```sh
    argbash run.m4 -c -o run
    ```
+   (Omit `-c` to skip all comments in generated script.)
 
-   Omit the `-c` flag if you don't want to run argbash in commented mode.
+**Optional: Pre-commit Hook**
 
-4. [Optional] Add a pre-commit hook to generate the `run` script using argbash every time you update and commit a change to `run.m4`. Execute the following snippet from the root of this repo.
+Automate script generation after `run.m4` changes using this snippet in the repository root:
 
-   ```sh
-   # Check if .git/hooks/pre-commit already exists
-   if [ -e .git/hooks/pre-commit ]; then
-      # If it exists, append the contents of the new pre-commit hook to the existing one
-      bat ./assets/git_hooks/pre-commit >> .git/hooks/pre-commit
-   else
-      # If it doesn't exist, copy the new pre-commit hook and set the execute permission
-      cp ./assets/git_hooks/pre-commit .git/hooks/
-      chmod +x .git/hooks/pre-commit
-   fi
-   ```
+```sh
+if [ -e .git/hooks/pre-commit ]; then
+  bat ./assets/git_hooks/pre-commit >> .git/hooks/pre-commit
+else
+  cp ./assets/git_hooks/pre-commit .git/hooks/
+  chmod +x .git/hooks/pre-commit
+fi
+```
 
-   > _Psst... if you have used my dotfiles, `bat` should be installed; otherwise, replace it with `cat`_
-   >
-   > Note: I use `ripgrep` in the pre-commit script. If you have modififed the brewfile and don't have ripgrep, change `rg "run.m4$"` to `grep "run.m4$"` on line 7 of `./assets/git_hooks/pre-commit`.
+(If `bat` is not installed, replace it with `cat`. If you don't have ripgrep, replace `rg "run.m4$"` with `grep "run.m4$"` on line 7 of `./assets/git_hooks/pre-commit`.)
+
 
 ## Support & Contributions
 
-If you run into issues or have any questions, please feel free to [open an issue](https://github.com/DeeprajPandey/dotfiles/issues).
+For issues or questions, please feel free to [open an issue](https://github.com/DeeprajPandey/dotfiles/issues).
 
 While I'll strive to respond, do note that this is not an actively maintained project. These dotfiles represent configurations that are tailored to my preferences and may not suit everyone's needs.
 
-Contributions are always welcome! Please create a pull request with your changes or improvements.
+Contributions are always welcome! Feel free to create a pull request with your changes or improvements.
 
 ## License
 
