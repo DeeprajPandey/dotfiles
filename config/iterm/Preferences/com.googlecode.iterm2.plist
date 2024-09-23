@@ -9507,7 +9507,7 @@
 	<key>QuitWhenAllWindowsClosed</key>
 	<true/>
 	<key>Selection Respects Soft Boundaries</key>
-	<false/>
+	<true/>
 	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>SoundForEsc</key>
