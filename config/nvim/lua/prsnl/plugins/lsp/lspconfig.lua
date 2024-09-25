@@ -33,13 +33,13 @@ function M.config(_, opts)
       map('gI', builtin.lsp_implementations, '[G]oto [I]mplementation')
       map('<leader>D', builtin.lsp_type_definitions, 'Type [D]efinition')
       map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-      map('<leader>f', function()
-        -- never request typescript language server for formatting
-        vim.lsp.buf.format({
-          async = true,
-          filter = function(client) return client.name ~= "tsserver" end
-        })
-      end, '[F]ormat Document')
+      -- map('<leader>f', function()
+      --   -- never request typescript language server for formatting
+      --   vim.lsp.buf.format({
+      --     async = true,
+      --     filter = function(client) return client.name ~= "tsserver" end
+      --   })
+      -- end, '[F]ormat Document')
       map('<leader>ca', function()
         -- TODO: context is everything but 'empty' and it doesn't show `ruff fix all`. Use default code_action until fixed.
         -- vim.lsp.buf.code_action { context = { only = { 'quickfix', 'refactor', 'refactor.extract', 'refactor.inline', 'refactor.rewrite', 'source', 'source.organizeImports' } } }
