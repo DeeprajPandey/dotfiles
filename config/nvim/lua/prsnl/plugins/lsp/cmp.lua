@@ -16,13 +16,17 @@ M = {
         return 'make install_jsregexp'
       end
       )(),
-      dependencies = { 'rafamadriz/friendly-snippets' }, -- useful snippets
+      dependencies = {
+        'rafamadriz/friendly-snippets',
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load()
+        end,
+      }, -- useful snippets
     },
     'saadparwaiz1/cmp_luasnip',                          -- autocompletions
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
     'SergioRibera/cmp-dotenv',
-    'hrsh7th/cmp-nvim-lua', -- neovim lua api
     -- {
     --   'Exafunction/codeium.nvim',
     --   enabled = false,
@@ -102,8 +106,6 @@ function M.config(_, opts)
     end,
   })
 
-  require('luasnip.loaders.from_vscode').lazy_load()
-
   -- Configure nvim-cmp with sources and keymaps
   cmp.setup({
     performance = {
@@ -132,7 +134,6 @@ function M.config(_, opts)
         { name = 'nvim_lsp_signature_help' },
         { name = 'calc' },
         { name = 'dotenv' },
-        { name = 'nvim_lua' },
         -- { name = 'copilot' },
         -- { name = 'codeium' },
         -- { name = 'crates' },
