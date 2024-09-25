@@ -40,7 +40,11 @@ function M.config(_, opts)
           filter = function(client) return client.name ~= "tsserver" end
         })
       end, '[F]ormat Document')
-      map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+      map('<leader>ca', function()
+        -- TODO: context is everything but 'empty' and it doesn't show `ruff fix all`. Use default code_action until fixed.
+        -- vim.lsp.buf.code_action { context = { only = { 'quickfix', 'refactor', 'refactor.extract', 'refactor.inline', 'refactor.rewrite', 'source', 'source.organizeImports' } } }
+        vim.lsp.buf.code_action()
+      end, '[C]ode [A]ction')
 
       -- fuzzy find all symbols in current document
       map('<leader>ds', builtin.lsp_document_symbols, '[D]ocument [S]ymbols')
