@@ -3,7 +3,7 @@ M = {
   cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
   event = { 'BufReadPre', 'BufNewFile', 'BufWinEnter' },
   dependencies = {
-    'williamboman/mason.nvim',
+    { 'williamboman/mason.nvim', config = true },
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     'hrsh7th/cmp-nvim-lsp',
@@ -71,6 +71,13 @@ function M.config(_, opts)
           end,
         })
       end
+
+      -- toggle inlay hints (but displaces code)
+      if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+        map('<leader>th', function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+        end, '[T]oggle Inlay [H]ints')
+      end
     end,
   })
 
@@ -136,10 +143,30 @@ function M.config(_, opts)
     cssls = {},
     debugpy = {}, -- for python dap
     emmet_ls = {},
+    -- gopls = {},
     html = {},
     jsonls = {},
-    pyright = {},
-    -- gopls = {},
+    pyright = {
+      filetypes = {'python'},
+      settings = {
+        pyright = {
+          -- Using Ruff's import organizer
+          disableOrganizeImports = true,
+        },
+        python = {
+          analysis = {
+            -- Ignore all files for analysis to exclusively use Ruff for linting
+            ignore = { '*' },
+            autoImportCompletions = true,
+            typeCheckingMode = "off",
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "openFilesOnly", -- "openFilesOnly" or "openFilesOnly"
+            stubPath = vim.fn.stdpath "data" .. "/lazy/python-type-stubs/stubs",
+          },
+        },
+      },
+    },
     -- rust_analyzer = {
     --   filetypes = { 'rust' },
     --   root_dir = require('lspconfig').util.root_pattern('Cargo.toml', 'rust-project.json'),
@@ -155,7 +182,14 @@ function M.config(_, opts)
     --     }
     --   }
     -- },
-
+    ruff_lsp = {
+      init_options = {
+        settings = {
+          -- Any extra CLI arguments for `ruff` go here.
+          args = {},
+        }
+      }
+    },
     lua_ls = {
       -- cmd = {...},
       -- filetypes = { ...},
@@ -198,6 +232,11 @@ function M.config(_, opts)
         -- override values passed by the server config above
         -- e.g. turn off LSP formatters for certain servers
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+
+        if server_name == 'ruff_lsp' then
+          -- Disable hover in favor of Pyright
+          server.capabilities.hoverProvider = false
+        end
 
         -- mason-lspconfig assumes we are using nvim-lspconfig.rust_analyzer. Explicitly return non for this to prevent
         -- two instances of rust_analyzer LSP servers for rust buffers
