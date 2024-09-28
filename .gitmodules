@@ -23,9 +23,6 @@
 [submodule "config/zsh/plugins/powerlevel10k"]
 	path = config/zsh/plugins/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
-[submodule "config/tmux/plugins/rose-pine"]
-	path = config/tmux/plugins/rose-pine
-	url = https://github.com/rose-pine/tmux.git
 [submodule "config/tmux/plugins/tmux-weather"]
 	path = config/tmux/plugins/tmux-weather
 	url = https://github.com/ilya-manin/tmux-weather
