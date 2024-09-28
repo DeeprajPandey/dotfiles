@@ -23,3 +23,6 @@
 [submodule "config/tmux/plugins/tmux-weather"]
 	path = config/tmux/plugins/tmux-weather
 	url = https://github.com/ilya-manin/tmux-weather
+[submodule "config/tmux/plugins/tmux-resurrect"]
+	path = config/tmux/plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect
