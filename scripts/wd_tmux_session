@@ -11,11 +11,10 @@ if [[ -z $selected ]]; then
     exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _)
-tmux_running=$(pgrep tmux)
+selected_name="$(basename "$selected" | tr . -)"
 
-if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s "$selected_name" -c "$selected"
+if [[ -z $TMUX ]]; then
+    tmux new-session -As "$selected_name" -c "$selected"
     exit 0
 fi
 
