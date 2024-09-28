@@ -102,11 +102,11 @@ nmap({ 'x', '"_x', { desc = 'Delete character into null register', noremap = tru
 nmap({ '<C-d>', '<C-d>zz', { desc = 'Scroll half-page down and center cursor', noremap = true } })
 nmap({ '<C-u>', '<C-u>zz', { desc = 'Scroll half-page up and center cursor', noremap = true } })
 
--- quicker window movement (drop the <Ctrl+w>)
-nmap({ '<C-j>', '<C-w>j', { desc = 'Move cursor to the lower window', noremap = true } })
-nmap({ '<C-k>', '<C-w>k', { desc = 'Move cursor to the upper window', noremap = true } })
-nmap({ '<C-h>', '<C-w>h', { desc = 'Move cursor to the left window', noremap = true } })
-nmap({ '<C-l>', '<C-w>l', { desc = 'Move cursor to the right window', noremap = true } })
+-- -- quicker window movement (drop the <Ctrl+w>)
+-- nmap({ '<C-j>', '<C-w>j', { desc = 'Move cursor to the lower window', noremap = true } })
+-- nmap({ '<C-k>', '<C-w>k', { desc = 'Move cursor to the upper window', noremap = true } })
+-- nmap({ '<C-h>', '<C-w>h', { desc = 'Move cursor to the left window', noremap = true } })
+-- nmap({ '<C-l>', '<C-w>l', { desc = 'Move cursor to the right window', noremap = true } })
 
 -- tab management
 nmap({ '<Leader>to', '<cmd>tabnew<CR>', { desc = 'Open new tab', noremap = true } })
