@@ -9,10 +9,10 @@ M = {
     'hrsh7th/cmp-nvim-lsp',
 
     -- LSP status updates
-    { 'j-hui/fidget.nvim', opts = {} },
+    { 'j-hui/fidget.nvim',       opts = {} },
 
     -- LSP for nvim config, runtime and plugins
-    { 'folke/neodev.nvim', opts = {} },
+    { 'folke/neodev.nvim',       opts = {} },
   },
 }
 
@@ -71,7 +71,7 @@ function M.config(_, opts)
           group = vim.api.nvim_create_augroup('prsnl-lsp-detach', { clear = true }),
           callback = function(event2)
             vim.lsp.buf.clear_references()
-            vim.api.nvim_clear_autocmds { group = 'prsnl-lsp-highlight', buffer = event2.buf }
+            vim.api.nvim_clear_autocmds({ group = 'prsnl-lsp-highlight', buffer = event2.buf })
           end,
         })
       end
@@ -79,7 +79,7 @@ function M.config(_, opts)
       -- toggle inlay hints (but displaces code)
       if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
         map('<leader>th', function()
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
         end, '[T]oggle Inlay [H]ints')
       end
     end,
@@ -151,7 +151,7 @@ function M.config(_, opts)
     html = {},
     jsonls = {},
     pyright = {
-      filetypes = {'python'},
+      filetypes = { 'python' },
       settings = {
         pyright = {
           -- Using Ruff's import organizer
@@ -162,11 +162,11 @@ function M.config(_, opts)
             -- Ignore all files for analysis to exclusively use Ruff for linting
             ignore = { '*' },
             autoImportCompletions = true,
-            typeCheckingMode = "off",
+            typeCheckingMode = 'off',
             autoSearchPaths = true,
             useLibraryCodeForTypes = true,
-            diagnosticMode = "openFilesOnly", -- "openFilesOnly" or "openFilesOnly"
-            stubPath = vim.fn.stdpath "data" .. "/lazy/python-type-stubs/stubs",
+            diagnosticMode = 'openFilesOnly', -- "openFilesOnly" or "openFilesOnly"
+            stubPath = vim.fn.stdpath('data') .. '/lazy/python-type-stubs/stubs',
           },
         },
       },
@@ -191,8 +191,8 @@ function M.config(_, opts)
         settings = {
           -- Any extra CLI arguments for `ruff` go here.
           args = {},
-        }
-      }
+        },
+      },
     },
     lua_ls = {
       -- cmd = {...},
@@ -214,7 +214,7 @@ function M.config(_, opts)
     },
     texlab = {},
     -- typescript lang. plugin, if needed: https://github.com/pmizio/typescript-tools.nvim
-    tsserver = {},
+    ts_ls = {},
     yamlfmt = {},
   }
 
@@ -223,11 +223,11 @@ function M.config(_, opts)
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
     'codelldb', -- for rustaceanvim
-    'stylua', -- lua formatter
+    'stylua',   -- lua formatter
   })
-  require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+  require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
-  require('mason-lspconfig').setup {
+  require('mason-lspconfig').setup({
     automatic_installation = true,
     automatic_setup = true,
     handlers = {
@@ -246,12 +246,12 @@ function M.config(_, opts)
         -- two instances of rust_analyzer LSP servers for rust buffers
         -- if server_name == 'rust_analyzer' then
         --   server = function() end
-        if server_name == 'tsserver' then
+        if server_name == 'ts_ls' then
           server.init_options = {
             preferences = {
               -- change to `true` to reduce non-actionable suggestions
               disableSuggestions = false,
-            }
+            },
           }
           -- IMP: don't need this. Filter in formatting keymap skips tsserver
           -- function server.on_attach(client)
@@ -263,7 +263,7 @@ function M.config(_, opts)
         require('lspconfig')[server_name].setup(server)
       end,
     },
-  }
+  })
 end
 
 return M
