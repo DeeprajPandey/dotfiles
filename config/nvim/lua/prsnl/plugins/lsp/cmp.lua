@@ -3,19 +3,18 @@ M = {
   event = { 'InsertEnter' },
   dependencies = {
     'hrsh7th/cmp-nvim-lsp', -- source for builtin lsp client
-    'hrsh7th/cmp-buffer',   -- source for text in buffer
-    'hrsh7th/cmp-path',     -- source for filesystem paths
-    'hrsh7th/cmp-cmdline',  -- source for vim cmdline
+    'hrsh7th/cmp-buffer', -- source for text in buffer
+    'hrsh7th/cmp-path', -- source for filesystem paths
+    'hrsh7th/cmp-cmdline', -- source for vim cmdline
     {
-      'L3MON4D3/LuaSnip',   -- snippet engine
+      'L3MON4D3/LuaSnip', -- snippet engine
       -- (optional) for regex support in snippets
       build = (function()
-        if vim.fn.executable 'make' == 0 then
+        if vim.fn.executable('make') == 0 then
           return
         end
         return 'make install_jsregexp'
-      end
-      )(),
+      end)(),
       dependencies = {
         'rafamadriz/friendly-snippets',
         config = function()
@@ -23,7 +22,7 @@ M = {
         end,
       }, -- useful snippets
     },
-    'saadparwaiz1/cmp_luasnip',                          -- autocompletions
+    'saadparwaiz1/cmp_luasnip', -- autocompletions
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-calc',
     'SergioRibera/cmp-dotenv',
@@ -88,7 +87,7 @@ function M.config(_, opts)
   -- trigger update of active node's dependents on every change
   luasnip.config.set_config({
     history = true,
-    update_events = 'TextChanged,TextChangedI'
+    update_events = 'TextChanged,TextChangedI',
   })
   -- add framework snippets (not enabled by default)
   -- ref: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
@@ -98,8 +97,8 @@ function M.config(_, opts)
   vim.api.nvim_create_autocmd('InsertLeave', {
     callback = function()
       if
-          require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
-          and not require('luasnip').session.jump_active
+        require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+        and not require('luasnip').session.jump_active
       then
         require('luasnip').unlink_current()
       end
@@ -128,22 +127,21 @@ function M.config(_, opts)
       documentation = cmp.config.window.bordered(),
     },
     sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'path' },
-        { name = 'luasnip' },
-        { name = 'nvim_lsp_signature_help' },
-        { name = 'calc' },
-        { name = 'dotenv' },
-        -- { name = 'copilot' },
-        -- { name = 'codeium' },
-        -- { name = 'crates' },
-        { name = 'css-variables' },
-        { name = 'cmp-sass-variables' },
-        { name = 'pypi' },
-      },
-      {
-        { name = 'buffer' },
-      }),
+      { name = 'nvim_lsp' },
+      { name = 'path' },
+      { name = 'luasnip' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'calc' },
+      { name = 'dotenv' },
+      -- { name = 'copilot' },
+      -- { name = 'codeium' },
+      -- { name = 'crates' },
+      { name = 'css-variables' },
+      { name = 'cmp-sass-variables' },
+      { name = 'pypi' },
+    }, {
+      { name = 'buffer' },
+    }),
     formatting = {
       fields = { 'abbr', 'kind', 'menu' },
       format = function(entry, vim_item)
@@ -151,7 +149,7 @@ function M.config(_, opts)
           calc = '[calc]',
           nvim_lsp = '[LSP]', -- 'λ'
           nvim_lua = '[lua]', -- 'Π'
-          path = '[path]',    -- ''
+          path = '[path]', -- ''
           -- copilot = '[copilot]',
           -- codeium = '[codeium]',
           luasnip = '[snip]', -- '⋗'
@@ -160,7 +158,6 @@ function M.config(_, opts)
           buffer = '[buf]', -- 'Ω'
         }
         local menu_name = short_name[entry.source.name] or entry.source.name
-
 
         vim_item.kind = kind_icons[vim_item.kind]
         vim_item.menu = string.format('[%s]', menu_name)
@@ -267,14 +264,13 @@ function M.config(_, opts)
       },
     }),
     sources = cmp.config.sources({
-        { name = 'path' },
-      },
+      { name = 'path' },
+    }, {
       {
-        {
-          name = 'cmdline',
-          option = { ignore_cmds = { 'Man', '!' } },
-        },
-      }),
+        name = 'cmdline',
+        option = { ignore_cmds = { 'Man', '!' } },
+      },
+    }),
     matching = { disallow_symbol_nonprefix_matching = false },
   })
 
