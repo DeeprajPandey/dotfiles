@@ -64,6 +64,20 @@ imap({ '<C-c>', '<Esc>', { desc = 'Map Ctrl+C to Escape in insert mode', noremap
 -- copy current file
 nmap({ '<Leader>sa', ":saveas <C-R>=expand('%')<CR><Left><Left><Left>", { desc = '[S]ave [A]s current file' } })
 
+-- fix spellings
+nmap({
+  '<leader>fs',
+  '1z=',
+  { silent = true, desc = 'Fix spelling under cursor', noremap = true },
+})
+
+-- fix ellipsis
+nmap({
+  '<leader>fe',
+  'mc:%s,\\.\\.\\.,…,g<CR>:nohlsearch<CR>`c',
+  { noremap = true, silent = true, desc = '… -> …' },
+})
+
 -- keep search results in the middle of the screen
 nmap({ 'n', 'nzzzv', { desc = 'Jump to next search result, center screen, and reselect', noremap = true } })
 nmap({ 'N', 'Nzzzv', { desc = 'Jump to previous search result, center screen, and reselect', noremap = true } })
