@@ -15,7 +15,12 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup(
-  { { import = 'prsnl.plugins' }, { import = 'prsnl.plugins.lsp' }, { import = 'prsnl.plugins.git' } },
+  {
+    { import = 'prsnl.plugins' },
+    { import = 'prsnl.plugins.diagnostics' },
+    { import = 'prsnl.plugins.git' },
+    { import = 'prsnl.plugins.lsp' },
+  },
   {
     install = {
       colorscheme = { 'catppuccin', 'habamax' },
