@@ -39,7 +39,7 @@ M = {
           'fileformat',
           icon_only = true,
           padding = { left = 1, right = 0 },
-          separator = ''
+          separator = '',
         },
         'mode',
       },
@@ -53,8 +53,8 @@ M = {
         {
           'searchcount',
           timeout = 3500,
-          separator = ''
-        }
+          separator = '',
+        },
       },
       lualine_z = { 'location', 'progress' },
     },
@@ -86,7 +86,7 @@ function M.config(_, opts)
     local client_str = ''
 
     if #clients < 1 then
-      return '...'
+      return
     end
 
     for i, client in ipairs(clients) do
@@ -107,4 +107,3 @@ function M.config(_, opts)
 end
 
 return M
-
