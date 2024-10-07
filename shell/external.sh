@@ -29,3 +29,8 @@ alias get_idf='. $HOME/esp/esp-idf/export.sh'
 # Setup fzf shell integration
 # shellcheck source=/opt/homebrew/bin/fzf
 source <(fzf --zsh)
+
+# Setup golang paths
+export GOPATH="${HOME}/go"
+export GOROOT="$(brew --prefix golang)/libexec"
+path_append "${GOPATH}/bin:${GOROOT}/bin"

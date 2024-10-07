@@ -44,12 +44,13 @@ M = {
       }
     end,
     formatters_by_ft = {
+      -- install manually
+      go = { 'gofumpt', 'goimports_reviser', 'golines' },
       lua = { 'stylua' },
       python = {
         'ruff_fix', -- To fix lint errors. (ruff with argument --fix)
         'ruff_format', -- To run the formatter. (ruff with argument format)
       },
-      --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
       -- Use the "_" filetype to run formatters on filetypes that don't

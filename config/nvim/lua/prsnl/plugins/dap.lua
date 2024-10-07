@@ -3,63 +3,83 @@ M = {
   keys = {
     {
       '<leader>d<space>',
-      function() require('dap').continue() end,
+      function()
+        require('dap').continue()
+      end,
       remap = false,
-      desc = '[D]AP: Continue or start debugging'
+      desc = '[D]AP: Continue or start debugging',
     },
     {
       '<leader>db',
-      function() require('dap').toggle_breakpoint() end,
+      function()
+        require('dap').toggle_breakpoint()
+      end,
       remap = false,
-      desc = '[D]AP: Toggle [b]reakpoint'
+      desc = '[D]AP: Toggle [b]reakpoint',
     },
     {
       '<leader>dB',
-      function() require('dap').toggle_breakpoint(vim.fn.input('Breakpoint condition: ')) end,
+      function()
+        require('dap').toggle_breakpoint(vim.fn.input('Breakpoint condition: '))
+      end,
       remap = false,
-      desc = '[D]AP: Set conditional [B]reakpoint'
+      desc = '[D]AP: Set conditional [B]reakpoint',
     },
     {
       '<leader>dL',
-      function() require('dap').toggle_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end,
+      function()
+        require('dap').toggle_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+      end,
       remap = false,
-      desc = '[D]AP: [L]og breakpoint'
+      desc = '[D]AP: [L]og breakpoint',
     },
     {
       '<leader>dj',
-      function() require('dap').step_into() end,
+      function()
+        require('dap').step_into()
+      end,
       remap = false,
-      desc = '[D]AP: Step into (vim-motion `[j]`)'
+      desc = '[D]AP: Step into (vim-motion `[j]`)',
     },
     {
       '<leader>dk',
-      function() require('dap').step_out() end,
+      function()
+        require('dap').step_out()
+      end,
       remap = false,
-      desc = '[D]AP: Step out (vim-motion `[k]`)'
+      desc = '[D]AP: Step out (vim-motion `[k]`)',
     },
     {
       '<leader>dl',
-      function() require('dap').step_over() end,
+      function()
+        require('dap').step_over()
+      end,
       remap = false,
-      desc = '[D]AP: Step over (vim-motion `[l]`)'
+      desc = '[D]AP: Step over (vim-motion `[l]`)',
     },
     {
       '<leader>dh',
-      function() require('dap').step_back() end, -- some debuggers might not support reverse debugging
+      function()
+        require('dap').step_back()
+      end, -- some debuggers might not support reverse debugging
       remap = false,
-      desc = '[D]AP: Step back (vim-motion `[h]`)'
+      desc = '[D]AP: Step back (vim-motion `[h]`)',
     },
     {
       '<leader>dr',
-      function() require('dap').restart() end,
+      function()
+        require('dap').restart()
+      end,
       remap = false,
-      desc = '[D]AP: Continue or start debugging'
+      desc = '[D]AP: Continue or start debugging',
     },
     {
       '<leader>dT',
-      function() require('dap').terminate() end,
+      function()
+        require('dap').terminate()
+      end,
       remap = false,
-      desc = '[D]AP: [T]erminate'
+      desc = '[D]AP: [T]erminate',
     },
   },
   dependencies = {
@@ -86,21 +106,48 @@ M = {
     {
       'mfussenegger/nvim-dap-python',
       ft = 'python',
-      dependencies =
-      {
+      dependencies = {
         'mfussenegger/nvim-dap',
-        'rcarriga/nvim-dap-ui'
+        'rcarriga/nvim-dap-ui',
+      },
+    },
+    {
+      'leoluz/nvim-dap-go',
+      ft = 'go',
+      keys = {
+        {
+          '<leader>dgt',
+          function()
+            require('dap-go').debug_test()
+          end,
+          remap = false,
+          desc = '[D]AP [G]o [T]est: Run the nearest go test',
+        },
+        {
+          '<leader>dgl',
+          function()
+            require('dap-go').debug_last()
+          end,
+          remap = false,
+          desc = '[D]AP [G]o [L]ast: Run the last go test',
+        },
+      },
+      dependencies = {
+        'mfussenegger/nvim-dap',
+        'rcarriga/nvim-dap-ui',
       },
     },
   },
 }
 
 function M.config(_, opts)
-  local dap = require 'dap'
+  local dap = require('dap')
   local ui_ok, dapui = pcall(require, 'dapui')
-  local mason_registry = require 'mason-registry'
+  local mason_registry = require('mason-registry')
 
-  if not ui_ok then return end
+  if not ui_ok then
+    return
+  end
   dapui.setup()
   dap.listeners.before.attach['dapui_config'] = dapui.open
   dap.listeners.before.launch['dapui_config'] = dapui.open
