@@ -6,7 +6,20 @@ local M = {
     'nvim-treesitter/playground',
   },
   opts = {
-    ensure_installed = { 'bash', 'c', 'go', 'html', 'lua', 'luadoc', 'markdown', 'query', 'rust', 'vim', 'vimdoc' },
+    ensure_installed = {
+      'bash',
+      'c',
+      'go',
+      'gleam',
+      'html',
+      'lua',
+      'luadoc',
+      'markdown',
+      'query',
+      'rust',
+      'vim',
+      'vimdoc',
+    },
 
     sync_install = false,
     auto_install = true,

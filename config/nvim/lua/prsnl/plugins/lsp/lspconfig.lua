@@ -246,6 +246,13 @@ function M.config(_, opts)
   })
   require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
+  -- add servers not on mason registry
+  servers.gleam = {
+    cmd = { 'gleam', 'lsp' },
+    filetypes = { 'gleam' },
+    root_dir = require('lspconfig').util.root_pattern('gleam.toml', '.git'),
+  }
+
   require('mason-lspconfig').setup({
     automatic_installation = true,
     automatic_setup = true,
@@ -255,6 +262,10 @@ function M.config(_, opts)
         -- override values passed by the server config above
         -- e.g. turn off LSP formatters for certain servers
         server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+
+        if server_name == 'gleam' then
+          server.capabilities.documentFormattingProvider = true
+        end
 
         if server_name == 'ruff_lsp' then
           -- Disable hover in favor of Pyright

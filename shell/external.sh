@@ -34,3 +34,7 @@ source <(fzf --zsh)
 export GOPATH="${HOME}/go"
 export GOROOT="$(brew --prefix golang)/libexec"
 path_append "${GOPATH}/bin:${GOROOT}/bin"
+
+# Setup rebar3 paths
+path_append "${HOME}/.cache/rebar3/bin"
+
