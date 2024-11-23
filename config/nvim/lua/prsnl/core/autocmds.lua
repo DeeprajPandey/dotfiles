@@ -12,23 +12,24 @@ local function update_listchars()
   -- TODO: try with different terminal font and in clean mode. If not resolved, open Issue on neovim repo.
 
   vim.opt.listchars = current_listchars
+  vim.opt.shiftwidth = ts -- update shiftwidth to softtabstop
 end
 
 -- Update listchars whenever tabstop changes
-vim.api.nvim_create_autocmd({ "OptionSet" }, {
+vim.api.nvim_create_autocmd({ 'OptionSet' }, {
   desc = 'Update listchars based on the current value of softtabstop when it changes',
   group = vim.api.nvim_create_augroup('update-listchars', { clear = true }),
   pattern = 'softtabstop',
-  callback = update_listchars
+  callback = update_listchars,
 })
 
 -- Update buffer contents when file is updated outside vim
 -- Ref: https://stackoverflow.com/questions/2490227/how-does-vims-autoread-work
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter' }, {
-  desc = 'Automatically check for reloading file when it\'s changed externally. Fixes autoread behaviour',
+  desc = "Automatically check for reloading file when it's changed externally. Fixes autoread behaviour",
   group = vim.api.nvim_create_augroup('reload-file-on-update', { clear = true }),
   pattern = '*', -- apply to all buffers
-  command = 'checktime'
+  command = 'checktime',
 })
 
 -- Highlight when yanking (copying) text; ref: `:help vim.highlight.on_yank()`
@@ -47,13 +48,25 @@ vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('transient-filetypes', { clear = true }),
   -- list of filetypes this will apply to
   pattern = {
-    'netrw', 'Jaq', 'qf', 'git', 'help', 'man', 'lspinfo',
-    'oil', 'spectre_panel', 'lir', 'DressingSelect', 'tsplayground',
+    'netrw',
+    'Jaq',
+    'qf',
+    'git',
+    'help',
+    'man',
+    'lspinfo',
+    'oil',
+    'spectre_panel',
+    'lir',
+    'DressingSelect',
+    'tsplayground',
   },
   callback = function()
     -- buffer-local mapping to close the buffer with 'q' w/o additional inputs
     vim.api.nvim_buf_set_keymap(0, 'n', 'q', ':close<CR>', {
-      desc = 'Close window', silent = true, nowait = true
+      desc = 'Close window',
+      silent = true,
+      nowait = true,
     })
     -- set the current buffer as non-listed
     vim.bo.buflisted = false
@@ -82,7 +95,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   pattern = '*',
   callback = function()
     local save_cursor = vim.fn.getpos('.')
-    vim.cmd [[%s/\s\+$//e]]
+    vim.cmd([[%s/\s\+$//e]])
     vim.fn.setpos('.', save_cursor)
   end,
 })
