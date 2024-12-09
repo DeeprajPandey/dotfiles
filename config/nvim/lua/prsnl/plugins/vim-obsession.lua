@@ -11,9 +11,25 @@ function M.config(_, opts)
   vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
 
   local function restore_filetypes()
-    if vim.bo.filetype == '' then
-      vim.cmd('filetype detect')
+    local windows = vim.api.nvim_list_wins()
+    local current_win = vim.api.nvim_get_current_win()
+
+    for _, win in ipairs(windows) do
+      -- get buffer for each window
+      local buf = vim.api.nvim_win_get_buf(win)
+
+      -- switch to window
+      vim.api.nvim_set_current_win(win)
+
+      -- restore filetype and syntax
+      if vim.bo[buf].filetype == '' then
+        vim.cmd('filetype detect')
+      end
+      vim.cmd('syntax enable')
     end
+
+    -- return to original window
+    vim.api.nvim_set_current_win(current_win)
   end
 
   local function get_default_session_file()
@@ -25,7 +41,11 @@ function M.config(_, opts)
   local function load_session(session_file)
     if vim.fn.filereadable(session_file) == 1 then
       vim.cmd('source ' .. session_file)
-      restore_filetypes()
+
+      -- Delay syntax restoration slightly to ensure windows are fully loaded
+      vim.schedule(function()
+        restore_filetypes()
+      end)
     else
       print('Session `' .. session_file .. '` not found.')
     end
@@ -71,7 +91,7 @@ function M.config(_, opts)
     desc = 'Autoload session saved by vim-obsession',
     group = vim.api.nvim_create_augroup('vim_obsession-autoload', { clear = true }),
     pattern = '*',
-    callback = session_autoload
+    callback = session_autoload,
   })
 end
 
