@@ -38,7 +38,7 @@ brew "gpg" if OS.mac?
 brew "gping"
 # brew "helix"
 brew "hexyl"                        # hex viewer + auto formatter
-# brew "imagemagick"                  # cli image editor
+brew "imagemagick"                  # cli image editor
 brew "jq"                           # json command line processor
 brew "kondo"
 brew "lnav"                         # log navigator tui
@@ -54,6 +54,7 @@ brew "openssl@1.1"
 brew "paperkey"
 brew "pinentry-mac"
 brew "pipenv"
+brew "potrace"                      # convert bitmap to vector graphics
 brew "procs"
 brew "pv"
 # brew "rename"
@@ -64,6 +65,7 @@ brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
 brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
+brew "skim"                         # pdf viewer with file watching (helpful for latex)
 # brew "sloc"                         # lines of code
 brew "spacer"                       # insert spacers when command output stops
 brew "spicetify-cli"                # customise spotify
@@ -110,6 +112,7 @@ cask "karabiner-elements"
 cask "kap"
 cask "keepassxc", greedy: true      # always upgrade
 # cask "little-snitch"
+cask "localsend"
 # cask "logi-options-plus"          # iff 3S is on the desk
 cask "logseq"
 cask "magicavoxel"                  # 8-bit 3D voxel editor and renderer
