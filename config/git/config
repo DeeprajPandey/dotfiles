@@ -141,7 +141,8 @@
 	program = gpg
 
 [init]
-    defaultBranch = main
+  defaultBranch = main
+  templateDir = /Users/vieuler/.git-templates
 
 [merge]
 	conflictstyle = diff3
@@ -175,9 +176,7 @@
 
 [sequence]
 	editor = vim
-
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager
-
 [credential "https://dev.azure.com"]
 	useHttpPath = true
