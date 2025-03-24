@@ -13,9 +13,9 @@ export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
 # Docker
 export DOCKER_SCAN_SUGGEST=false
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+# [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 
 
@@ -37,4 +37,14 @@ path_append "${GOPATH}/bin:${GOROOT}/bin"
 
 # Setup rebar3 paths
 path_append "${HOME}/.cache/rebar3/bin"
+
+# pnpm
+export PNPM_HOME="/opt/homebrew/bin/pnpm"
+path_append "$PNPM_HOME"
+
+export POSTGRESQL_BIN="/opt/homebrew/opt/postgresql@15/bin"
+path_prepend "$POSTGRESQL_BIN"
+export LDFLAGS="-L/opt/homebrew/opt/postgresql@15/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/postgresql@15/include"
+export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib
 

@@ -116,6 +116,9 @@ alias duf='du -sh *'
 alias print-path='echo $PATH | tr ":" "\n"'
 alias print-functions='print -l ${(k)functions[(I)[^_]*]} | sort'
 
+# pnpm
+alias pn='pnpm'
+
 # Use pip without requiring virtualenv
 syspip() {
     PIP_REQUIRE_VIRTUALENV="" pip "$@"
@@ -204,12 +207,12 @@ serve() {
   # Function to start the server
   start_server() {
     pushd "$dir" > /dev/null || return
-    python3 -m http.server "$port" &
+    python3 -m http.server "$port" --bind 0.0.0.0 &
     local server_pid=$!
     echo "$server_pid" > "$server_pidfile"
     popd > /dev/null || return
     # TODO: silence this on flag (e.g. arg set to 1). Useful on server reloads
-    echo "[$server_pid]:Server started on http://localhost:$port"
+    echo "[$server_pid]:Server started on http://$(hostname -I | awk '{print $1}'):$port"
   }
 
   # Function to stop the server
