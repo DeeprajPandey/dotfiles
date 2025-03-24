@@ -40,6 +40,19 @@ M = {
       dependencies = { 'nvim-lua/plenary.nvim' },
       event = { 'BufRead pyproject.toml', 'BufRead requirements.txt', 'BufRead requirements_dev.txt' },
     },
+    {
+      'micangl/cmp-vimtex',
+      keys = {
+        i = {
+          '<C-s>',
+          function()
+            require('cmp_vimtex.search').perform_search({ engine = 'google' })
+          end,
+          desc = '[s]earch selected bibtex entry',
+        },
+      },
+      opt = {},
+    },
   },
 }
 
@@ -139,6 +152,7 @@ function M.config(_, opts)
       { name = 'css-variables' },
       { name = 'cmp-sass-variables' },
       { name = 'pypi' },
+      { name = 'vimtex' },
     }, {
       { name = 'buffer' },
     }),
@@ -156,6 +170,8 @@ function M.config(_, opts)
           pypi = '[pypi]',
           env = '[env]',
           buffer = '[buf]', -- 'Ω'
+          -- can't overwrite cmp-vimtex's additional info
+          vimtex = '[VimTeX]' .. (vim_item.menu ~= nil and vim_item.menu or ''),
         }
         local menu_name = short_name[entry.source.name] or entry.source.name
 
