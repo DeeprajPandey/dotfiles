@@ -101,6 +101,17 @@ function M.config(_, opts)
   luasnip.config.set_config({
     history = true,
     update_events = 'TextChanged,TextChangedI',
+    region_check_events = 'CursorMoved,CursorHold,InsertEnter',
+    delete_check_events = 'TextChanged,InsertLeave',
+    store_selection_keys = '<Tab>',
+    enable_autosnippets = false,
+    ext_opts = {
+      [require('luasnip.util.types').choiceNode] = {
+        active = {
+          virt_text = { { '● Choice', 'GruvboxOrange' } },
+        },
+      },
+    },
   })
   -- add framework snippets (not enabled by default)
   -- ref: https://github.com/rafamadriz/friendly-snippets/tree/main/snippets/frameworks
@@ -240,9 +251,10 @@ function M.config(_, opts)
       end, { 'i', 's' }),
     }),
 
-    experimental = {
-      ghost_text = true,
-    },
+    -- `{}` in html contexts kept giving parsing errors
+    -- experimental = {
+    --   ghost_text = true,
+    -- },
   })
 
   -- completions for `/` & `?` searches: buffer source
