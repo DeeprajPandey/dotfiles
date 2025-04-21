@@ -128,6 +128,7 @@ function M.config(_, opts)
   --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
 
   --  Overrides for lang. server configs
   --  - cmd (table): default init command
@@ -162,7 +163,22 @@ function M.config(_, opts)
         },
       },
     },
-    html = {},
+    html = {
+      cmd = { 'vscode-html-language-server', '--stdio' },
+      filetypes = { 'html' },
+      init_options = {
+        configurationSection = { 'html', 'css', 'javascript' },
+        embeddedLanguages = {
+          css = true,
+          javascript = true,
+        },
+      },
+      root_dir = function(fname)
+        return require('lspconfig').util.root_pattern('package.json', 'index.html', '.git')(fname)
+          or vim.fn.fnamemodify(fname, ':h') -- This returns the directory containing the file
+      end,
+      settings = {},
+    },
     jsonls = {},
     pyright = {
       filetypes = { 'python' },
