@@ -48,3 +48,6 @@ export LDFLAGS="-L/opt/homebrew/opt/postgresql@15/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/postgresql@15/include"
 export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/opt/openssl/lib
 
+# Added by Windsurf
+path_prepend "/Users/vieuler/.codeium/windsurf/bin"
+
