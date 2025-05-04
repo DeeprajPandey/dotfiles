@@ -129,6 +129,7 @@ cask "protonvpn"
 cask "raspberry-pi-imager"
 cask "screaming-frog-seo-spider"
 cask "screens-connect"
+cask "scribus"                      # desktop publishing software
 # mas "sequel-ace", id: 1518036000
 cask "shottr"
 # cask "spotify"                    # noinstall: checksum undefined
