@@ -23,6 +23,7 @@ brew "bottom"                       # rust port - htop; process monitor
 brew "btop"                         # rust port - htop
 brew "ccache"
 brew "cmake"
+brew "cmake-docs"
 brew "coreutils"
 brew "dfu-util"
 brew "fd"
@@ -51,7 +52,7 @@ brew "nvim"                         # neovim
 brew "nvm"                          # node version manager
 brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
 brew "openssh"
-brew "openssl@1.1"
+brew "openssl"
 brew "paperkey"
 brew "pinentry-mac"
 brew "pipenv"
@@ -66,7 +67,6 @@ brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
 brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
-brew "skim"                         # pdf viewer with file watching (helpful for latex)
 # brew "sloc"                         # lines of code
 brew "spacer"                       # insert spacers when command output stops
 brew "spicetify-cli"                # customise spotify
@@ -92,8 +92,10 @@ brew "zoxide"
 brew "d2"                           # tap terrastruct
 
 # Install essential casks
-cask "android-platform-tools"       # adb
 cask "aldente"
+cask "android-platform-tools"       # adb
+cask "anki"                         # flashcards
+cask "arc"                          # arc browser
 # cask "autodesk-fusion360"         # noinstall: checksum undefined
 cask "balenaetcher"                 # flash OS images
 # cask "calibre"                      # ebook management + reader
@@ -113,6 +115,7 @@ cask "iterm2"
 cask "karabiner-elements"
 cask "kap"
 cask "keepassxc", greedy: true      # always upgrade
+cask "keycastr"                     # show keystrokes on screen
 # cask "little-snitch"
 cask "localsend"
 # cask "logi-options-plus"          # iff 3S is on the desk
@@ -132,6 +135,7 @@ cask "screens-connect"
 cask "scribus"                      # desktop publishing software
 # mas "sequel-ace", id: 1518036000
 cask "shottr"
+cask "skim"                         # pdf viewer with file watching (helpful for latex)
 # cask "spotify"                    # noinstall: checksum undefined
 cask "superslicer"
 # mas "unifi", id: 1057750338
