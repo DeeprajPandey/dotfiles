@@ -8,6 +8,7 @@ tap "felixkratz/formulae"           # jankyborders
 tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"          # yabai
 tap "microsoft/git"
+tap "oven-sh/bun"                   # bun
 # tap "saulpw/vd"                     # visidata
 tap "spicetify/homebrew-tap"        # spicetify
 tap "terrastruct/d2"
@@ -21,6 +22,7 @@ brew "bat"                          # rust port - cat; highlight, git
 brew "borders"                      # tap felixkratz/formulae; jankyborders: customised window borders
 brew "bottom"                       # rust port - htop; process monitor
 brew "btop"                         # rust port - htop
+brew "bun"                          # faster js runtime
 brew "ccache"
 brew "cmake"
 brew "cmake-docs"
@@ -80,7 +82,7 @@ brew "vbindiff"
 # brew "visidata"                     # tabular data tui explorer
 brew "wget"
 brew "wireguard-go"                 # wireguard vpn
-brwe "wireguard-tools"              # wireguard vpn tools
+brew "wireguard-tools"              # wireguard vpn tools
 brew "xh"                           # rust port - curl; HTTPie API
 brew "yabai"                        # tiling window manager; koekeishiya/formulae
 brew "yamllint"
