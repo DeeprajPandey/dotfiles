@@ -26,3 +26,15 @@
 [submodule "config/tmux/plugins/tmux-sysstat"]
 	path = config/tmux/plugins/tmux-sysstat
 	url = https://github.com/samoshkin/tmux-plugin-sysstat
+[submodule "vim/pack/plugins/start/gruvbox"]
+	path = vim/pack/plugins/start/gruvbox
+	url = https://github.com/morhetz/gruvbox.git
+[submodule "vim/pack/plugins/start/seoul256.vim"]
+	path = vim/pack/plugins/start/seoul256.vim
+	url = https://github.com/junegunn/seoul256.vim
+[submodule "vim/pack/plugins/start/goyo.vim"]
+	path = vim/pack/plugins/start/goyo.vim
+	url = https://github.com/junegunn/goyo.vim
+[submodule "vim/pack/plugins/start/vim-colors-solarized"]
+	path = vim/pack/plugins/start/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized
