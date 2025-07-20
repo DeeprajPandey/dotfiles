@@ -4,7 +4,13 @@
 config/github-copilot/hosts.json
 
 Autodesk
-darktable
+darktable/
+configstore/
+
+config/zed/conversations/
+config/zed/prompts/
+config/zed/themes/
+
 joplin-desktop
 lnav
 raycast
