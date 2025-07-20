@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# attach or create tmux session based on argument, current directory, or fzf selection
+
+print_usage() {
+  echo "Usage: $0 [-f] [directory]"
+  echo "  -f    Use fzf to select a directory"
+  echo "  If no arguments are provided, the current directory is used"
+}
+
+select_directory() {
+  if [[ $use_fzf == true ]]; then
+    find ~/wd/playground ~/wd/mkspc ~/wd/rmd ~/wd/ ~/ -mindepth 1 -maxdepth 1 -type d | fzf --tmux 80%,50%
+  # elif [[ $# -eq 1 ]]; then
+  elif [[ -n $1 ]]; then
+    echo "$1"
+  else
+    echo "$PWD"
+  fi
+}
+
+use_fzf=false
+while getopts ":f" opt; do
+  case ${opt} in
+    f )
+      use_fzf=true
+      ;;
+    \? )
+      print_usage
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
+selected=$(select_directory "$@")
+
+if [[ -z $selected ]]; then
+  exit 0
+fi
+
+session_name=$(basename "$selected" | tr . _)
+
+not_in_tmux() {
+  [[ -z "$TMUX" ]]
+}
+
+session_exists() {
+  tmux has-session -t "=$session_name" > /dev/null 2>&1
+}
+
+create_or_attach_session() {
+  if not_in_tmux; then
+    # create new session OR attach to existing
+    tmux new-session -As "$session_name" -c "$selected"
+  else
+    if ! session_exists; then
+      # create detached session
+      tmux new-session -Ads "$session_name" -c "$selected"
+    fi
+    # switch to existing session
+    tmux switch-client -t "$session_name"
+  fi
+}
+
+create_or_attach_session
+

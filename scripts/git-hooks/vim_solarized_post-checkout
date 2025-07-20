@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# This script is designed to be used both as a Git hook and as a standalone utility. 
+# When used as a Git hook within a submodule, it assumes the current working directory 
+# is the root of the submodule. When used manually, it can accept a single argument:
+# the path to the submodule, to explicitly set the working context.
+#
+# It's primarily meant to be used with the solarised vim colorscheme repo (https://github.com/altercation/vim-colors-solarized)
+# I have set up vim-colors-solarized as a submodule (with sparseCheckout to only keep the colors dir). We then use
+# this script to keep the `solarized.vim` file in submodule root and remove the extra colors dir.
+#
+# It can be easily adapted/extended for other use cases (plugins as submodules).
+#
+# Usage:
+# Automatically by Git as a hook: No arguments needed. Place in the appropriate 
+# `.git/hooks` directory and Git will execute it in the repository or submodule root.
+#
+# Manually: Pass the absolute or relative path to the target directory as the first argument.
+# Example: ./vim_solarized_post_checkout /path/to/submodule
+#
+# Arguments:
+# - $1 (optional): The absolute or relative path to the repository or submodule directory.
+#   If not provided, the script uses the current working directory as the context.
+
+
+# Optionally, get the submodule path from arguments
+# $(pwd) will set it to submodule root when invoked by git as a hook
+SUBMODULE_PATH=${1:-$(pwd)}
+
+# path from submodule root to file to be copied
+COLORS_DIR="$SUBMODULE_PATH/colors"
+FILE_PATH="$COLORS_DIR/solarized.vim"
+TARGET_PATH="$SUBMODULE_PATH"
+
+# Check if the "colors" directory exists
+# this will happen on submodule updates
+if [ ! -d "$COLORS_DIR" ]; then
+  pwd
+  cwd_=$(dirname "$0")
+  echo "$cwd_"
+  echo "The 'colors' directory does not exist. Exiting gracefully."
+  exit 0
+fi
+
+# Perform the move if the file exists
+if [ -f "$FILE_PATH" ]; then
+  mv -f "$FILE_PATH" "$TARGET_PATH"
+
+  # Remove the now-empty colors directory if empty
+  rmdir $(dirname "$FILE_PATH")
+fi
+

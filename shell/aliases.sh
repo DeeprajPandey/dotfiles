@@ -1,26 +1,88 @@
 # shellcheck shell=bash
 # To allow shellcheck linting
 
+# Single character alias
+alias _='sudo'
+alias g='git'
+alias l='ls'
+
+
+trash() {
+  local trash_dir
+
+  # Set trash directory based on the operating system
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    trash_dir="$HOME/.Trash"
+  else
+    trash_dir="$HOME/.local/share/Trash/files"
+  fi
+
+  if [ ! -d "$trash_dir" ]; then
+    echo "Error: $trash_dir does not exist."
+    return 1
+    # mkdir -p "$trash_dir"
+  fi
+
+  if [ $# -eq 0 ]; then
+    echo "Usage: trash <file1> [file2] ..."
+    return 1
+  fi
+
+  for file in "$@"; do
+    if [ ! -e "$file" ]; then
+      echo "Error: $file does not exist."
+      continue
+    fi
+
+    local base_name=$(basename "$file")
+    local dest_file="$trash_dir/$base_name"
+
+    # if file already exists in trash, add timestamp to filename to avoid overwrite
+    if [ -e "$dest_file" ]; then
+      local timestamp=$(date +%Y%m%d%H%M%S)
+      dest_file="$trash_dir/${base_name}_$timestamp"
+    fi
+
+    # use rsync to preserve metadata, then remove the source file
+    rsync -aE --remove-source-files "$file" "$dest_file"
+    # rsync -aE --remove-source-files "$file" "$dest_file" && echo "Moved $file to $trash_dir"
+  done
+}
+
+
 # Use colors in coreutils utilities output
 alias grep='grep --color'
 
-# ls aliases - make sure exa is installed
-alias ls='exa --group-directories-first --icons -aG'
-alias le='exa --icons -aG'
-alias ld='exa --icons --time-style=default -s=Filename -FlaghHD'
-alias la='exa --group-directories-first --colour-scale --icons --time-style=default -s=Filename -FlaghHS'
-alias LD='exa --icons --time-style=default -s=Filename -laghHiD'
-alias LA='exa --group-directories-first --colour-scale --icons --time-style=default -s=Filename -laghHiS'
-# Tree commands which need a level number, e.g. `lt 2`
-alias lt='exa --tree --icons --group-directories-first -L'
-alias ltd='exa --tree --icons -aDL'
+# # ls aliases - make sure exa is installed
+# alias ls='exa --group-directories-first --icons -aG'
+# alias le='exa --icons -aG'
+# alias ld='exa --icons --time-style=default -s=Filename -FlaghHD'
+# alias la='exa --group-directories-first --colour-scale --icons --time-style=default -s=Filename -FlaghHS'
+# alias LD='exa --icons --time-style=default -s=Filename -laghHiD'
+# alias LA='exa --group-directories-first --colour-scale --icons --time-style=default -s=Filename -laghHiS'
+# # Tree commands which need a level number, e.g. `lt 2`
+# alias lt='exa --tree --icons --group-directories-first -L'
+# alias ltd='exa --tree --icons -aDL'
 
 # Aliases to protect against overwriting
 alias cp='cp -i'
 alias mv='mv -i'
 
-# Git alias
-alias g='git'
+# Better defaults
+alias vi='vim'
+alias nv='nvim'
+alias  ping='ping -c 5'
+
+# fix typos
+alias got=git
+alias quit='exit'
+alias cd..='cd ..'
+alias zz='exit'
+
+# tar
+alias tarls="tar -tvf"
+alias untar="tar -xvf"
+alias untars="tar -xvzf"
 
 # cd to git root directory
 alias cdgr='cd "$(git root)"'
@@ -28,9 +90,193 @@ alias cdgr='cd "$(git root)"'
 # good 'ol cls
 alias cls='clear'
 
-# make sure docker is installed, gcloud image exists, and you have authenticated
-# using a mounted volume to $HOME/.config/gcloud before using this
-alias gcloud='docker run --rm -ti \
--v $HOME/.config/gcloud:/root/.config/gcloud \
-gcr.io/google.com/cloudsdktool/google-cloud-cli gcloud'
+# date/time
+alias timestamp="date '+%Y-%m-%d %H:%M:%S'"
+alias datestamp="date '+%Y-%m-%d'"
+alias isodate="date +%Y-%m-%dT%H:%M:%S%z"
+alias utc="date -u +%Y-%m-%dT%H:%M:%SZ"
+alias unixepoch="date +%s"
 
+# find
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+
+# fast reload zshrc
+alias reload='source ~/.zshrc'
+
+# disk usage
+biggest() {
+  du -s ./* | sort -nr | awk "{print $2}" | xargs du -sh
+}
+alias dux='du -x --max-depth=1 | sort -n'
+alias dud='du -d 1 -h'
+alias duf='du -sh *'
+
+# print things
+alias print-path='echo $PATH | tr ":" "\n"'
+alias print-functions='print -l ${(k)functions[(I)[^_]*]} | sort'
+
+# pnpm
+alias pn='pnpm'
+
+# Use pip without requiring virtualenv
+syspip() {
+    PIP_REQUIRE_VIRTUALENV="" pip "$@"
+}
+
+syspip2() {
+    PIP_REQUIRE_VIRTUALENV="" pip2 "$@"
+}
+
+syspip3() {
+    PIP_REQUIRE_VIRTUALENV="" pip3 "$@"
+}
+
+# Create a directory and cd into it
+mcd() {
+  mkdir "${1}" && cd "${1}" || return
+}
+
+# Go up [n] directories
+up() {
+  cdir="$(pwd)"
+  local cdir
+  if [[ "${1}" == "" ]]; then
+    cdir="$(dirname "${cdir}")"
+  elif ! [[ "${1}" =~ ^[0-9]+$ ]]; then
+    echo "Error: argument must be a number"
+  elif ! [[ "${1}" -gt "0" ]]; then
+    echo "Error: argument must be positive"
+  else
+    for ((i = 0; i < ${1}; i++)); do
+      ncdir="$(dirname "${cdir}")"
+      local ncdir
+      if [[ "${cdir}" == "${ncdir}" ]]; then
+        break
+      else
+        cdir="${ncdir}"
+      fi
+    done
+  fi
+  cd "${cdir}" || return
+}
+
+# Check if a file contains non-ascii characters
+nonascii() {
+  LC_ALL=C grep -n '[^[:print:][:space:]]' "${1}"
+}
+
+# Fetch pull request
+fpr() {
+  if ! git rev-parse --git-dir >/dev/null 2>&1; then
+    echo "error: fpr must be executed from within a git repository"
+    return 1
+  fi
+  (
+    cdgr
+    if [ "$#" -eq 1 ]; then
+      local repo="${PWD##*/}"
+      local user="${1%%:*}"
+      local branch="${1#*:}"
+    elif [ "$#" -eq 2 ]; then
+      local repo="${PWD##*/}"
+      local user="${1}"
+      local branch="${2}"
+    elif [ "$#" -eq 3 ]; then
+      local repo="${1}"
+      local user="${2}"
+      local branch="${3}"
+    else
+      echo "Usage: fpr [repo] username branch"
+      return 1
+    fi
+
+    git fetch "git@github.com:${user}/${repo}" "${branch}:${user}/${branch}"
+  )
+}
+
+# Serve current directory
+serve() {
+  local port=${1:-8000}
+  local dir=${2:-.}
+  local server_pidfile
+
+  # Create temp files to pass PIDs to and from fswatch subshell
+  server_pidfile=$(mktemp -t serve_"$port".pid)
+
+  # Function to start the server
+  start_server() {
+    pushd "$dir" > /dev/null || return
+    python3 -m http.server "$port" --bind 0.0.0.0 &
+    local server_pid=$!
+    echo "$server_pid" > "$server_pidfile"
+    popd > /dev/null || return
+    # TODO: silence this on flag (e.g. arg set to 1). Useful on server reloads
+    echo "[$server_pid]:Server started on http://$(hostname -I | awk '{print $1}'):$port"
+  }
+
+  # Function to stop the server
+  stop_server() {
+    if [ -f "$server_pidfile" ]; then
+      local server_pid
+      server_pid=$(cat "$server_pidfile")
+      if [ -n "$server_pid" ]; then
+        echo "[$server_pid]:Stopping server..."
+        kill "$server_pid" && wait "$server_pid" 2>/dev/null
+      fi
+    fi
+  }
+
+  # Watch for changes in the directory
+  watch_directory() {
+    fswatch -o "$dir" | while read -r _; do
+      echo "File changed. Restarting server..."
+      stop_server
+      start_server
+      # TODO: use osascript to refresh browser on macOS
+      # TODO: use xdotool to refresh browser on Linux
+    done
+  }
+
+  # shellcheck disable=SC2317
+  # Handle script exit (gets invoked by trap)
+  cleanup() {
+    trap - SIGINT SIGTERM         # clear the trap
+    printf "\n"
+    stop_server
+    pkill -P $$                   # kill process group
+    rm -f "$server_pidfile"       # remove temp file
+    echo "Cleanup complete."
+  }
+
+  # Trap SIGINT (Ctrl+C) and SIGTERM
+  trap cleanup SIGINT SIGTERM
+
+  # Start the server and watch for changes
+  start_server
+
+  # Open the default browser to the server address
+  # TODO: flag to disable this (in case it's just a backend server)
+  if command -v open &> /dev/null; then
+      open "http://localhost:$port"
+  elif command -v xdg-open &> /dev/null; then
+      xdg-open "http://localhost:$port"
+  else
+      echo "Could not detect 'xdg-open' or 'open' command to launch the browser."
+  fi
+
+  watch_directory &
+  # Save PID of fswatch loop
+  local fswatch_pid=$!
+  echo "[$fswatch_pid]:fsWatching directory $dir for changes..."
+
+  # Keep the script running until Ctrl+C
+  wait
+}
+
+
+# Mirror a website
+alias mirrorsite='wget -m -k -K -E -e robots=off'
+
+# Mirror stdout to stderr, useful for seeing data going through a pipe
+alias peek='tee >(cat 1>&2)'

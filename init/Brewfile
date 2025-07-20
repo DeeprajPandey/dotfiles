@@ -1,0 +1,252 @@
+# set arguments for all 'brew install --cask' commands
+cask_args appdir: "~/Applications", require_sha: true
+
+# All taps
+tap "buo/cask-upgrade"              # `brew cu` for cask updates
+tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
+tap "felixkratz/formulae"           # jankyborders
+tap "homebrew/cask-fonts"
+tap "koekeishiya/formulae"          # yabai
+tap "microsoft/git"
+tap "oven-sh/bun"                   # bun
+# tap "saulpw/vd"                     # visidata
+tap "spicetify/homebrew-tap"        # spicetify
+tap "terrastruct/d2"
+
+# Install essential tools
+brew "amber"                        # tap danopia
+brew "aircrack-ng"                  # aircrack-ng
+brew "ansifilter"
+brew "bandwhich"                    # current network utilisation by proc
+brew "bat"                          # rust port - cat; highlight, git
+brew "borders"                      # tap felixkratz/formulae; jankyborders: customised window borders
+brew "bottom"                       # rust port - htop; process monitor
+brew "btop"                         # rust port - htop
+brew "bun"                          # faster js runtime
+brew "ccache"
+brew "cmake"
+brew "cmake-docs"
+brew "coreutils"
+brew "dfu-util"
+brew "fd"
+brew "findutils"
+brew "fswatch"                      # file system watcher
+brew "fzf"
+brew "gh"                           # github cli; sketchybar setup dependency (notifs)
+brew "git"
+brew "git-delta"
+brew "git-filter-repo"              # clean way to rewrite git history
+brew "glibc" if OS.linux?
+brew "gnupg"
+brew "gpg" if OS.mac?
+brew "gping"
+# brew "helix"
+brew "hexyl"                        # hex viewer + auto formatter
+brew "imagemagick"                  # cli image editor
+brew "jq"                           # json command line processor
+brew "kondo"
+brew "lnav"                         # log navigator tui
+# brew "lynx"
+brew "moreutils"
+brew "neofetch"                     # prettyprint system-info
+brew "nnn"                          # tui filemanager
+brew "nvim"                         # neovim
+brew "nvm"                          # node version manager
+brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
+brew "openssh"
+brew "openssl"
+brew "paperkey"
+brew "pinentry-mac"
+brew "pipenv"
+brew "potrace"                      # convert bitmap to vector graphics
+brew "procs"
+brew "pv"
+# brew "rename"
+brew "ripgrep"
+brew "rustscan"                     # rust port - nmap
+brew "sccache"
+brew "scrcpy"                       # screen mirroring over adb
+brew "sd"
+brew "shellcheck"                   # needed before shellcheck vscode extn
+brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
+# brew "sloc"                         # lines of code
+brew "spacer"                       # insert spacers when command output stops
+brew "spicetify-cli"                # customise spotify
+brew "ssh-copy-id"
+brew "starship"                     # current shell prompt
+brew "tldr"
+brew "tmux"                         # terminal multiplexer
+brew "tokei"
+# brew "valgrind"                   # noinstall: not available for Apple Silicon
+brew "vbindiff"
+# brew "visidata"                     # tabular data tui explorer
+brew "wget"
+brew "wireguard-go"                 # wireguard vpn
+brew "wireguard-tools"              # wireguard vpn tools
+brew "xh"                           # rust port - curl; HTTPie API
+brew "yabai"                        # tiling window manager; koekeishiya/formulae
+brew "yamllint"
+brew "zellij"                       # rust port - tmux; floating panes
+brew "zopfli"
+brew "zoxide"
+
+# Diagram scripting
+brew "d2"                           # tap terrastruct
+
+# Install essential casks
+cask "aldente"
+cask "android-platform-tools"       # adb
+cask "anki"                         # flashcards
+cask "arc"                          # arc browser
+# cask "autodesk-fusion360"         # noinstall: checksum undefined
+cask "balenaetcher"                 # flash OS images
+# cask "calibre"                      # ebook management + reader
+cask "colour-contrast-analyser"
+# cask "daisydisk"                  # noinstall: checksum undefined
+cask "darktable"                    # raw photo editor
+cask "digikam"                      # digital photo manager
+cask "drawio"                       # draw.io desktop client
+cask "firefox"
+cask "git-credential-manager"
+cask "godot"                        # FOSS game development engine
+cask "google-drive"
+cask "handbrake"
+cask "imageoptim"
+cask "inkscape"
+cask "iterm2"
+cask "karabiner-elements"
+cask "kap"
+cask "keepassxc", greedy: true      # always upgrade
+cask "keycastr"                     # show keystrokes on screen
+# cask "little-snitch"
+cask "localsend"
+# cask "logi-options-plus"          # iff 3S is on the desk
+cask "logseq"
+cask "magicavoxel"                  # 8-bit 3D voxel editor and renderer
+cask "mixxx"
+cask "monitorcontrol"
+# mas "nextdns", id: 1464122853
+cask "openoffice"                   # really didn't like numbers; hence OSS spreadsheets
+cask "orbstack"                     # docker desktop alt
+# Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
+cask "pika"
+cask "protonvpn"
+cask "raspberry-pi-imager"
+cask "screaming-frog-seo-spider"
+cask "screens-connect"
+cask "scribus"                      # desktop publishing software
+# mas "sequel-ace", id: 1518036000
+cask "shottr"
+cask "skim"                         # pdf viewer with file watching (helpful for latex)
+# cask "spotify"                    # noinstall: checksum undefined
+cask "superslicer"
+# mas "unifi", id: 1057750338
+cask "visual-studio-code"
+cask "wireshark"
+cask "zoom"
+
+
+# Install fonts (tap cask-fonts)
+# Font preview: https://www.programmingfonts.org/#source-code-pro
+cask "font-source-code-pro-for-powerline"
+# cask "font-fira-code-nerd-font"
+cask "font-hack-nerd-font"          # sketchybar dependency
+cask "font-atkinson-hyperlegible"
+# cask "font-ia-writer-duospace"    # noinstall: checksum undefined
+# cask "font-ia-writer-mono"        # noinstall: checksum undefined
+cask "font-ibm-plex"
+cask "font-inter"
+# cask "font-lato"                  # noinstall: checksum undefined
+cask "font-meslo-lg-nerd-font"
+# cask "font-nunito"                # noinstall: checksum undefined
+# cask "font-nunito-sans"           # noinstall: checksum undefined
+# cask "sf-symbols"                   # sketchybar setup dependency
+
+# Install daily practice tools
+brew "lua"
+brew "luarocks"
+
+# # Install some CTF tools; see https://github.com/ctfs/write-ups.
+# brew "aircrack-ng"
+# brew "bfg"
+# brew "binutils"
+# brew "binwalk"
+# brew "cifer"
+# brew "dex2jar"
+# brew "dns2tcp"
+# brew "fcrackzip"
+# brew "foremost"
+# brew "hashpump"
+# brew "hydra"
+# brew "john"
+# brew "knock"
+# brew "netpbm"
+# brew "nmap"
+# brew "pngcheck"
+# brew "socat"
+# brew "sqlmap"
+# brew "tcpflow"
+# brew "tcpreplay"
+# brew "tcptrace"
+# brew "ucspi-tcp" # `tcpserver` etc.
+# brew "xpdf"
+# brew "xz"
+
+
+# Docker daemon should be running for this.
+# It should be running if this Brewfile is run from `setup.sh`.
+brew "whalebrew"
+
+# Install linux packages through Whalebrew
+# https://github.com/whalebrew/whalebrew
+# whalebrew "whalebrew/ffmpeg"
+
+
+# Install VSCode extensions
+
+# # Generic
+# vscode "DavidAnson.vscode-markdownlint"              # md linting and stylechecking
+# # vscode "MS-vsliveshare.vsliveshare"
+# vscode "VisualStudioExptTeam.vscodeintellicode"
+# vscode "adpyke.codesnap"                             # code screenshots
+# vscode "christian-kohler.path-intellisense"          # autocomplete filenames
+# vscode "coolbear.systemd-unit-file"                  # syntax highlighting for systemd unit files
+# vscode "streetsidesoftware.code-spell-checker"       # helpful for latex
+# vscode "timonwong.shellcheck"
+# vscode "vscodevim.vim"                               # vim keybindings in vscode (note: enable keyrepeat (check macos.sh for VSCode settings))
+# vscode "wayou.vscode-todo-highlight"
+# vscode "yzhang.markdown-all-in-one"                  # preview, shortcuts, ToC for writing md
+#
+# # Themes & Icons
+# vscode "Catppuccin.catppuccin-vsc"
+# vscode "Catppuccin.catppuccin-vsc-icons"
+# vscode "Equinusocio.vsc-material-theme"
+# vscode "GulajavaMinistudio.mayukaithemevsc"
+# vscode "Nimda.deepdark-material"
+# vscode "PKief.material-icon-theme"
+# vscode "alexdauenhauer.catppuccin-noctis"            # catppuccin colour + noctis highlighting
+# vscode "dnicolson.binary-plist"                      # opens new editor with xml and writes to binary plist on the fly
+# vscode "dracula-theme.theme-dracula"
+# vscode "ftsamoyed.theme-pink-cat-boo"
+# vscode "liviuschera.noctis"
+# vscode "ryanolsonx.solarized"
+# vscode "teabyii.ayu"
+# # vscode "webrender.synthwave-x-fluoromachine"       # true synthwave, needs custom css; goes with Operator Mono
+#
+# # C/C++
+# vscode "ms-vscode.cmake-tools"
+# vscode "ms-vscode.cpptools"
+# vscode "ms-vscode.cpptools-extension-pack"
+# vscode "ms-vscode.makefile-tools"                    # makefile syntax highlighting
+# vscode "twxs.cmake"
+#
+# # Python
+# vscode "ms-python.python"
+# vscode "ms-python.vscode-pylance"                    # py lsp
+# vscode "njpwerner.autodocstring"
+# vscode "KevinRose.vsc-python-indent"
+# vscode "donjayamanne.python-environment-manager"
+#
+# # Containerised
+# vscode "ms-azuretools.vscode-docker"
+# vscode "ms-vscode-remote.remote-containers"          # dev containers

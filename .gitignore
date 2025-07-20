@@ -1,1 +1,26 @@
 .DS_Store
+
+# github-copilot env
+config/github-copilot/hosts.json
+
+Autodesk
+darktable/
+configstore/
+
+config/zed/conversations/
+config/zed/prompts/
+config/zed/themes/
+
+# nnn
+*.lock
+session.*
+
+joplin-desktop
+lnav
+raycast
+qbittorrent
+yarn
+
+undo-history
+vim-sessions
+.netrwhist

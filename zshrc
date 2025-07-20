@@ -1,8 +1,18 @@
-# If not running interactively, don't do anything
-[[ -o interactive ]] || returni
+# Functions
+source ~/.shell/functions.sh
 
-### For profiling zsh
-# zmodload zsh/zprof
+# Allow local customizations in the ~/.shell_local_before file
+if [ -f ~/.shell_local_before ]; then
+    source ~/.shell_local_before
+fi
+
+# Allow local customizations in the ~/.zshrc_local_before file
+if [ -f ~/.zshrc_local_before ]; then
+    source ~/.zshrc_local_before
+fi
+
+# External plugins (initialized before)
+source ~/.config/zsh/plugins_before.zsh
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -11,35 +21,39 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+# Settings
+source ~/.config/zsh/settings.zsh
+
+# Bootstrap
+source ~/.shell/bootstrap.sh
+
+# External settings
+source ~/.shell/external.sh
+
+# Aliases
+source ~/.shell/aliases.sh
+
+# Init the shell prompt
+source ~/.config/zsh/prompt.zsh
+
+# External plugins (initialized after)
+source ~/.config/zsh/plugins_after.zsh
+
+# CLI Tools - non-standard invocation
+source ~/.shell/tools.sh
+
+# Allow local customizations in the ~/.shell_local_after file
+if [ -f ~/.shell_local_after ]; then
+    source ~/.shell_local_after
 fi
 
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-### End of Zinit's installer chunk
+# Allow local customizations in the ~/.zshrc_local_after file
+if [ -f ~/.zshrc_local_after ]; then
+    source ~/.zshrc_local_after
+fi
 
+# Allow private customizations (not checked in to version control)
+if [ -f ~/.shell_private ]; then
+    source ~/.shell_private
+fi
 
-### ZSH Settings
-source ~/.zsh/settings.zsh
-
-# source the theme
-# shellcheck source=/dev/null
-. ~/.zsh/powerlevel10k.zsh
-# source the plugins and start completions/autosuggestions.
-# shellcheck source=.zsh/zinit.zsh
-export IN_ZINIT=1
-. ~/.zsh/zinit.zsh
-
-### Set up sandboxd for slow packages
-# https://github.com/benvan/sandboxd
-# source $dotfiles/.sandboxd
-
-### Profiling zsh
-# zprof | head -n 20

@@ -1,0 +1,182 @@
+[user]
+	signingkey = 99EE13392AE64AE0353B29A75DB3E939DCFB3E03
+	name = Deepraj Pandey
+	email = 15888623+DeeprajPandey@users.noreply.github.com
+
+[alias]
+	a = add
+	aa = add --all :/
+	br = branch -vv
+	bra = branch -vv --all
+	cc = rev-list HEAD --count
+	cca = rev-list --all --count
+	ck = checkout
+	co = commit -S -m
+	coa = commit -S -am
+	coam = commit --amend -v
+	contributors = shortlog -nse
+	count = diff --stat "4b825dc642cb6eb9a060e54bf8d69288fbee4904" # hash of empty tree
+	credit = shortlog -sn
+	di = diff
+	dis = diff --stat
+	diw = diff --color-words
+	dc = diff --cached
+	dcs = diff --cached --stat
+	dcw = diff --cached --color-words
+	dh = diff HEAD~
+	dhs = diff HEAD~ --stat
+	dhw = diff HEAD~ --color-words
+	dt = difftool
+	dts = difftool --staged
+	empty-tree-hash = hash-object -t tree /dev/null
+	f = fetch --tags --prune
+	fa = fetch --all --tags --prune
+	ff = merge --ff-only
+	noff = merge --no-ff
+	grp = grep -C 1
+	lg = log --graph --format=sig # graph with sign info
+	lgp = log -p
+	gr = log --graph --format=line # graph
+	grd = log --graph --format=detail # graph detail
+	gra = log --graph --format=line --all # graph all
+	grad = log --graph --format=detail --all # graph all in detail
+	info = ! "inf() { if git rev-parse ${1} >/dev/null 2>&1; then git cat-file -p $(git rev-parse ${1}); else echo Invalid object; fi }; inf"
+	linecredit = ! "lc() { git ls-tree --name-only -z -r HEAD | xargs -0 -n1 git diff --no-index --numstat /dev/null 2>/dev/null | grep -v '^-' | cut -f 3- | cut -d ' ' -f 3- | xargs -n1 git blame --line-porcelain | grep '^author ' | cut -d ' ' -f 2- | sort | uniq -c | sort -nr; }; lc"
+	mirror-remote = ! "mr() { git push \"${2}\" \"refs/remotes/${1}/*:refs/heads/*\" && git remote set-head \"${2}\" -a; }; mr"
+	missing = lg HEAD..main # commits NOT in CURRENT branch but in main (missing commits from current br, i.e. commits in main not in current branch)
+	new = lg main..HEAD # commits NOT in main but in CURRENT branch (new commits in current branch vs main)
+	pullrb = pull --rebase
+	pull-dir = "!find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \\;"
+	remotes = remote -v
+	root = rev-parse --show-toplevel
+	sf = show --format=fuller --show-signature
+	sfw = show --format=fuller --color-words
+	sfs = show --format=fuller --stat
+	showtool = ! "st() { if [ -z $1 ]; then c='HEAD'; else c=$1; fi; git difftool $c~..$c; }; st"
+	st = status
+  	stb = status -sb
+	undo = reset HEAD~1
+	update-submodules = submodule update --init --recursive
+	upgrade-submodules = submodule update --init --remote
+	versions = tag -l --sort=version:refname
+	ctags = ! "ctg() { trap \"rm -f .git/tags.$$\" EXIT; ctags --tag-relative -Rf.git/tags.$$ --exclude=.git; mv .git/tags.$$ .git/tags; }; ctg"
+	tar = ! "tar() { git archive --format tar --prefix=\"${PWD##*/}/\" HEAD -o ${1}; }; tar"
+	targz = ! "targz() { git archive --format tar.gz --prefix=\"${PWD##*/}/\" HEAD -o ${1}; }; targz"
+	zip = ! "zip() { git archive --format zip --prefix=\"${PWD##*/}/\" HEAD -o ${1}; }; zip"
+
+[commit]
+	gpgsign = true
+
+[core]
+	autocrlf = false
+	editor = vim
+	excludesfile = ~/.config/git/ignore
+	pager = delta
+	sparseCheckout = true
+
+[include]
+	path = ./delta.themes.gitconfig
+
+[interactive]
+	diffFilter = delta --color-only --features=interactive
+
+[color]
+	ui = true
+
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	func = 146 bold
+	commit = yellow bold
+	old = red bold
+	new = green
+	whitespace = red reverse
+
+[color "grep"]
+	match = cyan bold
+	selected = blue
+	context = normal
+	filename = magenta
+	linenumber = green
+	separator = yellow
+	function = blue
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
+# gruvmax-fang mellow-barbet villsau
+[delta]
+	features = side-by-side frankenstein
+	hyperlinks = true
+	# sticking to vscode rn. for vim, see https://dandavison.github.io/delta/grep.html?highlight=hyperlinks#grep
+	hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+    light = false      # set to true if you're in a terminal w/ a light background color
+	navigate = true    # use n and N to move between diff sections
+	true-color = always
+
+[delta "interactive"]
+	keep-plus-minus-markers = false
+
+[diff]
+	# check and set up later: https://dandavison.github.io/delta/color-moved-support.html
+    colorMoved = default
+
+[grep]
+	lineNumber = true
+
+[gpg]
+	program = gpg
+
+[init]
+  defaultBranch = main
+  templateDir = /Users/vieuler/.git-templates
+
+[merge]
+	conflictstyle = diff3
+	defaultToUpstream = true
+	tool = vimdiff
+
+[mergetool]
+	keepBackup = false
+
+[pager]
+	blame = delta
+
+[pretty]
+	line = "%C(auto)%h %<|(60,trunc)%s %Cgreen(%ar) %C(blue)<%aN> %C(auto)%d"
+	sig = "%C(auto)%h %<|(60,trunc)%s %C(green)(%ar) %C(bold brightmagenta)[%G?]%Creset%C(auto)%d %C(black)%<|(100,trunc)%GS"
+	detail = "%C(auto)%h %s%n  %C(yellow)by %C(blue)%an %C(magenta)<%ae> %C(bold brightmagenta)[%G?] %C(green)%ad%n %C(auto)%d%n"
+
+[pull]
+	ff = only
+
+[push]
+	default = upstream
+
+[url "https://github.com/"]
+	insteadOf = "gh/"
+	pushInsteadOf = "gh/"
+
+	# Allow local customizations in the .gitconfig_local file
+[include]
+	path = ~/.gitconfig_local
+
+[sequence]
+	editor = vim
+[credential]
+	helper = /usr/local/share/gcm-core/git-credential-manager
+[credential "https://dev.azure.com"]
+	useHttpPath = true

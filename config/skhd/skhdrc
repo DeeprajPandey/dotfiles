@@ -1,0 +1,110 @@
+###
+# Launchd
+# `skhd [[re|*]start]|[stop]-service`
+#
+# Debug Service Runs
+# `launchctl print gui/"$(id -u)"/com.koekeishiya.skhd`
+# `tail -f "/tmp/skhd_$UNAME.err.log"`
+#
+# Or
+# `skhd -V`
+#
+# Run `skhd -o` (observe) to print keycodes.
+# ref: https://github.com/koekeishiya/skhd/issues/1#issuecomment-375689733
+##
+
+## Navigation (lalt + ...)
+
+# Window navigation through display borders; lalt + {h, j, k, l}
+# silencing stderr to declutter error log when we try to move a window beyond a screen
+# if there are issues with the keybinding, temporarily stop redirecting sterr to null and check error logs
+lalt - h: yabai -m window --focus west 2> /dev/null || yabai -m display --focus west 2> /dev/null
+lalt - j: yabai -m window --focus south 2> /dev/null || yabai -m display --focus south 2> /dev/null
+lalt - k: yabai -m window --focus north 2> /dev/null || yabai -m display --focus north 2> /dev/null
+lalt - l: yabai -m window --focus east  2> /dev/null || yabai -m display --focus east 2> /dev/null
+
+# Toggle window float; lalt + space
+lalt - space      : yabai -m window --toggle float --grid 4:4:1:1:2:2
+
+
+## Resize (shift + lalt + ...)
+# Resize windows; shift + lalt + {h, j, k, l}
+shift + lalt - h  : yabai -m window --resize right:-100:0 || yabai -m window --resize left:-100:0
+shift + lalt - j  : yabai -m window --resize bottom:0:100 || yabai -m window --resize top:0:100
+shift + lalt - k  : yabai -m window --resize bottom:0:-100 || yabai -m window --resize top:0:-100
+shift + lalt - l  : yabai -m window --resize right:100:0 || yabai -m window --resize left:100:0
+
+
+## Movement (ctrl + lalt + ...)
+# Move windows in spaces and split; shift + lalt + {h, j, k, l}
+# Silence stdout & stderr for query cmds
+ctrl + lalt - h   : sh -c 'yabai -m query --windows --window west > /dev/null 2>&1 && yabai -m window --warp west || (yabai -m query --displays --display west > /dev/null 2>&1 && yabai -m window --display west && yabai -m display --focus west && yabai -m window --warp last)'
+ctrl + lalt - j   : sh -c 'yabai -m query --windows --window south > /dev/null 2>&1 && yabai -m window --warp south || (yabai -m query --displays --display south > /dev/null 2>&1 && yabai -m window --display south && yabai -m display --focus south)'
+ctrl + lalt - k   : sh -c 'yabai -m query --windows --window north > /dev/null 2>&1 && yabai -m window --warp north || (yabai -m query --displays --display north > /dev/null 2>&1 && yabai -m window --display north && yabai -m display --focus north)'
+ctrl + lalt - l   : sh -c 'yabai -m query --windows --window east > /dev/null 2>&1 && yabai -m window --warp east || (yabai -m query --displays --display east > /dev/null 2>&1 && yabai -m window --display east && yabai -m display --focus east && yabai -m window --warp first)'
+
+# Toggle split orientation of the selected windows node; shift + lalt + s
+ctrl + lalt - s   : yabai -m window --toggle split
+
+# Moving windows between spaces; ctrl + lalt + {1, 2, 3, 4, p, n } (Assumes 4 Spaces Max per Display)
+ctrl + lalt - 1   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[1] ]] \
+                  && yabai -m window --space $SPACES[1] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 18 using control down)'
+
+
+ctrl + lalt - 2   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[2] ]] \
+                  && yabai -m window --space $SPACES[2] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 19 using control down)'
+
+
+ctrl + lalt - 3   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[3] ]] \
+                  && yabai -m window --space $SPACES[3] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 20 using control down)'
+
+
+ctrl + lalt - 4   : SPACES=($(yabai -m query --displays --display | jq '.spaces[]')) && [[ -n $SPACES[4] ]] \
+                  && yabai -m window --space $SPACES[4] && sleep 0.01 && osascript -e 'tell application "System Events" to keystroke (key code 21 using control down)'
+
+
+# Move window to previous or next space
+# Alternative: https://github.com/koekeishiya/yabai/wiki/Tips-and-tricks#constrain-space-focus-to-current-display-with-optional-cycling
+ctrl + lalt - p   : yabai -m window --space prev && osascript -e 'tell application "System Events" to keystroke (key code 123 using control down)'
+ctrl + lalt - n   : yabai -m window --space next && osascript -e 'tell application "System Events" to keystroke (key code 124 using control down)'
+
+# Toggle window zoom; ctrl + lalt + f
+ctrl + lalt - f   : yabai -m window --toggle zoom-fullscreen
+
+# Make window zoom to parent node; lalt + f
+lalt - f          : yabai -m window --toggle zoom-parent
+
+# Mirror space on X and Y Axis; ctrl + lalt + {x, y}
+ctrl + lalt - x   : yabai -m space --mirror x-axis
+ctrl + lalt - y   : yabai -m space --mirror y-axis
+
+# Vim-style window autoresize; ctrl + lalt + =
+ctrl + lalt - 0x18: yabai -m space --balance
+
+# Rotate layout clockwise; ctrl + lalt + r
+ctrl + lalt - r    : yabai -m space --rotate 270
+
+# Toggle whether the focused window should be shown on all spaces; ctrl + lalt + s
+ctrl + lalt - s   : yabai -m window --toggle sticky
+
+## Stacks (shift + ctrl + ...)
+# Add the active window to the window or stack to the {direction}; shift + ctrl + {h, j, k, l}
+shift + ctrl - h  : yabai -m window  west --stack $(yabai -m query --windows --window | jq -r '.id')
+shift + ctrl - j  : yabai -m window south --stack $(yabai -m query --windows --window | jq -r '.id')
+shift + ctrl - k  : yabai -m window north --stack $(yabai -m query --windows --window | jq -r '.id')
+shift + ctrl - l  : yabai -m window  east --stack $(yabai -m query --windows --window | jq -r '.id')
+
+# Stack Navigation; shift + ctrl + {n, p}
+# Hacky fix to silence errors when we are trying to move beyond the end of stack (in either direction)
+shift + ctrl - n  : yabai -m window --focus stack.next 2> /dev/null
+shift + ctrl - p  : yabai -m window --focus stack.prev 2> /dev/null
+
+
+## Global Behaviour
+# Enable / Disable gaps in current workspace; ctrl + lalt + g
+ctrl + lalt - g   : yabai -m space --toggle padding; yabai -m space --toggle gap
+
+# works at the makerspace: needs binaries to be set up separately
+cmd + ctrl + shift - d   : ~/.local/bin/open_mkspc
+cmd + ctrl + shift - a   : ~/.local/bin/mkspc_hvac_toggle
+

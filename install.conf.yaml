@@ -3,30 +3,37 @@
       create: true
       relink: true
 
-- clean: ['~', '~/.config']
+- clean:
+    ~/:
+      force: true
+    ~/.config:
+      recursive: true
+
+- clean: ['~/.ssh']
 
 - link:
     ~/.dotfiles: ''
-    ~/.gitconfig:
-      force: true
-      path: gitconfig
-    ~/.gitignore_global:
-      force: true
-      path: gitignore_global
+    ~/.config:
+    ~/.config/spicetify/Extensions:
+      path: spicetify/Extensions
+    ~/.config/spicetify/Themes:
+      path: spicetify/Themes
+    ~/.config/spicetify/config-xpui.ini:
+      path: spicetify/config-xpui.ini
+    ~/.gnupg/common.conf:
+      path: gnupg/common.conf
     ~/.gnupg/gpg.conf:
-    ~/.rtorrent.rc:
+      path: gnupg/gpg.conf
+    ~/.gnupg/gpg-agent.conf:
+      path: gnupg/gpg-agent.conf
     ~/.shell:
+    ~/.ssh/config: ssh/config
     ~/.vim:
-    ~/.vimrc:
-    ~/.zsh:
     ~/.zshrc:
     ~/.zprofile:
-        force: true
+      force: true
 
 - create:
-  - ~/.rtorrent/downloads
-  - ~/.rtorrent/session
-  - ~/.rtorrent/watch
   - ~/.vim/undo-history
 
 - create:
@@ -34,16 +41,10 @@
       mode: 0700
 
 - shell:
-    - ["git submodule update --init --recursive", "Installing submodules"]
-
-- clean: [
-    '~',
-    '~/.config'
-]
-  # - git submodule sync --recursive
-  # the following have to run after linking ~/.gitconfig
-  # - git update-submodules
-  # - >
-  #   git cleanall -f
-  #   vim/pack/vendor/start/
-  #   zsh/plugins/
+  - git submodule sync --recursive
+  - ["git submodule update --init --recursive", "Installing submodules"]
+  - >-
+    git cleanall -f
+    vim/pack/vendor/start/
+#     shell/plugins/
+#     zsh/plugins/

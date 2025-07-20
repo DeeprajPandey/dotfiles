@@ -1,0 +1,57 @@
+# host-specific customisations
+Include ~/.ssh/config_local
+
+# outside version control
+Include ~/.ssh/config_extra
+
+Host *
+  IgnoreUnknown AddKeysToAgent,UseKeychain
+  ServerAliveInterval 120
+  ServerAliveCountMax 30
+
+# GitLab.com
+Host gitlab.com
+  PreferredAuthentications publickey
+
+# GitHub.com
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+  User git
+  AddKeysToAgent yes
+  UseKeychain yes
+
+# Lab M2 MBP
+Host workpc
+  Hostname vi-mbp.local
+
+# Personal
+Host air
+  Hostname po-mba.local
+
+###########
+## ho.me ##
+###########
+Host koala-tailscale
+  HostName 100.126.140.35
+
+Host koala-wg
+  HostName 172.16.172.3
+
+Host tulip-wg
+  HostName 172.16.172.2
+
+Host tulip-local
+  HostName 192.168.1.168
+
+Host dns-local
+  HostName 192.168.1.3
+
+Host oracle-tempadmin
+  HostName 144.24.97.5
+
+Host oracle-ubuntu
+  HostName 144.24.97.5
+
+Host alexandria
+  HostName 144.24.118.151
