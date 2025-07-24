@@ -10,7 +10,7 @@ print_usage() {
 
 select_directory() {
   if [[ $use_fzf == true ]]; then
-    find ~/wd/playground ~/wd/mkspc ~/wd/rmd ~/wd/ ~/ -mindepth 1 -maxdepth 1 -type d | fzf --tmux 80%,50%
+    find ~/wd/free/ ~/wd/playground/ ~/wd/mkspc/ ~/wd/prsnl-notes/ ~/wd/rmd/ ~/wd/ ~/ -mindepth 1 -maxdepth 1 -type d | fzf --tmux 80%,50%
   # elif [[ $# -eq 1 ]]; then
   elif [[ -n $1 ]]; then
     echo "$1"
