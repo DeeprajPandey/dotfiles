@@ -105,6 +105,7 @@ shift + ctrl - p  : yabai -m window --focus stack.prev 2> /dev/null
 ctrl + lalt - g   : yabai -m space --toggle padding; yabai -m space --toggle gap
 
 # works at the makerspace: needs binaries to be set up separately
-cmd + ctrl + shift - d   : ~/.local/bin/open_mkspc
+cmd + ctrl + shift - d   : ~/.local/bin/mkspc_open_007
+cmd + ctrl + shift - e   : ~/.local/bin/mkspc_open_006
 cmd + ctrl + shift - a   : ~/.local/bin/mkspc_hvac_toggle
 
