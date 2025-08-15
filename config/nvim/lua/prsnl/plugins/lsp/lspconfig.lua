@@ -138,7 +138,17 @@ function M.config(_, opts)
   -- ref: for `lua_ls`, https://luals.github.io/wiki/settings/
   local servers = {
     -- ref: `:help lspconfig-all`
-    bashls = {},
+    bashls = {
+      filetypes = { 'sh', 'm4' },
+      on_attach = function(client, bufnr)
+        local filename = vim.api.nvim_buf_get_name(bufnr)
+        if filename:match('%.env$') then
+          vim.schedule(function()
+            vim.lsp.stop_client(client.id)
+          end)
+        end
+      end,
+    },
     biome = {},
     clangd = {
       capabilities = {
