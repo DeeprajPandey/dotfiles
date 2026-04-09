@@ -26,3 +26,42 @@
 [submodule "config/tmux/plugins/rose-pine"]
 	path = config/tmux/plugins/rose-pine
 	url = https://github.com/rose-pine/tmux.git
+[submodule "vim/pack/plugins/start/incsearch.vim"]
+	path = vim/pack/plugins/start/incsearch.vim
+	url = https://github.com/haya14busa/incsearch.vim.git
+[submodule "vim/pack/plugins/start/vim-easymotion"]
+	path = vim/pack/plugins/start/vim-easymotion
+	url = https://github.com/easymotion/vim-easymotion.git
+[submodule "vim/pack/plugins/start/incsearch-easymotion.vim"]
+	path = vim/pack/plugins/start/incsearch-easymotion.vim
+	url = https://github.com/haya14busa/incsearch-easymotion.vim.git
+[submodule "vim/pack/plugins/start/nerdtree"]
+	path = vim/pack/plugins/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule "vim/pack/plugins/start/vim-buffergator"]
+	path = vim/pack/plugins/start/vim-buffergator
+	url = https://github.com/jeetsukumaran/vim-buffergator.git
+[submodule "vim/pack/plugins/start/gundo.vim"]
+	path = vim/pack/plugins/start/gundo.vim
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "vim/pack/plugins/start/ctrlp.vim"]
+	path = vim/pack/plugins/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule "vim/pack/plugins/start/ack.vim"]
+	path = vim/pack/plugins/start/ack.vim
+	url = https://github.com/mileszs/ack.vim.git
+[submodule "vim/pack/plugins/start/syntastic"]
+	path = vim/pack/plugins/start/syntastic
+	url = https://github.com/vim-syntastic/syntastic.git
+[submodule "vim/pack/plugins/start/vim-argwrap"]
+	path = vim/pack/plugins/start/vim-argwrap
+	url = https://github.com/FooSoft/vim-argwrap.git
+[submodule "vim/pack/plugins/start/vim-over"]
+	path = vim/pack/plugins/start/vim-over
+	url = https://github.com/osyo-manga/vim-over.git
+[submodule "vim/pack/plugins/start/lightline.vim"]
+	path = vim/pack/plugins/start/lightline.vim
+	url = https://github.com/itchyny/lightline.vim.git
+[submodule "vim/pack/plugins/start/vim-fugitive"]
+	path = vim/pack/plugins/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
