@@ -3,9 +3,6 @@ local M = {
   'nvim-treesitter/nvim-treesitter',
   event = 'VeryLazy',
   build = ':TSUpdate',
-  dependencies = {
-    'nvim-treesitter/playground'
-  },
   opts = {
     ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'query', 'rust', 'vim', 'vimdoc', },
 
