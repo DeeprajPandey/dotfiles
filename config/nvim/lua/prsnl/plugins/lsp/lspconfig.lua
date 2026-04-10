@@ -27,7 +27,7 @@ function M.config(_, opts)
         vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
       end
 
-      map("gd", builtin.lsp_definitions, "[G]oto [D]efinition") -- to jump back, press <C-t>
+      map("gd", builtin.lsp_definitions, "[G]oto [D]efinition")  -- to jump back, press <C-t>
       map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration") -- e.g. header in C
       map("gr", builtin.lsp_references, "[G]oto [R]eferences")
       map("gI", builtin.lsp_implementations, "[G]oto [I]mplementation")
@@ -81,7 +81,7 @@ function M.config(_, opts)
   vim.diagnostic.config({
     virtual_text = true, -- virtual text
     signs = {
-      active = signs, -- show signs
+      active = signs,    -- show signs
     },
     update_in_insert = true,
     underline = true,
@@ -183,6 +183,9 @@ function M.config(_, opts)
     "yamlfmt",
     "prettierd",
   })
+
+  local non_lsp_tools = { "stylua", "yamlfmt" }
+
   require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
   require("mason-lspconfig").setup({
@@ -190,6 +193,11 @@ function M.config(_, opts)
     automatic_setup = false,
     handlers = {
       function(server_name)
+        -- skip non-LSP tools that mason-lspconfig incorrectly maps
+        if vim.tbl_contains(non_lsp_tools, server_name) then
+          return
+        end
+
         local server = servers[server_name] or {}
         -- override values passed by the server config above
         -- e.g. turn off LSP formatters for certain servers
