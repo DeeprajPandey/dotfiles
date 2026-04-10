@@ -1,4 +1,4 @@
-M = {
+local M = {
   "dstein64/vim-startuptime",
   -- lazy-load on a command
   cmd = "StartupTime",
@@ -9,4 +9,3 @@ function M.init()
 end
 
 return M
-

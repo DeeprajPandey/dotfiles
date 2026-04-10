@@ -1,15 +1,17 @@
-M = {
-  'mrcjkb/rustaceanvim',
-  version = '^4',
-  ft = 'rust',
+local M = {
+  "mrcjkb/rustaceanvim",
+  version = "^4",
+  ft = "rust",
 }
 
 -- ref: https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#using-codelldb-for-debugging
 -- ref: https://github.com/AstroNvim/astrocommunity/blob/main/lua/astrocommunity/pack/rust/init.lua
 function M.opts()
   local adapter
-  local success, package = pcall(function() return require("mason-registry").get_package "codelldb" end)
-  local cfg = require "rustaceanvim.config"
+  local success, package = pcall(function()
+    return require("mason-registry").get_package("codelldb")
+  end)
+  local cfg = require("rustaceanvim.config")
 
   if success then
     local package_path = package:get_install_path()
@@ -18,7 +20,7 @@ function M.opts()
     local this_os = vim.loop.os_uname().sysname
 
     -- path is different on windows
-    if this_os:find "Windows" then
+    if this_os:find("Windows") then
       codelldb_path = package_path .. "\\extension\\adapter\\codelldb.exe"
       liblldb_path = package_path .. "\\extension\\lldb\\bin\\liblldb.dll"
     else
@@ -57,13 +59,13 @@ function M.opts()
           },
         },
       }
-      local ra = require 'rustaceanvim.config.server'
+      local ra = require("rustaceanvim.config.server")
 
       return ra.load_rust_analyzer_settings(project_root, {
-        settings_file_pattern = 'rust-analyzer.json',
+        settings_file_pattern = "rust-analyzer.json",
         default_settings = rust_analyzer_settings,
       })
-    end
+    end,
   }
 
   return {

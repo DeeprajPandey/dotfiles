@@ -1,29 +1,29 @@
-M = {
-  'nvim-neo-tree/neo-tree.nvim',
-  branch = 'v3.x',
+local M = {
+  "nvim-neo-tree/neo-tree.nvim",
+  branch = "v3.x",
   dependencies = {
-    'nvim-lua/plenary.nvim',
-    'nvim-tree/nvim-web-devicons',
-    'MunifTanjim/nui.nvim',
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "MunifTanjim/nui.nvim",
   },
   keys = {
     {
-      '<C-n>',
+      "<C-n>",
       function()
-        require('neo-tree.command').execute({
+        require("neo-tree.command").execute({
           toggle = true,
         })
       end,
-      desc = '[Neotree] Toggle',
+      desc = "[Neotree] Toggle",
     },
   },
-  cmd = { 'Neotree' },
+  cmd = { "Neotree" },
   opts = {
     close_if_last_window = true,
-    popup_border_style = 'single',
+    popup_border_style = "single",
     enable_git_status = true,
     enable_diagnostics = true,
-    open_files_do_not_replace_types = { 'terminal', 'trouble', 'qf' }, -- skip windows with these file/buffers
+    open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- skip windows with these file/buffers
     sort_case_insensitive = false,
     default_component_configs = {
       container = {
@@ -33,46 +33,46 @@ M = {
         indent_size = 2,
         padding = 1, -- extra padding on left
         with_markers = true,
-        indent_marker = '│',
-        last_indent_marker = '└',
-        highlight = 'NeoTreeIndentMarker',
+        indent_marker = "│",
+        last_indent_marker = "└",
+        highlight = "NeoTreeIndentMarker",
         with_expanders = true,
-        expander_collapsed = '', -- ''
-        expander_expanded = '', -- ''
-        expander_highlight = 'NeoTreeExpander',
+        expander_collapsed = "", -- ''
+        expander_expanded = "", -- ''
+        expander_highlight = "NeoTreeExpander",
       },
       icon = {
-        folder_closed = '',
-        folder_open = '',
-        folder_empty = '󰜌',
+        folder_closed = "",
+        folder_open = "",
+        folder_empty = "󰜌",
         -- fallback w/o nvim-web-devicons
-        default = '*',
-        highlight = 'NeoTreeFileIcon'
+        default = "*",
+        highlight = "NeoTreeFileIcon",
       },
       modified = {
-        symbol = '●',
+        symbol = "●",
         -- fallback
-        default = '[+]',
-        highlight = 'NeoTreeModified',
+        default = "[+]",
+        highlight = "NeoTreeModified",
       },
       name = {
         trailing_slash = false,
         use_git_status_colors = true,
-        highlight = 'NeoTreeFileName',
+        highlight = "NeoTreeFileName",
       },
       git_status = {
         symbols = {
           -- change type
-          added = '',      -- '✚', but git_status_colors gives same info
-          modified = '',   -- '', but^
-          deleted = '',    -- '✖', only in git_status source
-          renamed = '',    -- '󰁕', only in git_status source
+          added = "", -- '✚', but git_status_colors gives same info
+          modified = "", -- '', but^
+          deleted = "", -- '✖', only in git_status source
+          renamed = "", -- '󰁕', only in git_status source
           -- status type
-          untracked = '',   -- ''
-          ignored = '',    -- ''
-          unstaged = '',   -- '󰄱'
-          staged = '',     -- ''
-          conflict = '',   -- ''
+          untracked = "", -- ''
+          ignored = "", -- ''
+          unstaged = "", -- '󰄱'
+          staged = "", -- ''
+          conflict = "", -- ''
         },
       },
       file_size = {
@@ -98,68 +98,68 @@ M = {
     -- custom commands available globally
     commands = {},
     window = {
-      position = 'left',
+      position = "left",
       width = 34,
       mapping_options = {
         noremap = true,
         nowait = true,
       },
       mappings = {
-        ['h'] = 'close_node',
-        ['l'] = 'open',
-        ['L'] = 'open_vsplit',
-        ['S'] = 'open_split',
-        ['d'] = 'trash',
-        ['<C-d>'] = 'delete',
-        ['a'] = {
-          'add',
+        ["h"] = "close_node",
+        ["l"] = "open",
+        ["L"] = "open_vsplit",
+        ["S"] = "open_split",
+        ["d"] = "trash",
+        ["<C-d>"] = "delete",
+        ["a"] = {
+          "add",
           -- this command supports BASH style brace expansion ('x{a,b,c}' -> xa,xb,xc). see `:h neo-tree-file-actions` for details
           -- some commands may take optional config options, see `:h neo-tree-mappings` for details
           config = {
-            show_path = 'relative' -- 'none', 'relative', 'absolute'
-          }
+            show_path = "relative", -- 'none', 'relative', 'absolute'
+          },
         },
-        ['r'] = 'rename',
-        ['y'] = 'copy_to_clipboard',
-        ['x'] = 'cut_to_clipboard',
-        ['p'] = 'paste_from_clipboard',
-        ['c'] = {
-          'copy',
+        ["r"] = "rename",
+        ["y"] = "copy_to_clipboard",
+        ["x"] = "cut_to_clipboard",
+        ["p"] = "paste_from_clipboard",
+        ["c"] = {
+          "copy",
           config = {
-            show_path = 'relative' -- 'none', 'relative', 'absolute'
-          }
+            show_path = "relative", -- 'none', 'relative', 'absolute'
+          },
         },
-        ['m'] = {
-          'move',
+        ["m"] = {
+          "move",
           config = {
-            show_path = 'relative' -- 'none', 'relative', 'absolute'
-          }
+            show_path = "relative", -- 'none', 'relative', 'absolute'
+          },
         },
-        ['q'] = 'close_window',
-        ['R'] = 'refresh',
-        ['?'] = 'show_help',
-        ['<'] = 'prev_source',
-        ['>'] = 'next_source',
-        ['i'] = 'show_file_details',
+        ["q"] = "close_window",
+        ["R"] = "refresh",
+        ["?"] = "show_help",
+        ["<"] = "prev_source",
+        [">"] = "next_source",
+        ["i"] = "show_file_details",
       },
     },
     filesystem = {
       commands = {
         trash = function(state)
-          local inputs = require('neo-tree.ui.inputs')
+          local inputs = require("neo-tree.ui.inputs")
           local path = state.tree:get_node().path
-          local msg = 'Are you sure you want to trash ' .. path
+          local msg = "Are you sure you want to trash " .. path
           inputs.confirm(msg, function(confirmed)
             if not confirmed then
               return
             end
 
-            vim.fn.system({ 'trash', vim.fn.fnameescape(path) })
-            require('neo-tree.sources.manager').refresh(state.name)
+            vim.fn.system({ "trash", vim.fn.fnameescape(path) })
+            require("neo-tree.sources.manager").refresh(state.name)
           end)
         end,
         trash_visual = function(state, selected_nodes)
-          local inputs = require('neo-tree.ui.inputs')
+          local inputs = require("neo-tree.ui.inputs")
 
           local function get_table_length(tbl)
             local len = 0
@@ -170,15 +170,15 @@ M = {
           end
 
           local count = get_table_length(selected_nodes)
-          local msg = 'Are you sure you want to trash ' .. count .. ' files ?'
+          local msg = "Are you sure you want to trash " .. count .. " files ?"
           inputs.confirm(msg, function(confirmed)
             if not confirmed then
               return
             end
             for _, node in ipairs(selected_nodes) do
-              vim.fn.system({ 'trash', vim.fn.fnameescape(node.path) })
+              vim.fn.system({ "trash", vim.fn.fnameescape(node.path) })
             end
-            require('neo-tree.sources.manager').refresh(state.name)
+            require("neo-tree.sources.manager").refresh(state.name)
           end)
         end,
       },
@@ -193,10 +193,10 @@ M = {
       use_libuv_file_watcher = true,
       components = {
         name = function(config, node, state)
-          local cc = require('neo-tree.sources.common.components')
+          local cc = require("neo-tree.sources.common.components")
           local result = cc.name(config, node, state)
           if node:get_depth() == 1 then
-            result.text = string.gsub(state.path, '(.*[/\\])(.*)', '%2')
+            result.text = string.gsub(state.path, "(.*[/\\])(.*)", "%2")
           end
           return result
         end,
@@ -205,31 +205,31 @@ M = {
     source_selector = {
       winbar = true,
       sources = {
-        { source = 'filesystem', display_name = '   Files ' },
-        { source = 'buffers', display_name = '   Bufs ' },
-        { source = 'git_status', display_name = '   Git ' },
+        { source = "filesystem", display_name = "   Files " },
+        { source = "buffers", display_name = "   Bufs " },
+        { source = "git_status", display_name = "   Git " },
       },
     },
     event_handlers = {
       {
-        event = 'file_opened',
+        event = "file_opened",
         handler = function()
-          require('neo-tree.command').execute({ action = 'close' })
+          require("neo-tree.command").execute({ action = "close" })
         end,
       },
       {
-        event = 'neo_tree_window_after_open',
+        event = "neo_tree_window_after_open",
         handler = function(args)
-          if args.position == 'left' or args.position == 'right' then
-            vim.cmd('wincmd =')
+          if args.position == "left" or args.position == "right" then
+            vim.cmd("wincmd =")
           end
         end,
       },
       {
-        event = 'neo_tree_window_after_close',
+        event = "neo_tree_window_after_close",
         handler = function(args)
-          if args.position == 'left' or args.position == 'right' then
-            vim.cmd('wincmd =')
+          if args.position == "left" or args.position == "right" then
+            vim.cmd("wincmd =")
           end
         end,
       },
@@ -238,4 +238,3 @@ M = {
 }
 
 return M
-

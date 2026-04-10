@@ -1,9 +1,9 @@
-M = {
-  'nvim-lualine/lualine.nvim',
-  event = 'VimEnter',
+local M = {
+  "nvim-lualine/lualine.nvim",
+  event = "VimEnter",
   dependencies = {
-    'nvim-tree/nvim-web-devicons',
-    'arkav/lualine-lsp-progress',
+    "nvim-tree/nvim-web-devicons",
+    "arkav/lualine-lsp-progress",
   },
   opts = {
     options = {
@@ -12,7 +12,7 @@ M = {
       component_separators = { left = '▏', right = '▏' },
       component_separators = { left = '', right = '' },
       ]]
-      component_separators = { left = '|', right = '|' },
+      component_separators = { left = "|", right = "|" },
       globalstatus = true,
     },
     --[[ Available components
@@ -36,29 +36,29 @@ M = {
     sections = {
       lualine_a = {
         {
-          'fileformat',
+          "fileformat",
           icon_only = true,
           padding = { left = 1, right = 0 },
-          separator = ''
+          separator = "",
         },
-        'mode',
+        "mode",
       },
-      lualine_b = { 'branch', 'diff' },
+      lualine_b = { "branch", "diff" },
       lualine_c = {
-        { 'filename', path = 1, newfile_status = true },
-        'lsp_progress',
+        { "filename", path = 1, newfile_status = true },
+        "lsp_progress",
       },
-      lualine_x = { 'diagnostics', 'encoding', 'filetype', 'filesize' },
+      lualine_x = { "diagnostics", "encoding", "filetype", "filesize" },
       lualine_y = {
         {
-          'searchcount',
+          "searchcount",
           timeout = 3500,
-          separator = ''
-        }
+          separator = "",
+        },
       },
-      lualine_z = { 'location', 'progress' },
+      lualine_z = { "location", "progress" },
     },
-    extensions = { 'fzf', 'fugitive', 'lazy', 'mason', 'man', 'nvim-dap-ui', 'trouble' },
+    extensions = { "fzf", "fugitive", "lazy", "mason", "man", "nvim-dap-ui", "trouble" },
   },
 }
 
@@ -83,16 +83,16 @@ function M.config(_, opts)
 
   local function get_active_clients_str()
     local clients = get_active_lsp_clients()
-    local client_str = ''
+    local client_str = ""
 
     if #clients < 1 then
-      return '...'
+      return "..."
     end
 
     for i, client in ipairs(clients) do
       client_str = client_str .. client
       if i < #clients then
-        client_str = client_str .. ', '
+        client_str = client_str .. ", "
       end
     end
 
@@ -103,8 +103,7 @@ function M.config(_, opts)
   vim.list_extend(opts.sections.lualine_y, { get_active_clients_str })
   print(get_active_clients_str())
 
-  require('lualine').setup(opts)
+  require("lualine").setup(opts)
 end
 
 return M
-
