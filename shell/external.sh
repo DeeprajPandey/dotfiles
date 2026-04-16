@@ -29,3 +29,6 @@ alias get_idf='. $HOME/esp/esp-idf/export.sh'
 # Setup fzf shell integration
 # shellcheck source=/opt/homebrew/bin/fzf
 source <(fzf --zsh)
+
+path_prepend "$HOME/bin"
+eval "$(~/.local/bin/mise activate zsh)"
