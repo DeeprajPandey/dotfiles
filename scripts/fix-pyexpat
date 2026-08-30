@@ -1,0 +1,32 @@
+#!/bin/bash
+# Repoints Homebrew python's pyexpat.so at Homebrew's expat when it's linked
+# against the system /usr/lib/libexpat.1.dylib and that copy is missing a
+# symbol Homebrew's bottles expect (macOS 26.0-26.2 lack
+# _XML_SetAllocTrackerActivationThreshold, added upstream in expat 2.7.2).
+# See https://github.com/Homebrew/homebrew-core/issues/277330
+set -euo pipefail
+
+expat_lib=""
+patched=0
+
+while IFS= read -r -d '' so; do
+    linked="$(otool -L "$so" | grep -o '/usr/lib/libexpat\.[0-9]*\.dylib' | head -1 || true)"
+    [[ -z "$linked" ]] && continue
+
+    pybin="${so%/lib/*}/bin/python3"
+    "$pybin" -c "import pyexpat" >/dev/null 2>&1 && continue
+
+    if [[ -z "$expat_lib" ]]; then
+        brew list --formula expat >/dev/null 2>&1 || brew install expat >&2
+        expat_lib="$(brew --prefix expat)/lib/libexpat.1.dylib"
+    fi
+
+    echo "fix-pyexpat: patching $so" >&2
+    install_name_tool -change "$linked" "$expat_lib" "$so"
+    codesign --sign - --force "$so"
+    patched=$((patched + 1))
+done < <(find /opt/homebrew/Cellar/python@*/*/Frameworks/Python.framework/Versions/*/lib/python*/lib-dynload \
+    -name "pyexpat.cpython-*.so" -print0 2>/dev/null)
+
+[[ "$patched" -gt 0 ]] && echo "fix-pyexpat: patched $patched pyexpat.so file(s)" >&2
+exit 0
