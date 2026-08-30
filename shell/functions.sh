@@ -38,3 +38,17 @@ colour-test() {
     printf "\x1b[38;5;${i}m${i}  "
   done
 }
+
+# Homebrew's python@3.10/3.13/3.14 bottles link pyexpat against the system
+# libexpat, which is missing a symbol on macOS 26.0-26.2. Re-patch after any
+# brew command that could reinstall python. See fix-pyexpat in ~/.local/bin.
+brew() {
+    command brew "$@"
+    local brew_status=$?
+    case "${1:-}" in
+        install|upgrade|reinstall|autoremove)
+            command -v fix-pyexpat >/dev/null 2>&1 && fix-pyexpat
+            ;;
+    esac
+    return $brew_status
+}
