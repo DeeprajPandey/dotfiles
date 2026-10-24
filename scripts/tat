@@ -51,14 +51,14 @@ session_exists() {
 create_or_attach_session() {
   if not_in_tmux; then
     # create new session OR attach to existing
-    tmux new-session -As "$session_name" -c "$selected"
+    tmux -L daily new-session -As "$session_name" -c "$selected"
   else
     if ! session_exists; then
       # create detached session
-      tmux new-session -Ads "$session_name" -c "$selected"
+      tmux -L daily new-session -Ads "$session_name" -c "$selected"
     fi
     # switch to existing session
-    tmux switch-client -t "$session_name"
+    tmux -L daily switch-client -t "$session_name"
   fi
 }
 
