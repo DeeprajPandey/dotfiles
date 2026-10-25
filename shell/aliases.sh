@@ -307,3 +307,21 @@ alias mirrorsite='wget -m -k -K -E -e robots=off'
 
 # Mirror stdout to stderr, useful for seeing data going through a pipe
 alias peek='tee >(cat 1>&2)'
+
+# Change alacritty theme
+act() {
+  cp -f ~/.config/alacritty/themes/themes/"$1".toml ~/.config/alacritty/colors.toml
+}
+
+# yazi exits in working dir
+function y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+  yazi "$@" --cwd-file="$tmp"
+  if [ -f "$tmp" ]; then
+    cwd="$(cat -- "$tmp")"
+    if [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+      builtin cd -- "$cwd"
+    fi
+    rm -f -- "$tmp"
+  fi
+}
