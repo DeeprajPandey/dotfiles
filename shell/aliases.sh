@@ -4,7 +4,6 @@
 # Single character alias
 alias _='sudo'
 alias g='git'
-alias l='ls'
 
 
 trash() {
@@ -51,7 +50,9 @@ trash() {
 
 
 # Use colors in coreutils utilities output
+alias ls='ls --color=auto'
 alias grep='grep --color'
+alias egrep='egrep --color'
 
 # # ls aliases - make sure exa is installed
 # alias ls='exa --group-directories-first --icons -aG'
@@ -64,9 +65,38 @@ alias grep='grep --color'
 # alias lt='exa --tree --icons --group-directories-first -L'
 # alias ltd='exa --tree --icons -aDL'
 
-# Aliases to protect against overwriting
+alias lS='eza -lah --icons --sort=size'
+
+
+alias ls='eza --icons --color=always'
+alias la='eza --icons --all'
+alias ll='eza --icons --long --all --header --git --color-scale --time-style=default --sort=name'
+alias LL='eza --icons --long --all --header --git --color-scale --time-style=default --sort=name --group-directories-first'
+alias ld='eza --icons --long --all --header --git --color-scale --time-style=default --sort=name --only-dirs'
+alias lr='eza --icons --long --all --header --git --color-scale --sort=modified'
+
+# alias lt='eza --tree --level=2 --icons --git'
+# Usage: lt 2
+ltt() {
+  eza --icons --group-directories-first --tree --level="${1:-2}" --git;
+}
+
+# Usage: ltd 2
+ltd() { eza --tree --icons --all --only-dirs --level="${1:-2}"; }
+
+# Safety checks to protect against overwriting/deleting
+alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+
+# Navigation and listing
+# alias ll='ls -lah'
+# alias la='ls -A'
+# alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 
 # Better defaults
 alias vi='vim'
