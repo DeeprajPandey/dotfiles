@@ -1,0 +1,162 @@
+[general]
+import = ["~/.config/alacritty/colors.toml"]
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+# [colors.bright]
+# black = "#5b6268"
+# blue = "#3071db"
+# cyan = "#46d9ff"
+# green = "#4db5bd"
+# magenta = "#a9a1e1"
+# red = "#da8548"
+# white = "#dfdfdf"
+# yellow = "#ecbe7b"
+#
+# [colors.cursor]
+# cursor = "#528bff"
+# text = "CellBackground"
+#
+# [colors.normal]
+# black = "#1c1f24"
+# blue = "#51afef"
+# cyan = "#5699af"
+# green = "#98be65"
+# magenta = "#c678dd"
+# red = "#ff6c6b"
+# white = "#abb2bf"
+# yellow = "#da8548"
+#
+# [colors.primary]
+# background = "#111216"
+# foreground = "#bbc2cf"
+#
+# [colors.selection]
+# background = "#3e4451"
+# text = "CellForeground"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 12.0
+
+[font.bold]
+family = "Hack Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "Hack Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "Hack Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "Hack Nerd Font"
+style = "Regular"
+
+[font.offset]
+x = 1
+y = 1
+
+[[keyboard.bindings]]
+action = "PasteSelection"
+key = "Insert"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "Key0"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "Equals"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "Minus"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F11"
+mods = "None"
+
+## NOTE: this interferes with C-P in tmux, terminal, nvim etc.
+# [[keyboard.bindings]]
+# action = "Paste"
+# key = "P"
+# mods = "Control"
+
+## NOTE: interferes with vim vertical selection C-V
+# [[keyboard.bindings]]
+# action = "Paste"
+# key = "V"
+# mods = "Control"
+
+## NOTE: do not want this when tmux yank (y) in copy mode works
+# [[keyboard.bindings]]
+# action = "Copy"
+# key = "C"
+# mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "Copy"
+mods = "None"
+
+## NOTE: interferes with tmux pane movement C-L
+# [[keyboard.bindings]]
+# action = "ClearLogNotice"
+# key = "L"
+# mods = "Control"
+
+## NOTE: interferes with tmux pane resize
+# [[keyboard.bindings]]
+# action = "ScrollPageUp"
+# key = "k"
+# mods = "Shift"
+#
+# [[keyboard.bindings]]
+# action = "ScrollPageDown"
+# key = "j"
+# mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollToTop"
+key = "Home"
+mode = "~Alt"
+mods = "Shift"
+
+[[keyboard.bindings]]
+action = "ScrollToBottom"
+key = "End"
+mode = "~Alt"
+mods = "Shift"
+
+[window]
+dynamic_padding = false
+opacity = 1.0
+title = ""
+option_as_alt = "OnlyLeft"
+
+[window.class]
+general = "Alacritty"
+instance = "Alacritty"
+
+[window.padding]
+x = 6
+y = 6
+
+[cursor]
+style = "Block"
+thickness = 0.2
+
+[scrolling]
+history = 10000
+multiplier = 3
