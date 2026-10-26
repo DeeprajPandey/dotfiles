@@ -25,10 +25,6 @@ setopt auto_pushd
 # Don't push multiple copies of the same directory onto the directory stack.
 setopt pushd_ignore_dups
 
-# Allow for corrections when mistyping directory names with 'cd'.
-# Zsh will suggest the closest match.
-setopt correct_all
-
 # The prompt will display information about the status of a background job 
 # if it starts or stops. Useful if you background tasks often.
 setopt notify
@@ -161,6 +157,11 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 # Pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
+
+# Allow correction notifications when mistyping commands.
+# `correct_all` is for all arguments.
+# Zsh will suggest the closest match.
+setopt correct
 
 # =============================================================================
 # Key Bindings
