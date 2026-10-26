@@ -249,8 +249,9 @@ bindkey '^[[B' down-line-or-beginning-search
 # =============================================================================
 
 # See 2.5.4 of http://zsh.sourceforge.net/Guide/zshguide02.html.
-[ -z "$HISTFILE" ] && HISTFILE=$HOME/.zsh_history
-HISTSIZE=10000
+HISTFILE=${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history
+[[ -d $HISTFILE:h ]] || mkdir -p $HISTFILE:h
+HISTSIZE=500000
 SAVEHIST=$HISTSIZE
 
 # Perform textual history expansion, csh-style, treating the character '!'
@@ -260,20 +261,25 @@ unsetopt bang_hist
 setopt hist_ignore_all_dups    # Delete an old recorded event if a new event is a duplicate.
 setopt hist_ignore_space       # Do not record an event starting with a space.
 setopt hist_reduce_blanks      # Remove extra blanks from commands added to the history list.
-setopt hist_save_no_dups       # Do not write a duplicate event to the history file.
-# If the internal history needs to be trimmed to add the current command line,
-# setting this option will cause the oldest history event that has a duplicate
-# to be lost before losing a unique event from the list.
-setopt hist_expire_dups_first
+
+# NOTE: `hist_ignore_all_dups` makes the following settings redundant. Leaving comments here
+# for reference
+#
+## # Do not enter command lines into the history list if they are duplicates of the
+## # previous event.
+## setopt hist_ignore_dups
+##
+## setopt hist_save_no_dups       # Do not write a duplicate event to the history file.
+##
+## # If the internal history needs to be trimmed to add the current command line,
+## # setting this option will cause the oldest history event that has a duplicate
+## # to be lost before losing a unique event from the list.
+## setopt hist_expire_dups_first
 
 # When searching for history entries in the line editor, do not display
 # duplicates of a line previously found, even if the duplicates are not
 # contiguous.
 setopt hist_find_no_dups
-
-# Do not enter command lines into the history list if they are duplicates of the
-# previous event.
-setopt hist_ignore_dups
 
 # Whenever the user enters a line with history expansion, don't execute the line
 # directly; instead, perform history expansion and reload the line into the
@@ -283,7 +289,7 @@ setopt hist_verify
 # This options works like APPEND_HISTORY except that new history lines are added
 # to the $HISTFILE incrementally (as soon as they are entered), rather than
 # waiting until the shell exits.
-setopt inc_append_history
+setopt inc_append_history_time
 
 # Save each command’s beginning timestamp (in seconds since the epoch) and the
 # duration (in seconds) to the history file. The format of this prefixed data is:
