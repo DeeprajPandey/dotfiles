@@ -25,7 +25,7 @@ setopt auto_pushd
 # Don't push multiple copies of the same directory onto the directory stack.
 setopt pushd_ignore_dups
 
-# The prompt will display information about the status of a background job 
+# The prompt will display information about the status of a background job
 # if it starts or stops. Useful if you background tasks often.
 setopt notify
 
@@ -84,8 +84,8 @@ fi
   fi
 } &!
 
-# Menu selection will be started unconditionally.
-zstyle ':completion:*' menu select=4
+# Menu selection starts with 2 or more matches.
+zstyle ':completion:*' menu select=2
 
 # Use vim style keybinds in menu completion
 bindkey -M menuselect 'h' vi-backward-char
@@ -127,6 +127,8 @@ setopt auto_param_slash     # If completed parameter is a directory, add a trail
 setopt extended_glob        # Needed for file modification glob modifiers with compinit.
 setopt NO_menu_complete     # Do not autoselect the first completion entry.
 setopt NO_flow_control      # Disable start/stop characters in shell editor.
+# ^with this option is unset, output flow control via start/stop characters
+# (usually assigned to ^S/^Q) is disabled in the shell's editor.
 
 # Don't beep on an ambiguous completion.
 unsetopt list_beep
@@ -152,7 +154,7 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:*:*:*:descriptions' format '%F{green}-- %d --%f'
 zstyle ':completion:*:*:*:*:corrections' format '%F{yellow}!- %d (errors: %e) -!%f'
-zstyle ':completion:*:messages' format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:messages' format ' %F{magenta} -- %d --%f'
 zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 
 # Pasting with tabs doesn't perform completion
@@ -210,13 +212,13 @@ bindkey -s '\e`' "!:0- \t"     # all but the last word
 
 # bind C-Z to "fg", so the same keybind suspends and resumes
 function fancy_ctrl_z() {
-	if [[ $#BUFFER -eq 0 ]]; then
-		export BUFFER='fg'
-		zle accept-line
-	else
-		zle push-input
-		zle clear-screen
-	fi
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER='fg'
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
 }
 zle -N fancy_ctrl_z
 bindkey '^Z' fancy_ctrl_z
@@ -303,10 +305,6 @@ setopt NO_share_history        # Don't share history between all sessions.
 # =============================================================================
 # Input/Output
 # =============================================================================
-
-# If this option is unset, output flow control via start/stop characters
-# (usually assigned to ^S/^Q) is disabled in the shell's editor.
-unsetopt flow_control
 
 # https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#index-r
 # Disable zsh builtin redo command alias. Use `fc -e -` or `!!` if needed.
