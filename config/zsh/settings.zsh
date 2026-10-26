@@ -42,6 +42,10 @@ setopt notify
 # See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Use-of-compinit
 zmodload zsh/complist
 
+# zsh picks the vi keymap by itself when $EDITOR or $VISUAL contains "vi".
+# Set emacs before anything (including compinit) binds keys into main.
+bindkey -e
+
 # Set the completion dump file path.
 # Utilises the XDG_CACHE_HOME if available, falls back to home directory.
 local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
@@ -171,11 +175,11 @@ setopt interactivecomments
 
 # The time the shell waits, in hundredths of seconds, for another key to be pressed
 # when reading bound multi-character sequences.
-KEYTIMEOUT=1 # corresponds to 10ms
+# Corresponds to 40ms (default, safer over ssh in emacs mode where esc-prefixed seq. can arrive split
+KEYTIMEOUT=4
 
-# Use vim as the editor
-export EDITOR=vim
-
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
 # # Use vim style line editing in zsh
 # bindkey -v
 # # Movement
