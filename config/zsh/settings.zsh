@@ -142,8 +142,6 @@ WORDCHARS=${WORDCHARS/\/}
 
 # Advanced completion styles
 # See http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-Styles.
-emulate -L zsh
-setopt localoptions extendedglob
 
 # Try smart-case completion, then case-insensitive, then partial-word, and then
 # substring completion.
