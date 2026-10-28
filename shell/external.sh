@@ -32,3 +32,8 @@ source <(fzf --zsh)
 
 path_prepend "$HOME/bin"
 eval "$(~/.local/bin/mise activate zsh)"
+
+# enable xelatex on terminal (from brew fomula `basictex`)
+# NOTE: path_helper messed up path order
+# eval $(/usr/libexec/path_helper)
+path_append "/Library/TeX/texbin"
