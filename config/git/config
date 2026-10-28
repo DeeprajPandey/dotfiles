@@ -176,6 +176,9 @@
 [sequence]
 	editor = vim
 
+[gpg "ssh"]
+	allowedSignersFile = /Users/pontiac/.config/git/allowed_signers
+
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager
 
