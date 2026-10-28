@@ -48,7 +48,7 @@ function argbash() {
     if [[ $arg == $workingdir/* ]]; then
       arg="${arg#"$workingdir"/}"
     fi
-    
+
     # Append the (possibly modified) argument to the array
     modified_args+=("$arg")
   done
@@ -70,7 +70,7 @@ function argbash-init() {
     if [[ $arg == $workingdir/* ]]; then
       arg="${arg#"$workingdir"/}"
     fi
-    
+
     # Append the (possibly modified) argument to the array
     modified_args+=("$arg")
   done
@@ -78,13 +78,6 @@ function argbash-init() {
   docker run --rm -e PROGRAM=argbash-init \
   -v "$workingdir:/work" \
   -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
-}
-
-# Update Spicetify in one go
-function spicetify-update() {
-  spicetify backup
-  spicetify upgrade
-  spicetify restore backup apply
 }
 
 ## Run executable from local node_modules/

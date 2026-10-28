@@ -2,24 +2,15 @@
     link:
       create: true
       relink: true
-
 - clean:
     ~/:
       force: true
     ~/.config:
       recursive: true
-
 - clean: ['~/.ssh']
-
 - link:
     ~/.dotfiles: ''
     ~/.config:
-    ~/.config/spicetify/Extensions:
-      path: spicetify/Extensions
-    ~/.config/spicetify/Themes:
-      path: spicetify/Themes
-    ~/.config/spicetify/config-xpui.ini:
-      path: spicetify/config-xpui.ini
     ~/.gnupg/common.conf:
       path: gnupg/common.conf
     ~/.gnupg/gpg.conf:
