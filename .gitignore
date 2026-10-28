@@ -5,3 +5,10 @@ config/github-copilot/hosts.json
 
 lnav
 
+# ignore state and credentials
+config/joplin-desktop/*
+!config/joplin-desktop/userstyle.css
+!config/joplin-desktop/userchrome.css
+config/tanstack/
+config/flutter/
+config/whop/
