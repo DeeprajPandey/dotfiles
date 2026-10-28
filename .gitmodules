@@ -2,18 +2,6 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
-[submodule "zsh/plugins/zsh-completions"]
-	path = zsh/plugins/zsh-completions
-	url = https://github.com/zsh-users/zsh-completions/
-[submodule "zsh/plugins/zsh-syntax-highlighting"]
-	path = zsh/plugins/zsh-syntax-highlighting
-	url = https://github.com/zsh-users/zsh-syntax-highlighting
-[submodule "zsh/plugins/zsh-autosuggestions"]
-	path = zsh/plugins/zsh-autosuggestions
-	url = https://github.com/zsh-users/zsh-autosuggestions
-[submodule "zsh/plugins/zsh-defer"]
-	path = zsh/plugins/zsh-defer
-	url = https://github.com/romkatv/zsh-defer
 [submodule "config/tmux/plugins/tmux-resurrect"]
 	path = config/tmux/plugins/tmux-resurrect
 	url = https://github.com/tmux-plugins/tmux-resurrect
@@ -68,3 +56,12 @@
 [submodule "config/alacritty/themes"]
 	path = config/alacritty/themes
 	url = https://github.com/alacritty/alacritty-theme
+[submodule "config/zsh/plugins/zsh-completions"]
+	path = config/zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions
+[submodule "config/zsh/plugins/zsh-syntax-highlighting"]
+	path = config/zsh/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "config/zsh/plugins/zsh-autosuggestions"]
+	path = config/zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
