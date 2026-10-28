@@ -160,7 +160,7 @@ setopt interactivecomments
 
 # The time the shell waits, in hundredths of seconds, for another key to be pressed
 # when reading bound multi-character sequences.
-# Corresponds to 40ms (default, safer over ssh in emacs mode where esc-prefixed seq. can arrive split
+# Corresponds to 40ms (safer over ssh in emacs mode where esc-prefixed seq. can arrive split
 KEYTIMEOUT=4
 
 # Option + left and right arrow as Alacritty sends them; iTerm's ^[b/^[f are already emacs defaults

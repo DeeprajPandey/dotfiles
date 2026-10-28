@@ -13,8 +13,5 @@ path_prepend "/opt/homebrew/opt/ccache/libexec"
 # prepend: in case a system-installed rustc needs to be overridden
 path_prepend "$HOME/.cargo/bin"
 
-# Reduces delay when entering vi-mode
-export KEYTIMEOUT=1
-
 # Only keep unique values in $PATH array
 typeset -U PATH
