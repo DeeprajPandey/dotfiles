@@ -243,6 +243,7 @@ fi
 
 # Initialise editing command line
 autoload -U edit-command-line && zle -N edit-command-line
+bindkey '^X^E' edit-command-line
 
 # Option + left and right arrow as Alacritty sends them; iTerm's ^[b/^[f are already
 # emacs defaults
