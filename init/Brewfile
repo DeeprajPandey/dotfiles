@@ -71,6 +71,7 @@ brew "starship"                     # current shell prompt
 brew "tldr"
 brew "tmux"                         # terminal multiplexer
 brew "tokei"
+brew "tree-sitter-cli"              # builds parsers for nvim-treesitter
 # brew "valgrind"                   # noinstall: not available for Apple Silicon
 brew "vbindiff"
 # brew "visidata"                     # tabular data tui explorer
