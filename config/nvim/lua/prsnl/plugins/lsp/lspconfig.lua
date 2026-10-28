@@ -168,7 +168,14 @@ function M.config(_, opts)
     },
     texlab = {},
     -- typescript lang. plugin, if needed: https://github.com/pmizio/typescript-tools.nvim
-    ts_ls = {},
+    ts_ls = {
+      init_options = {
+        preferences = {
+          -- change to `true` to reduce non-actionable suggestions
+          disableSuggestions = false,
+        },
+      },
+    },
   }
 
   require("mason").setup()
@@ -184,45 +191,19 @@ function M.config(_, opts)
     "prettierd",
   })
 
-  local non_lsp_tools = { "stylua", "yamlfmt" }
-
   require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+-- every server gets cmp's capabilities; per-server tables merge on top
+  vim.lsp.config("*", { capabilities = capabilities })
+  for name, config in pairs(servers) do
+    vim.lsp.config(name, config)
+  end
+
+  -- mason-lspconfig v2 enables each installed server via vim.lsp.enable()
   require("mason-lspconfig").setup({
-    automatic_installation = false,
-    automatic_setup = false,
-    handlers = {
-      function(server_name)
-        -- skip non-LSP tools that mason-lspconfig incorrectly maps
-        if vim.tbl_contains(non_lsp_tools, server_name) then
-          return
-        end
-
-        local server = servers[server_name] or {}
-        -- override values passed by the server config above
-        -- e.g. turn off LSP formatters for certain servers
-        server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-
-        -- mason-lspconfig assumes we are using nvim-lspconfig.rust_analyzer. Explicitly return non for this to prevent
-        -- two instances of rust_analyzer LSP servers for rust buffers
-        -- if server_name == 'rust_analyzer' then
-        --   server = function() end
-        if server_name == "ts_ls" then
-          server.init_options = {
-            preferences = {
-              -- change to `true` to reduce non-actionable suggestions
-              disableSuggestions = false,
-            },
-          }
-          -- IMP: don't need this. Filter in formatting keymap skips ts_ls
-          -- function server.on_attach(client)
-          --   -- this is important, otherwise ts_ls will format ts/js
-          --   -- files which we *really* don't want.
-          --   client.server_capabilities.documentFormattingProvider = false
-          -- end
-        end
-        require("lspconfig")[server_name].setup(server)
-      end,
+    automatic_enable = {
+      -- conform runs stylua; rustaceanvim owns rust_analyzer
+      exclude = { "stylua", "rust_analyzer" },
     },
   })
 end
