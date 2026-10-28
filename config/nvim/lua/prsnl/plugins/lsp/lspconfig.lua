@@ -26,7 +26,7 @@ function M.config(_, opts)
 
       map("gd", builtin.lsp_definitions, "[G]oto [D]efinition")  -- to jump back, press <C-t>
       map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration") -- e.g. header in C
-      map("gr", builtin.lsp_references, "[G]oto [R]eferences")
+      map("grr", builtin.lsp_references, "[G]oto [R]eferences")
       map("gI", builtin.lsp_implementations, "[G]oto [I]mplementation")
       map("<leader>D", builtin.lsp_type_definitions, "Type [D]efinition")
       map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
