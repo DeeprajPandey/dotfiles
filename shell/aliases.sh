@@ -127,10 +127,6 @@ alias isodate="date +%Y-%m-%dT%H:%M:%S%z"
 alias utc="date -u +%Y-%m-%dT%H:%M:%SZ"
 alias unixepoch="date +%s"
 
-# find
-alias fd='find . -type d -name'
-alias ff='find . -type f -name'
-
 # fast reload zshrc
 alias reload='source ~/.zshrc'
 
