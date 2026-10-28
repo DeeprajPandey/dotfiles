@@ -42,47 +42,33 @@ zmodload zsh/complist
 # Set emacs before anything (including compinit) binds keys into main.
 bindkey -e
 
-# Set the completion dump file path.
-# Utilises the XDG_CACHE_HOME if available, falls back to home directory.
-local zcompdump=${1:-${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}}
-[[ -d "$zcompdump:h" ]] || mkdir -p "$zcompdump:h"
-
-# Initialise completion system.
-autoload -Uz compinit
-
-# Determine whether to regenerate the completion dump file.
-# If the dump file is older than 20 hours or if the force flag is set, it is regenerated.
-# The force flag allows manual overriding of the default behavior for troubleshooting or updates.
+# A full compinit rescans fpath, so rebuild the dump at most once every 20h.
+# To pick up new completions sooner: rm the dump and `exec zsh`.
 # See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Initialization
-local force=0
+() {
+  emulate -L zsh -o extended_glob
+  local zcompdump=${ZSH_COMPDUMP:-${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump}
+  [[ -d $zcompdump:h ]] || mkdir -p $zcompdump:h
+  autoload -Uz compinit
 
-if [[ "$1" == "-f" ]]; then
-  force=1
-  shift
-fi
-
-# Glob magic explained:
-#   #q expands globs in conditional expressions
-#   N - sets null_glob option (no error on 0 results)
-#   mh-20 - modified less than 20 hours ago
-if [[ $force -ne 1 ]] && [[ $zcompdump(#qNmh-20) ]]; then
-  # -C (cached) implies -i.
-  compinit -C -d "$zcompdump"
-else
-  compinit -i -d "$zcompdump" # -i (ignore insecure directories)
-  touch "$zcompdump"
-fi
-
-# Asynchronously compile the completion dump on modification for better performance.
-# This step is skipped if the dump is up-to-date or currently being compiled by another process.
-{
-  if [[ -s "$zcompdump" && (! -s "${zcompdump}.zwc" || "$zcompdump" -nt "${zcompdump}.zwc") ]]; then
-    if command mkdir "${zcompdump}.zwc.lock" 2>/dev/null; then
-      zcompile "$zcompdump"
-      command rmdir  "${zcompdump}.zwc.lock" 2>/dev/null
-    fi
+  # (#qNmh-20): the dump exists and was modified within the last 20 hours.
+  if [[ -n $zcompdump(#qNmh-20) ]]; then
+    compinit -C -d $zcompdump
+  else
+    # compinit leaves an unchanged dump alone, so touch it to restart the 20h clock.
+    compinit -i -d $zcompdump && touch $zcompdump
   fi
-} &!
+
+  # The lock dir stops shells started in parallel from compiling at the same time.
+  {
+    if [[ -s $zcompdump && ( ! -s $zcompdump.zwc || $zcompdump -nt $zcompdump.zwc ) ]]; then
+      if command mkdir $zcompdump.zwc.lock 2>/dev/null; then
+        zcompile $zcompdump
+        command rmdir $zcompdump.zwc.lock 2>/dev/null
+      fi
+    fi
+  } &!
+}
 
 # Menu selection starts with 2 or more matches.
 zstyle ':completion:*' menu select=2
@@ -124,7 +110,7 @@ setopt complete_in_word
 setopt auto_menu            # Show completion menu on a successive tab press.
 setopt auto_list            # Automatically list choices on ambiguous completion.
 setopt auto_param_slash     # If completed parameter is a directory, add a trailing slash.
-setopt extended_glob        # Needed for file modification glob modifiers with compinit.
+setopt extended_glob        # Enable ^, ~, # and (#q...) glob operators.
 setopt NO_menu_complete     # Do not autoselect the first completion entry.
 setopt NO_flow_control      # Disable start/stop characters in shell editor.
 # ^with this option is unset, output flow control via start/stop characters
