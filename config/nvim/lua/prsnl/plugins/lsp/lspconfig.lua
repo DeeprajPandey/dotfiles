@@ -10,9 +10,6 @@ local M = {
 
     -- LSP status updates
     { "j-hui/fidget.nvim", opts = {} },
-
-    -- LSP for nvim config, runtime and plugins
-    { "folke/neodev.nvim", opts = {} },
   },
 }
 
