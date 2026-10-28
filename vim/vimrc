@@ -160,6 +160,12 @@ endfunction
 " toggle relative numbering
 nnoremap <C-n> :set rnu!<CR>
 
+"Set a custom Leader key
+let mapleader = " "
+
+" Paste directly from system clipboard in Normal and Visual modes
+noremap <Leader>v "+p
+
 "---------------------
 " Plugin configuration
 "---------------------
@@ -204,6 +210,10 @@ nnoremap <Leader>s :SyntasticCheck<CR>
 nnoremap <Leader>r :SyntasticReset<CR>
 nnoremap <Leader>i :SyntasticInfo<CR>
 nnoremap <Leader>m :SyntasticToggleMode<CR>
+
+" Move back to visual mode after right/left indent
+vnoremap > >gv
+vnoremap < <gv
 
 " easymotion
 map <Space> <Plug>(easymotion-prefix)
