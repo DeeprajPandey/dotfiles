@@ -85,18 +85,15 @@ bindkey -M menuselect 'l' vi-forward-char
 # See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
 [ -n "${terminfo[kcbt]}" ] && bindkey "${terminfo[kcbt]}" reverse-menu-complete
 
-# Configure terminal in application mode for accurate key code interpretation.
+# terminfo key entries (kcuu1, kcbt, ...) describe what keys send in application mode, so turn it on while
+# zle is editing and off before a command runs.
 # See http://zshwiki.org/home/zle/bindkeys#reading_terminfo.
-if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-  function zle-line-init() {
-    echoti smkx
-  }
-
-  function zle-line-finish() {
-    echoti rmkx
-  }
-  zle -N zle-line-init
-  zle -N zle-line-finish
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+  function zle_application_mode_start { echoti smkx }
+  function zle_application_mode_stop { echoti rmkx }
+  autoload -Uz add-zle-hook-widget
+  add-zle-hook-widget zle-line-init zle_application_mode_start
+  add-zle-hook-widget zle-line-finish zle_application_mode_stop
 fi
 
 # If a completion is performed with the cursor within a word, and a full
