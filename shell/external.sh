@@ -31,3 +31,14 @@ eval "$(~/.local/bin/mise activate zsh)"
 # NOTE: path_helper messed up path order
 # eval $(/usr/libexec/path_helper)
 path_append "/Library/TeX/texbin"
+
+## Android commandline tools (w/o android studio)
+# Set Java home directory (temurin v26)
+export JAVA_HOME=$(/usr/libexec/java_home -v 26)
+
+# Homebrew's shared android SDK directory
+export ANDROID_HOME=/opt/homebrew/share/android-commandlinetools
+
+# Add Platform Tools (adb) and Build Tools to your path
+path_append "$ANDROID_HOME/platform-tools"
+path_append "$ANDROID_HOME/cmdline-tools/latest/bin"
