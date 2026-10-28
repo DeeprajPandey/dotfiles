@@ -15,3 +15,6 @@ path_prepend "$HOME/.cargo/bin"
 
 # Only keep unique values in $PATH array
 typeset -U PATH
+
+# Tools installed with go live here
+path_append "$HOME/go/bin"
