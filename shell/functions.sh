@@ -2,7 +2,10 @@
 # To allow shellcheck linting
 
 path_remove() {
-    PATH=$(echo -n "$PATH" | awk -v RS=: -v ORS=: "\$0 != \"$1\"" | sed 's/:$//')
+  local p=":$PATH:"
+  p=${p//":$1:"/:}
+  p=${p#:}
+  PATH=${p%:}
 }
 
 path_append() {
