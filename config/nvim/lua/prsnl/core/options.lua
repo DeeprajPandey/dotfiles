@@ -51,6 +51,7 @@ opt.cursorline = true       -- highlight current cursor line
 opt.colorcolumn = '110'     -- mark column to limit text to 110 chars
 opt.signcolumn = 'number'   -- signcolumn in number col by default
 opt.showmode = false        -- turn off default statusline (using lualine)
+opt.winborder = "rounded"
 
 -- min. 8 lines of `scrolloff` opt (+3 for treesitter-context & separator)
 opt.scrolloff = 11

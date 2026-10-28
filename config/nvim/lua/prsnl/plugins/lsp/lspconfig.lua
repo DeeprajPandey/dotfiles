@@ -87,14 +87,6 @@ function M.config(_, opts)
     },
   })
 
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
-  })
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = "rounded",
-  })
-
   -- LSP servers and clients are able to communicate to each other what features they support.
   --  By default, Neovim doesn't support everything that is in the LSP specification.
   --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
