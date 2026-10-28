@@ -11,6 +11,10 @@
 # environment, especially when dealing with symlinked directories.
 fpath=(${0:h}/plugins $fpath)
 
+# zsh picks the vi keymap by itself when $EDITOR or $VISUAL contains "vi".
+# Set emacs before anything (including compinit) binds keys into main.
+bindkey -e
+
 # =============================================================================
 # Changing Directories
 # =============================================================================
@@ -25,10 +29,6 @@ setopt auto_pushd
 # Don't push multiple copies of the same directory onto the directory stack.
 setopt pushd_ignore_dups
 
-# The prompt will display information about the status of a background job
-# if it starts or stops. Useful if you background tasks often.
-setopt notify
-
 # =============================================================================
 # Completion
 # =============================================================================
@@ -37,10 +37,6 @@ setopt notify
 # Since we are using menu-select, we need to load complist before calling compinit.
 # See https://zsh.sourceforge.io/Doc/Release/Completion-System.html#Use-of-compinit
 zmodload zsh/complist
-
-# zsh picks the vi keymap by itself when $EDITOR or $VISUAL contains "vi".
-# Set emacs before anything (including compinit) binds keys into main.
-bindkey -e
 
 # A full compinit rescans fpath, so rebuild the dump at most once every 20h.
 # To pick up new completions sooner: rm the dump and `exec zsh`.
@@ -70,32 +66,6 @@ bindkey -e
   } &!
 }
 
-# Menu selection starts with 2 or more matches.
-zstyle ':completion:*' menu select=2
-
-# Use vim style keybinds in menu completion
-bindkey -M menuselect 'h' vi-backward-char
-bindkey -M menuselect 'k' vi-up-line-or-history
-bindkey -M menuselect 'j' vi-down-line-or-history
-bindkey -M menuselect 'l' vi-forward-char
-
-# Shift-Tab: Perform menu completion, like menu-complete, except that if a menu
-# completion is already in progress, move to the previous completion rather than
-# the next.
-# See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
-[[ -n ${terminfo[kcbt]} ]] && bindkey ${terminfo[kcbt]} reverse-menu-complete
-
-# terminfo key entries (kcuu1, kcbt, ...) describe what keys send in application mode, so turn it on while
-# zle is editing and off before a command runs.
-# See http://zshwiki.org/home/zle/bindkeys#reading_terminfo.
-if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
-  function zle_application_mode_start { echoti smkx }
-  function zle_application_mode_stop { echoti rmkx }
-  autoload -Uz add-zle-hook-widget
-  add-zle-hook-widget zle-line-init zle_application_mode_start
-  add-zle-hook-widget zle-line-finish zle_application_mode_stop
-fi
-
 # If a completion is performed with the cursor within a word, and a full
 # completion is inserted, the cursor is moved to the end of the word.
 setopt always_to_end
@@ -107,20 +77,13 @@ setopt complete_in_word
 setopt auto_menu            # Show completion menu on a successive tab press.
 setopt auto_list            # Automatically list choices on ambiguous completion.
 setopt auto_param_slash     # If completed parameter is a directory, add a trailing slash.
-setopt extended_glob        # Enable ^, ~, # and (#q...) glob operators.
 setopt NO_menu_complete     # Do not autoselect the first completion entry.
-setopt NO_flow_control      # Disable start/stop characters in shell editor.
-# ^frees ^S/^Q in the line editor; with flow control on they pause/resume output
 
 # Don't beep on an ambiguous completion.
 unsetopt list_beep
 
-# Word motion and deletion (Option + left/right arrow, Option + Backspace) treat characters in WORDCHARS as
-# part of a word. Drop '/' so they stop at each path component:
-# Option+Backspace on ~/wd/dotfiles deletes "dotfiles", not the whole path.
-# See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
-WORDCHARS=${WORDCHARS/\/}
-
+# Menu selection starts with 2 or more matches.
+zstyle ':completion:*' menu select=2
 
 # Advanced completion styles
 # See http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-Styles.
@@ -144,81 +107,23 @@ zstyle ':completion:*:warnings' format ' %F{red}-- no matches found --%f'
 # Pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
 
-# Allow correction notifications when mistyping commands.
-# `correct_all` is for all arguments.
-# Zsh will suggest the closest match.
-setopt correct
+# Use vim style keybinds in menu completion
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+
+# Shift-Tab: Perform menu completion, like menu-complete, except that if a menu
+# completion is already in progress, move to the previous completion rather than
+# the next.
+# See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
+[[ -n ${terminfo[kcbt]} ]] && bindkey ${terminfo[kcbt]} reverse-menu-complete
 
 # =============================================================================
-# Key Bindings
+# Expansion and Globbing
 # =============================================================================
-# Initialise editing command line
-autoload -U edit-command-line && zle -N edit-command-line
 
-# Enable interactive comments (# on the command line)
-setopt interactivecomments
-
-# The time the shell waits, in hundredths of seconds, for another key to be pressed
-# when reading bound multi-character sequences.
-# Corresponds to 40ms (safer over ssh in emacs mode where esc-prefixed seq. can arrive split
-KEYTIMEOUT=4
-
-# Option + left and right arrow as Alacritty sends them; iTerm's ^[b/^[f are already emacs defaults
-bindkey '^[[1;3D' backward-word
-bindkey '^[[1;3C' forward-word
-# # Use vim style line editing in zsh
-# bindkey -v
-# # Movement
-# bindkey -a 'gg' beginning-of-buffer-or-history
-# bindkey -a 'G' end-of-buffer-or-history
-# # Undo
-# bindkey -a 'u' undo
-# bindkey -a '^R' redo
-# # Edit line
-# bindkey -a '^V' edit-command-line
-# # Backspace
-# bindkey '^?' backward-delete-char
-# bindkey '^H' backward-delete-char
-# Option + Backspace doesn't work
-# bindkey '^[^?' backward-delete-word
-# # Ctrl-U
-# bindkey "^U" backward-kill-line
-
-# bind C-Z to "fg", so the same keybind suspends and resumes
-function fancy_ctrl_z() {
-  if [[ $#BUFFER -eq 0 ]]; then
-    BUFFER='fg'
-    zle accept-line
-  else
-    zle push-input
-    zle clear-screen
-  fi
-}
-zle -N fancy_ctrl_z
-bindkey '^Z' fancy_ctrl_z
-
-# # Update: switch entirely to vim keybinds. Removing everything else.
-# # See
-# # http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
-# # for the table of terminfo, and see
-# # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
-# # for standard widgets of zsh.
-
-# # Will not work on mac: Ctrl + Left/Right arrow
-# bindkey '^[[5D' beginning-of-line
-# bindkey '^[[5C' end-of-line
-# bindkey '^[[3~' delete-char
-
-# Up/Down walk only entries that start with what's already typed (all history on
-# an empty line). The arrows send ^[OA in application mode (what kcuu1/kcud1 hold)
-# and ^[[A otherwise, so bind both.
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
-bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
-bindkey '^[[A' up-line-or-beginning-search
-bindkey '^[[B' down-line-or-beginning-search
+setopt extended_glob        # Enable ^, ~, # and (#q...) glob operators.
 
 # =============================================================================
 # History
@@ -287,6 +192,113 @@ setopt NO_share_history        # Don't share history between all sessions.
 # Input/Output
 # =============================================================================
 
+# Allow correction notifications when mistyping commands.
+# `correct_all` is for all arguments.
+# Zsh will suggest the closest match.
+setopt correct
+
+# Enable interactive comments (# on the command line)
+setopt interactivecomments
+
+setopt NO_flow_control      # Disable start/stop characters in shell editor.
+# ^frees ^S/^Q in the line editor; with flow control on they pause/resume output
+
 # https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#index-r
 # Disable zsh builtin redo command alias. Use `fc -e -` if needed.
 disable r
+
+# =============================================================================
+# Job Control
+# =============================================================================
+
+# The prompt will display information about the status of a background job
+# if it starts or stops. Useful if you background tasks often.
+setopt notify
+
+# =============================================================================
+# Zle
+# =============================================================================
+
+# The time the shell waits, in hundredths of seconds, for another key to be pressed
+# when reading bound multi-character sequences.
+# Corresponds to 40ms (safer over ssh in emacs mode where esc-prefixed seq. can arrive split)
+KEYTIMEOUT=4
+
+# Word motion and deletion (Option + left/right arrow, Option + Backspace) treat characters
+# in WORDCHARS as part of a word. Drop '/' so they stop at each path component:
+# Option+Backspace on ~/wd/dotfiles deletes "dotfiles", not the whole path.
+# See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
+WORDCHARS=${WORDCHARS/\/}
+
+# terminfo key entries (kcuu1, kcbt, ...) describe what keys send in application mode, so turn
+# it on while zle is editing and off before a command runs.
+# See http://zshwiki.org/home/zle/bindkeys#reading_terminfo.
+if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
+  function zle_application_mode_start { echoti smkx }
+  function zle_application_mode_stop { echoti rmkx }
+  autoload -Uz add-zle-hook-widget
+  add-zle-hook-widget zle-line-init zle_application_mode_start
+  add-zle-hook-widget zle-line-finish zle_application_mode_stop
+fi
+
+# Initialise editing command line
+autoload -U edit-command-line && zle -N edit-command-line
+
+# Option + left and right arrow as Alacritty sends them; iTerm's ^[b/^[f are already
+# emacs defaults
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
+
+# Up/Down walk only entries that start with what's already typed (all history on
+# an empty line). The arrows send ^[OA in application mode (what kcuu1/kcud1 hold)
+# and ^[[A otherwise, so bind both.
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
+bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+# bind C-Z to "fg", so the same keybind suspends and resumes
+function fancy_ctrl_z() {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER='fg'
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy_ctrl_z
+bindkey '^Z' fancy_ctrl_z
+
+# # Use vim style line editing in zsh
+# bindkey -v
+# # Movement
+# bindkey -a 'gg' beginning-of-buffer-or-history
+# bindkey -a 'G' end-of-buffer-or-history
+# # Undo
+# bindkey -a 'u' undo
+# bindkey -a '^R' redo
+# # Edit line
+# bindkey -a '^V' edit-command-line
+# # Backspace
+# bindkey '^?' backward-delete-char
+# bindkey '^H' backward-delete-char
+# Option + Backspace doesn't work
+# bindkey '^[^?' backward-delete-word
+# # Ctrl-U
+# bindkey "^U" backward-kill-line
+
+# # Update: switch entirely to vim keybinds. Removing everything else.
+# # See
+# # http://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html#tag_002_001_003_003
+# # for the table of terminfo, and see
+# # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
+# # for standard widgets of zsh.
+
+# # Will not work on mac: Ctrl + Left/Right arrow
+# bindkey '^[[5D' beginning-of-line
+# bindkey '^[[5C' end-of-line
+# bindkey '^[[3~' delete-char
