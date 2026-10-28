@@ -47,7 +47,7 @@ brew "moreutils"
 brew "neofetch"                     # prettyprint system-info
 brew "nnn"                          # tui filemanager
 brew "nvim"                         # neovim
-brew "nvm"                          # node version manager
+# brew "nvm"                        # using mise now. node version manager
 brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
 brew "openssh"
 brew "openssl@1.1"
