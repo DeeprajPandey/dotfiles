@@ -6,6 +6,7 @@ config/github-copilot/hosts.json
 lnav
 
 # ignore state and credentials
+config/iterm2/
 config/joplin-desktop/*
 !config/joplin-desktop/userstyle.css
 !config/joplin-desktop/userchrome.css
