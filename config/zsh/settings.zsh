@@ -83,7 +83,7 @@ bindkey -M menuselect 'l' vi-forward-char
 # completion is already in progress, move to the previous completion rather than
 # the next.
 # See http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Completion.
-[ -n "${terminfo[kcbt]}" ] && bindkey "${terminfo[kcbt]}" reverse-menu-complete
+[[ -n ${terminfo[kcbt]} ]] && bindkey ${terminfo[kcbt]} reverse-menu-complete
 
 # terminfo key entries (kcuu1, kcbt, ...) describe what keys send in application mode, so turn it on while
 # zle is editing and off before a command runs.
@@ -110,13 +110,14 @@ setopt auto_param_slash     # If completed parameter is a directory, add a trail
 setopt extended_glob        # Enable ^, ~, # and (#q...) glob operators.
 setopt NO_menu_complete     # Do not autoselect the first completion entry.
 setopt NO_flow_control      # Disable start/stop characters in shell editor.
-# ^with this option is unset, output flow control via start/stop characters
-# (usually assigned to ^S/^Q) is disabled in the shell's editor.
+# ^frees ^S/^Q in the line editor; with flow control on they pause/resume output
 
 # Don't beep on an ambiguous completion.
 unsetopt list_beep
 
-# Adjust WORDCHARS to treat certain characters as part of words.
+# Word motion and deletion (Option + left/right arrow, Option + Backspace) treat characters in WORDCHARS as
+# part of a word. Drop '/' so they stop at each path component:
+# Option+Backspace on ~/wd/dotfiles deletes "dotfiles", not the whole path.
 # See 4.3.4 of http://zsh.sourceforge.net/Guide/zshguide04.html.
 WORDCHARS=${WORDCHARS/\/}
 
@@ -162,6 +163,7 @@ setopt interactivecomments
 # Corresponds to 40ms (default, safer over ssh in emacs mode where esc-prefixed seq. can arrive split
 KEYTIMEOUT=4
 
+# Option + left and right arrow as Alacritty sends them; iTerm's ^[b/^[f are already emacs defaults
 bindkey '^[[1;3D' backward-word
 bindkey '^[[1;3C' forward-word
 # # Use vim style line editing in zsh
@@ -181,9 +183,6 @@ bindkey '^[[1;3C' forward-word
 # bindkey '^[^?' backward-delete-word
 # # Ctrl-U
 # bindkey "^U" backward-kill-line
-
-# Use incremental search
-bindkey "^R" history-incremental-search-backward
 
 # bind C-Z to "fg", so the same keybind suspends and resumes
 function fancy_ctrl_z() {
@@ -205,19 +204,18 @@ bindkey '^Z' fancy_ctrl_z
 # # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Standard-Widgets
 # # for standard widgets of zsh.
 
-# # Option + Left arrow for prev word
-# bindkey '^[^[[D' backward-word
-# # Option + Right arrow for next word
-# bindkey '^[^[[C' forward-word
 # # Will not work on mac: Ctrl + Left/Right arrow
 # bindkey '^[[5D' beginning-of-line
 # bindkey '^[[5C' end-of-line
 # bindkey '^[[3~' delete-char
 
+# Up/Down walk only entries that start with what's already typed (all history on
+# an empty line). The arrows send ^[OA in application mode (what kcuu1/kcud1 hold)
+# and ^[[A otherwise, so bind both.
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
-bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search    # app-mode, matches the smkx hook
+bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
 bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 bindkey '^[[A' up-line-or-beginning-search
 bindkey '^[[B' down-line-or-beginning-search
@@ -273,9 +271,8 @@ setopt hist_find_no_dups
 # # NOTE: this works only with bang_hist enabled (which is not now)
 # setopt hist_verify
 
-# This options works like APPEND_HISTORY except that new history lines are added
-# to the $HISTFILE incrementally (as soon as they are entered), rather than
-# waiting until the shell exits.
+# Like inc_append_history, but writes each command after it finishes, so
+# extended_history records its real duration.
 setopt inc_append_history_time
 
 # Save each command’s beginning timestamp (in seconds since the epoch) and the
