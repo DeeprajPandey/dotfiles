@@ -76,7 +76,7 @@ brew "vbindiff"
 # brew "visidata"                     # tabular data tui explorer
 brew "wget"
 brew "wireguard-go"                 # wireguard vpn
-brwe "wireguard-tools"              # wireguard vpn tools
+brew "wireguard-tools"              # wireguard vpn tools
 brew "xh"                           # rust port - curl; HTTPie API
 brew "yabai"                        # tiling window manager; koekeishiya/formulae
 brew "yamllint"
