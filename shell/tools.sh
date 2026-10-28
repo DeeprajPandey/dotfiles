@@ -80,6 +80,7 @@ function argbash-init() {
   -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
 }
 
-## Run executable from local node_modules/
+## DEPRECATED: `npx bin` or `npm exec <bin>` runs binaries rom local node_modules now
+# Run executable from local node_modules/
 # https://web.archive.org/web/20200812154305/https://2ality.com/2016/01/locally-installed-npm-executables.html
-function npm-do { (PATH=$(npm bin):$PATH; "$@";) }
+# function npm-do { (PATH=$(npm bin):$PATH; "$@";) }
