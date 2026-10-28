@@ -42,3 +42,6 @@ export ANDROID_HOME=/opt/homebrew/share/android-commandlinetools
 # Add Platform Tools (adb) and Build Tools to your path
 path_append "$ANDROID_HOME/platform-tools"
 path_append "$ANDROID_HOME/cmdline-tools/latest/bin"
+
+# burst-cli
+path_append "$HOME/.burst/bin"
