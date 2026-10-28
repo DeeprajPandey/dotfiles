@@ -185,14 +185,6 @@ bindkey '^[[1;3C' forward-word
 # Use incremental search
 bindkey "^R" history-incremental-search-backward
 
-# Print previous command with Alt-N, where N is the number of arguments
-bindkey -s '\e1' "!:0 \t"
-bindkey -s '\e2' "!:0-1 \t"
-bindkey -s '\e3' "!:0-2 \t"
-bindkey -s '\e4' "!:0-3 \t"
-bindkey -s '\e5' "!:0-4 \t"
-bindkey -s '\e`' "!:0- \t"     # all but the last word
-
 # bind C-Z to "fg", so the same keybind suspends and resumes
 function fancy_ctrl_z() {
   if [[ $#BUFFER -eq 0 ]]; then
@@ -240,9 +232,17 @@ HISTFILE=${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history
 HISTSIZE=500000
 SAVEHIST=$HISTSIZE
 
-# Perform textual history expansion, csh-style, treating the character '!'
-# specially.
+# Treat '!' as a plain character: no !!/!$ history expansion, no quoting surprises.
 unsetopt bang_hist
+
+# NOTE: these need bang_hist to be enabled.
+# # Print previous command with Alt-N, where N is the number of arguments
+# bindkey -s '\e1' "!:0 \t"
+# bindkey -s '\e2' "!:0-1 \t"
+# bindkey -s '\e3' "!:0-2 \t"
+# bindkey -s '\e4' "!:0-3 \t"
+# bindkey -s '\e5' "!:0-4 \t"
+# bindkey -s '\e`' "!:0- \t"     # all but the last word
 
 setopt hist_ignore_all_dups    # Delete an old recorded event if a new event is a duplicate.
 setopt hist_ignore_space       # Do not record an event starting with a space.
@@ -267,10 +267,11 @@ setopt hist_reduce_blanks      # Remove extra blanks from commands added to the 
 # contiguous.
 setopt hist_find_no_dups
 
-# Whenever the user enters a line with history expansion, don't execute the line
-# directly; instead, perform history expansion and reload the line into the
-# editing buffer.
-setopt hist_verify
+# # Whenever the user enters a line with history expansion, don't execute the line
+# # directly; instead, perform history expansion and reload the line into the
+# # editing buffer.
+# # NOTE: this works only with bang_hist enabled (which is not now)
+# setopt hist_verify
 
 # This options works like APPEND_HISTORY except that new history lines are added
 # to the $HISTFILE incrementally (as soon as they are entered), rather than
@@ -290,5 +291,5 @@ setopt NO_share_history        # Don't share history between all sessions.
 # =============================================================================
 
 # https://zsh.sourceforge.io/Doc/Release/Shell-Builtin-Commands.html#index-r
-# Disable zsh builtin redo command alias. Use `fc -e -` or `!!` if needed.
+# Disable zsh builtin redo command alias. Use `fc -e -` if needed.
 disable r
