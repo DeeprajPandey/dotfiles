@@ -2,18 +2,13 @@
 cask_args appdir: "~/Applications", require_sha: true
 
 # All taps
+tap "asmvik/formulae"               # yabai, skhd
 tap "buo/cask-upgrade"              # `brew cu` for cask updates
-tap "danopia/tools"                 # https://github.com/dalance/amber/issues/46#issuecomment-756813259
 tap "felixkratz/formulae"           # jankyborders
-tap "homebrew/cask-fonts"
-tap "koekeishiya/formulae"          # yabai
-tap "microsoft/git"
 # tap "saulpw/vd"                     # visidata
-tap "spicetify/homebrew-tap"        # spicetify
-tap "terrastruct/d2"
 
 # Install essential tools
-brew "amber"                        # tap danopia
+brew "amber"                        # code search and replace (ambs, ambr)
 brew "ansifilter"
 brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
@@ -24,6 +19,7 @@ brew "ccache"
 brew "cmake"
 brew "coreutils"
 brew "dfu-util"
+brew "fastfetch"                    # prettyprint system-info; neofetch successor
 brew "fd"
 brew "findutils"
 brew "fswatch"                      # file system watcher
@@ -34,7 +30,6 @@ brew "git-delta"
 brew "git-filter-repo"              # clean way to rewrite git history
 brew "glibc" if OS.linux?
 brew "gnupg"
-brew "gpg" if OS.mac?
 brew "gping"
 # brew "helix"
 brew "hexyl"                        # hex viewer + auto formatter
@@ -44,13 +39,11 @@ brew "kondo"
 brew "lnav"                         # log navigator tui
 # brew "lynx"
 brew "moreutils"
-brew "neofetch"                     # prettyprint system-info
+brew "neovim"
 brew "nnn"                          # tui filemanager
-brew "nvim"                         # neovim
-# brew "nvm"                        # using mise now. node version manager
 brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
+# brew "nvm"                        # using mise now. node version manager
 brew "openssh"
-brew "openssl@1.1"
 brew "paperkey"
 brew "pinentry-mac"
 brew "pipenv"
@@ -63,12 +56,12 @@ brew "sccache"
 brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
 brew "shellcheck"                   # needed before shellcheck vscode extn
-brew "skhd"                         # hotkey daemon (works w/ yabai); tap koekeishiya/formulae
+brew "skhd"                         # hotkey daemon (works w/ yabai); tap asmvik/formulae
 # brew "sloc"                         # lines of code
 brew "spacer"                       # insert spacers when command output stops
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
-brew "tldr"
+brew "tlrc"                         # tldr pages client; provides the tldr command
 brew "tmux"                         # terminal multiplexer
 brew "tokei"
 brew "tree-sitter-cli"              # builds parsers for nvim-treesitter
@@ -79,44 +72,44 @@ brew "wget"
 brew "wireguard-go"                 # wireguard vpn
 brew "wireguard-tools"              # wireguard vpn tools
 brew "xh"                           # rust port - curl; HTTPie API
-brew "yabai"                        # tiling window manager; koekeishiya/formulae
+brew "yabai"                        # tiling window manager; tap asmvik/formulae
 brew "yamllint"
 brew "zellij"                       # rust port - tmux; floating panes
 brew "zopfli"
 brew "zoxide"
 
 # Diagram scripting
-brew "d2"                           # tap terrastruct
+brew "d2"
 
 # Install essential casks
-cask "android-platform-tools"       # adb
 cask "aldente"
+cask "android-platform-tools"       # adb
 # cask "autodesk-fusion360"         # noinstall: checksum undefined
 cask "balenaetcher"                 # flash OS images
 # cask "calibre"                      # ebook management + reader
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
-cask "darktable"                    # raw photo editor
-cask "digikam"                      # digital photo manager
+# cask "darktable"                  # noinstall: not notarized; get it from the website; raw photo editor
+# cask "digikam"                    # noinstall: not notarized; get it from the website; digital photo manager
 cask "drawio"                       # draw.io desktop client
 cask "firefox"
 cask "git-credential-manager"
 cask "google-drive"
-cask "handbrake"
+cask "handbrake-app"
 cask "imageoptim"
 cask "inkscape"
 cask "iterm2"
-cask "karabiner-elements"
 cask "kap"
+cask "karabiner-elements"
 cask "keepassxc", greedy: true      # always upgrade
 # cask "little-snitch"
-# cask "logi-options-plus"          # iff 3S is on the desk
+# cask "logi-options+"              # noinstall: checksum undefined; iff 3S is on the desk
 cask "logseq"
-cask "magicavoxel"                  # 8-bit 3D voxel editor and renderer
+# cask "magicavoxel"                # noinstall: not notarized; get it from the website; 8-bit 3D voxel editor and renderer
 cask "mixxx"
 cask "monitorcontrol"
 # mas "nextdns", id: 1464122853
-cask "openoffice"                   # really didn't like numbers; hence OSS spreadsheets
+# cask "openoffice"                 # noinstall: not notarized; get it from the website; really didn't like numbers; hence OSS spreadsheets
 cask "orbstack"                     # docker desktop alt
 # Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
 cask "pika"
@@ -127,21 +120,20 @@ cask "screens-connect"
 # mas "sequel-ace", id: 1518036000
 cask "shottr"
 # cask "spotify"                    # noinstall: checksum undefined
-cask "superslicer"
 # mas "unifi", id: 1057750338
 cask "visual-studio-code"
 cask "zoom"
 
 
-# Install fonts (tap cask-fonts)
+# Install fonts
 # Font preview: https://www.programmingfonts.org/#source-code-pro
-cask "font-source-code-pro-for-powerline"
+# cask "font-source-code-pro-for-powerline" # noinstall: checksum undefined
 # cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"          # sketchybar dependency
 cask "font-atkinson-hyperlegible"
 # cask "font-ia-writer-duospace"    # noinstall: checksum undefined
 # cask "font-ia-writer-mono"        # noinstall: checksum undefined
-cask "font-ibm-plex"
+cask "font-ibm-plex-mono"
 cask "font-inter"
 # cask "font-lato"                  # noinstall: checksum undefined
 cask "font-meslo-lg-nerd-font"
