@@ -8,18 +8,25 @@ tap "felixkratz/formulae"           # jankyborders
 # tap "saulpw/vd"                     # visidata
 
 # Install essential tools
+brew "age"                          # simple file encryption
 brew "amber"                        # code search and replace (ambs, ambr)
 brew "ansifilter"
 brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
 brew "borders"                      # tap felixkratz/formulae; jankyborders: customised window borders
 brew "bottom"                       # rust port - htop; process monitor
+brew "broot"                        # tree navigator; `br` in shell/tools.sh
 brew "btop"                         # rust port - htop
+brew "cava"                         # console audio visualiser
 brew "ccache"
 brew "cmake"
 brew "coreutils"
+brew "cowsay"
 brew "dfu-util"
+brew "exiftool"                     # read/write image metadata
 brew "fastfetch"                    # prettyprint system-info; neofetch successor
+brew "expat"                        # bin/fix-pyexpat relinks python against it
+brew "eza"                          # modern ls; shell/aliases.sh depends on it
 brew "fd"
 brew "findutils"
 brew "fswatch"                      # file system watcher
@@ -29,42 +36,63 @@ brew "git"
 brew "git-delta"
 brew "git-filter-repo"              # clean way to rewrite git history
 brew "glibc" if OS.linux?
+brew "gnu-tar"
 brew "gnupg"
+brew "go"                           # binaries land in ~/go/bin (on PATH)
 brew "gping"
 # brew "helix"
 brew "hexyl"                        # hex viewer + auto formatter
-# brew "imagemagick"                  # cli image editor
+brew "hledger"                      # plain text accounting
+brew "hugo"                         # static site generator
+brew "imagemagick-full"             # cli image editor
 brew "jq"                           # json command line processor
+brew "jrnl"                         # cli journal; config/jrnl
 brew "kondo"
 brew "lnav"                         # log navigator tui
+brew "lolcat"
 # brew "lynx"
 brew "moreutils"
+brew "mosh"                         # ssh that survives roaming and sleep
 brew "neovim"
 brew "nnn"                          # tui filemanager
 brew "no-more-secrets"              # hollywood hacker effect - Sneakers, 1992
 # brew "nvm"                        # using mise now. node version manager
+brew "ollama"                       # run LLMs locally
+brew "openfortivpn"                 # Fortinet VPN client
 brew "openssh"
+brew "pandoc"                       # markup format converter
 brew "paperkey"
 brew "pinentry-mac"
 brew "pipenv"
+brew "pnpm"
+brew "poppler"                      # pdf tools: pdftotext, pdfinfo
 brew "procs"
 brew "pv"
+brew "pyenv"
+brew "ranger"                       # tui file manager
 # brew "rename"
 brew "ripgrep"
+brew "rtorrent"                     # tui bittorrent client
 brew "rustscan"                     # rust port - nmap
 brew "sccache"
 brew "scrcpy"                       # screen mirroring over adb
 brew "sd"
+brew "sevenzip"                     # 7-zip archiver
 brew "shellcheck"                   # needed before shellcheck vscode extn
+brew "showkey"                      # keystroke visualiser
 brew "skhd"                         # hotkey daemon (works w/ yabai); tap asmvik/formulae
 # brew "sloc"                         # lines of code
 brew "spacer"                       # insert spacers when command output stops
+brew "spark"                        # sparklines in the terminal
 brew "ssh-copy-id"
 brew "starship"                     # current shell prompt
+brew "telnet"
 brew "tlrc"                         # tldr pages client; provides the tldr command
 brew "tmux"                         # terminal multiplexer
 brew "tokei"
+brew "tree"
 brew "tree-sitter-cli"              # builds parsers for nvim-treesitter
+brew "uv"                           # python versions, venvs and packages
 # brew "valgrind"                   # noinstall: not available for Apple Silicon
 brew "vbindiff"
 # brew "visidata"                     # tabular data tui explorer
@@ -74,6 +102,9 @@ brew "wireguard-tools"              # wireguard vpn tools
 brew "xh"                           # rust port - curl; HTTPie API
 brew "yabai"                        # tiling window manager; tap asmvik/formulae
 brew "yamllint"
+brew "yarn"
+brew "yazi"                         # tui file manager; `y` in shell/aliases.sh
+brew "yt-dlp"                       # audio/video downloader
 brew "zellij"                       # rust port - tmux; floating panes
 brew "zopfli"
 brew "zoxide"
@@ -82,31 +113,56 @@ brew "zoxide"
 brew "d2"
 
 # Install essential casks
+cask "alacritty"                    # terminal; config/alacritty
 cask "aldente"
+cask "android-commandlinetools"     # sdkmanager; shell/external.sh sets ANDROID_HOME
 cask "android-platform-tools"       # adb
+cask "apparency"                    # inspect app bundles
+cask "arc"
+cask "audacity"
 # cask "autodesk-fusion360"         # noinstall: checksum undefined
 cask "balenaetcher"                 # flash OS images
+cask "basictex"                     # xelatex; shell/external.sh adds texbin to PATH
+cask "brave-browser"
 # cask "calibre"                      # ebook management + reader
+cask "charles"                      # http debugging proxy
+cask "claude"
+cask "cloudflare-warp"
 cask "colour-contrast-analyser"
 # cask "daisydisk"                  # noinstall: checksum undefined
 # cask "darktable"                  # noinstall: not notarized; get it from the website; raw photo editor
+cask "dbeaver-community"            # sql client
 # cask "digikam"                    # noinstall: not notarized; get it from the website; digital photo manager
+cask "discord"
 cask "drawio"                       # draw.io desktop client
+cask "figma"
 cask "firefox"
+cask "flutter"
 cask "git-credential-manager"
+# cask "google-chrome"              # noinstall: checksum undefined
 cask "google-drive"
 cask "handbrake-app"
+cask "iina"                         # media player
 cask "imageoptim"
 cask "inkscape"
+cask "itch"                         # itch.io game client
 cask "iterm2"
+cask "joplin"                       # notes; css in config/joplin-desktop
 cask "kap"
 cask "karabiner-elements"
 cask "keepassxc", greedy: true      # always upgrade
+cask "linear"
 # cask "little-snitch"
+cask "localsend"                    # airdrop alternative
 # cask "logi-options+"              # noinstall: checksum undefined; iff 3S is on the desk
 cask "logseq"
+cask "loom"
+cask "macfuse"
 # cask "magicavoxel"                # noinstall: not notarized; get it from the website; 8-bit 3D voxel editor and renderer
+cask "microsoft-edge"
+cask "middleclick"                  # middle click on the trackpad
 cask "mixxx"
+cask "mongodb-compass"
 cask "monitorcontrol"
 # mas "nextdns", id: 1464122853
 # cask "openoffice"                 # noinstall: not notarized; get it from the website; really didn't like numbers; hence OSS spreadsheets
@@ -114,15 +170,31 @@ cask "orbstack"                     # docker desktop alt
 # Nikon Webcam Utility https://downloadcenter.nikonimglib.com/en/download/sw/209.html
 cask "pika"
 cask "protonvpn"
+cask "rapidapi"                     # http api client
 cask "raspberry-pi-imager"
+cask "raycast"
 cask "screaming-frog-seo-spider"
 cask "screens-connect"
 # mas "sequel-ace", id: 1518036000
 cask "shottr"
+cask "signal"
+cask "skim"                         # pdf reader + annotations
+cask "slack"
 # cask "spotify"                    # noinstall: checksum undefined
+cask "stremio"
+cask "suspicious-package"           # inspect .pkg installers
+cask "tabula"                       # extract tables from pdfs
+cask "tailscale-app"
+cask "temurin"                      # jdk; shell/external.sh sets JAVA_HOME
+cask "thunderbird"
+cask "transmission"
+cask "ungoogled-chromium"
 # mas "unifi", id: 1057750338
 cask "visual-studio-code"
+cask "vlc"
+cask "whatsapp"
 cask "zoom"
+cask "zotero"                       # reference manager
 
 
 # Install fonts
