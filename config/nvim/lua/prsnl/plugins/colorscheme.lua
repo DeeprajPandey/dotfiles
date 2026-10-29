@@ -603,7 +603,8 @@ local function toggleRosePineTransparency()
 end
 
 M[2].lazy = false
-M[2].priority = true
+-- default is 50. plugins load highest to lowest.
+M[2].priority = 1000
 M[2].config = function(_, opts)
   -- substitution: `.,+1s/tokyonight/catppuccin/g`
   require('rose-pine').setup(opts)
