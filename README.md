@@ -25,17 +25,18 @@ The `run` script is the core of this repository, offering automated setup and co
 
 ## Installation
 
-1. Clone the repository:
+1. Install the Xcode Command Line Tools (provides `git`):
 
    ```sh
-   git clone https://github.com/[USERNAME]/dotfiles.git ~/dotfiles
-   cd ~/dotfiles
+   xcode-select --install
    ```
 
-2. Add execute permissions:
+2. Clone the repository and run the setup script:
 
    ```sh
-   chmod +x run
+   git clone --recursive https://github.com/[USERNAME]/dotfiles.git ~/Documents/wd/dotfiles
+   cd ~/Documents/wd/dotfiles
+   ./run
    ```
 
 3. Run the setup script:
