@@ -78,9 +78,9 @@ keymap.set('n', '<F9>', '<cmd>cnext<CR>zz',
   { desc = 'Go to next item in quickfix list and center on screen', noremap = true, silent = true })
 keymap.set('n', '<F7>', '<cmd>cprev<CR>zz',
   { desc = 'Go to previous item in quickfix list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<leader>F9', '<cmd>lnext<CR>zz',
+keymap.set('n', '<leader><F9>', '<cmd>lnext<CR>zz',
   { desc = 'Go to next item in location list and center on screen', noremap = true, silent = true })
-keymap.set('n', '<leader>F7', '<cmd>lprev<CR>zz',
+keymap.set('n', '<leader><F7>', '<cmd>lprev<CR>zz',
   { desc = 'Go to previous item in location list and center on screen', noremap = true, silent = true })
 
 -- disable arrow keys in normal mode
