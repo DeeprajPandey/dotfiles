@@ -72,7 +72,6 @@
 	editor = vim
 	excludesfile = ~/.config/git/ignore
 	pager = delta
-	sparseCheckout = true
 
 [include]
 	path = ./delta.themes.gitconfig
@@ -177,7 +176,7 @@
 	editor = vim
 
 [gpg "ssh"]
-	allowedSignersFile = /Users/pontiac/.config/git/allowed_signers
+	allowedSignersFile = ~/.config/git/allowed_signers
 
 [credential]
 	helper = /usr/local/share/gcm-core/git-credential-manager
