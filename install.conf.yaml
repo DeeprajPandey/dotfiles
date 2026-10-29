@@ -7,6 +7,7 @@
       force: true
     ~/.config:
       recursive: true
+    ~/.local/bin/:
 - clean: ['~/.ssh']
 - link:
     ~/.dotfiles: ''
@@ -17,6 +18,9 @@
       path: gnupg/gpg.conf
     ~/.gnupg/gpg-agent.conf:
       path: gnupg/gpg-agent.conf
+    ~/.local/bin/:
+      glob: true
+      path: bin/*
     ~/.shell:
     ~/.ssh/config: ssh/config
     ~/.vim:
