@@ -66,6 +66,9 @@ zmodload zsh/complist
   } &!
 }
 
+# argbash ships only bash completion; zsh can build one from --help.
+compdef _gnu_generic argbash argbash-init
+
 # If a completion is performed with the cursor within a word, and a full
 # completion is inserted, the cursor is moved to the end of the word.
 setopt always_to_end
