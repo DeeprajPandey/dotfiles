@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# argbash loads its m4 files relative to its own path, so a symlink in
+# ~/.local/bin would break it; run the submodule copy by its real path.
+exec "$HOME/.dotfiles/vendor/argbash/bin/argbash" "$@"

@@ -11,6 +11,7 @@ tap "felixkratz/formulae"           # jankyborders
 brew "age"                          # simple file encryption
 brew "amber"                        # code search and replace (ambs, ambr)
 brew "ansifilter"
+brew "autoconf"                     # argbash runs autom4te
 brew "bandwhich"                    # current network utilisation by proc
 brew "bat"                          # rust port - cat; highlight, git
 brew "borders"                      # tap felixkratz/formulae; jankyborders: customised window borders

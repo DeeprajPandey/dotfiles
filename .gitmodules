@@ -65,3 +65,6 @@
 [submodule "config/zsh/plugins/zsh-autosuggestions"]
 	path = config/zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "vendor/argbash"]
+	path = vendor/argbash
+	url = https://github.com/matejak/argbash.git

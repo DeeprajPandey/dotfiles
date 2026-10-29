@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec "$HOME/.dotfiles/vendor/argbash/bin/argbash-init" "$@"

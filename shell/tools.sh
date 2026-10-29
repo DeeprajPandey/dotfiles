@@ -34,52 +34,6 @@ function br {
     fi
 }
 
-# Argbash via docker container
-# https://web.archive.org/web/20230927191830/https://github.com/matejak/argbash/blob/master/docker/README.md
-function argbash() {
-  workingdir="$PWD"
-
-  # Initialize an empty array to store the modified arguments
-  modified_args=()
-
-  # Iterate over each argument
-  for arg in "$@"; do
-    # If the argument starts with the working directory, remove that prefix
-    if [[ $arg == $workingdir/* ]]; then
-      arg="${arg#"$workingdir"/}"
-    fi
-
-    # Append the (possibly modified) argument to the array
-    modified_args+=("$arg")
-  done
-
-  docker run --rm \
-  -v "$workingdir:/work" \
-  -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
-}
-
-function argbash-init() {
-  workingdir="$PWD"
-
-  # Initialize an empty array to store the modified arguments
-  modified_args=()
-
-  # Iterate over each argument
-  for arg in "$@"; do
-    # If the argument starts with the working directory, remove that prefix
-    if [[ $arg == $workingdir/* ]]; then
-      arg="${arg#"$workingdir"/}"
-    fi
-
-    # Append the (possibly modified) argument to the array
-    modified_args+=("$arg")
-  done
-
-  docker run --rm -e PROGRAM=argbash-init \
-  -v "$workingdir:/work" \
-  -u "$(id -u):$(id -g)" matejak/argbash "${modified_args[@]}"
-}
-
 ## DEPRECATED: `npx bin` or `npm exec <bin>` runs binaries rom local node_modules now
 # Run executable from local node_modules/
 # https://web.archive.org/web/20200812154305/https://2ality.com/2016/01/locally-installed-npm-executables.html
