@@ -1,4 +1,3 @@
--- TODO: look into treesitter-textobjects, treesitter-context, and incremental selection
 local M = {
   'nvim-treesitter/nvim-treesitter',
   branch = 'main',
