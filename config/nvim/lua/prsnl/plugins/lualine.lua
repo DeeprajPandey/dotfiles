@@ -65,14 +65,10 @@ local M = {
 function M.config(_, opts)
   -- lsp active clients
   local function get_active_lsp_clients()
-    local active_clients = vim.lsp.get_active_clients()
+    local active_clients = vim.lsp.get_clients({ bufnr = 0 })
     local client_names = {}
-    for _, client in pairs(active_clients or {}) do
-      local buf = vim.api.nvim_get_current_buf()
-      -- only return attached buffers
-      if vim.lsp.buf_is_attached(buf, client.id) then
-        table.insert(client_names, client.name)
-      end
+    for _, client in ipairs(active_clients) do
+      table.insert(client_names, client.name)
     end
 
     if not vim.tbl_isempty(client_names) then
@@ -101,7 +97,6 @@ function M.config(_, opts)
 
   -- add lsp active clients fn to lualine y
   vim.list_extend(opts.sections.lualine_y, { get_active_clients_str })
-  print(get_active_clients_str())
 
   require("lualine").setup(opts)
 end
