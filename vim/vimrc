@@ -1,5 +1,8 @@
 set nocompatible  " not vi compatible
 
+"Set a custom Leader key
+let mapleader = " "
+
 "------------------
 " Syntax and indent
 "------------------
@@ -159,9 +162,6 @@ endfunction
 
 " toggle relative numbering
 nnoremap <C-n> :set rnu!<CR>
-
-"Set a custom Leader key
-let mapleader = " "
 
 " Paste directly from system clipboard in Normal and Visual modes
 noremap <Leader>v "+p
