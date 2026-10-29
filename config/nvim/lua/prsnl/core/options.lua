@@ -27,6 +27,7 @@ opt.expandtab = true        -- expand to spaces
 opt.smartindent = true
 opt.autoindent = true       -- copy indent from current line when starting next
 opt.wrap = true
+opt.linebreak = true        -- wrap at word boundaries, not mid-word
 
 -- reload file from disk on change
 -- works with `reload-file-on-update` autocmd
