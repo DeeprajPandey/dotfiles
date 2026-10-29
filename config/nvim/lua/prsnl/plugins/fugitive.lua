@@ -1,8 +1,9 @@
 local M = {
-  'tpope/vim-fugitive',
-  config = function()
-    vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
-  end
+  "tpope/vim-fugitive",
+  event = "VeryLazy",
+  keys = {
+    { "<leader>gs", vim.cmd.Git, desc = "[G]it [S]tatus" },
+  },
 }
 
 return M
