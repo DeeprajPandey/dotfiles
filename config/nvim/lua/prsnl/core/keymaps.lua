@@ -115,9 +115,6 @@ keymap.set('n', '<leader><leader>', function()
   vim.cmd('so %')
 end, { desc = 'Source the current file' })
 
--- toggle relative numbering
-keymap.set('n', '<C-n>', ':set rnu!<CR>', { desc = 'Toggle relative numbering', noremap = true, silent = true })
-
 local function show_documentation()
   local filetype = vim.bo.filetype
   local cword = vim.fn.expand('<cword>') -- get word under cursor once
