@@ -34,7 +34,7 @@ local M = {
       find_files = {
         disable_devicons = true, -- icons affect performance
         -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
-        find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*', '--unrestricted' },
+        find_command = { 'rg', '--files', '--hidden', '--unrestricted', '--glob', '!**/.git/*', '--glob', '!**/target/*', '--glob', '!**/node_modules/*', },
       },
       git_files = {
         disable_devicons = true, -- icons affect performance
