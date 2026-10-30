@@ -216,7 +216,7 @@ function setup_environment_and_shell() {
     # Install all our dependencies with bundle (See Brewfile)
     # https://github.com/Homebrew/homebrew-bundle
     log_info "Installing dependencies from Brewfile..."
-    brew bundle --file ./init/Brewfile
+    brew bundle --file "$DIR/init/Brewfile"
     log_success "Homebrew formulae and casks installed."
 
     # Set up the shell and everything else
