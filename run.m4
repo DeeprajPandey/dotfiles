@@ -118,8 +118,7 @@ function setup_environment_and_shell() {
 
     # Set up the shell and everything else
     log_info "Setting up the shell using dotbot..."
-    # shellcheck source=/dev/null
-    source "$DIR/install"
+    "$DIR/install"
 
     # Initialise launchd services
     # SKetchybar: get community font ligatures
