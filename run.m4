@@ -34,8 +34,8 @@ function log_success() {
     echo -e "${GREEN}[SUCCESS] $1${NC}"
 }
 
-# Installs foundational components: xcode-select, Homebrew, and Docker.
-# Ensures Docker is running and initialises a project directory.
+# Installs foundational components: xcode-select and Homebrew,
+# and creates the working directory.
 function install_core_dependencies() {
     log_info "Setting up your Mac's core dependencies..."
 
@@ -66,21 +66,21 @@ function install_core_dependencies() {
     log_info "Updating Homebrew and upgrading installed formulae..."
     brew update && brew upgrade
 
-    # Install docker and start the daemon before moving to Brewfile (whalebrew needs this)
-    log_info "Installing and starting Docker..."
-    brew install --cask docker
+    # # Install docker and start the daemon before moving to Brewfile (whalebrew needs this)
+    # log_info "Installing and starting Docker..."
+    # brew install --cask docker
 
-    # Run Docker if it's not running
-    if ! type -a docker > /dev/null 2>&1; then
-        open /Applications/Docker.app
+    # # Run Docker if it's not running
+    # if ! type -a docker > /dev/null 2>&1; then
+    #     open /Applications/Docker.app
 
-        # Wait until Docker daemon is running and has completed initialisation
-        until docker stats --no-stream &> /dev/null; do
-            echo -e "\\n${YELLOW}[INFO] Waiting for Docker to launch...${NC}"
-            sleep 5
-        done
-        log_success "Docker is running."
-    fi
+    #     # Wait until Docker daemon is running and has completed initialisation
+    #     until docker stats --no-stream &> /dev/null; do
+    #         echo -e "\\n${YELLOW}[INFO] Waiting for Docker to launch...${NC}"
+    #         sleep 5
+    #     done
+    #     log_success "Docker is running."
+    # fi
 
     # Create a projects dir and symlink to ~
     log_info "Creating a working directory, gnupg, and spicetify dirs to symlink everything appropriately..."
