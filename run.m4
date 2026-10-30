@@ -120,6 +120,12 @@ function setup_environment_and_shell() {
     log_info "Setting up the shell using dotbot..."
     "$DIR/install"
 
+    # dotbot has now linked config/mise; install the tools it lists (node, …)
+    "$HOME/.local/bin/mise" install
+
+    # install plugins and build treesitter parsers
+    nvim --headless "+Lazy! sync" +qa
+
     # Initialise launchd services
     # SKetchybar: get community font ligatures
     # curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v1.0.23/sketchybar-app-font.ttf -o $HOME/Library/Fonts/sketchybar-app-font.ttf
