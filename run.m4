@@ -34,7 +34,7 @@ function log_success() {
     echo -e "${GREEN}[SUCCESS] $1${NC}"
 }
 
-# Installs foundational components: xcode-select and Homebrew,
+# Installs foundational components: xcode-select, Homebrew, rustup and mise,
 # and creates the working directory.
 function install_core_dependencies() {
     log_info "Setting up your Mac's core dependencies..."
@@ -89,7 +89,21 @@ function install_core_dependencies() {
     mkdir -p -m 700 "$HOME/.gnupg"
     log_success "Directories initialised and linked."
 
-    log_info "Install rustup and rust. Ref: https://www.rust-lang.org/learn/get-started"
+    # --no-modify-path: rustup would otherwise append to ~/.zshrc, a symlink
+    # into this repo; shell/bootstrap.sh already puts ~/.cargo/bin on PATH
+    if [ ! -x "$HOME/.cargo/bin/rustup" ]; then
+        log_info "Installing rustup and the stable toolchain..."
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+        "$HOME/.cargo/bin/rustup" component add rust-analyzer
+        log_success "Rust installed."
+    fi
+
+    # shell/external.sh activates mise from this exact path
+    if [ ! -x "$HOME/.local/bin/mise" ]; then
+        log_info "Installing mise..."
+        curl -fsSL https://mise.run | sh
+        log_success "mise installed."
+    fi
 }
 
 # Installs Brew formulae and casks from Brewfile and sets up the shell using Dotbot.
