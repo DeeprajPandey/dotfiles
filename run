@@ -186,11 +186,10 @@ function install_core_dependencies() {
     # fi
 
     # Create a projects dir and symlink to ~
-    log_info "Creating a working directory, gnupg, and spicetify dirs to symlink everything appropriately..."
+    log_info "Creating the working and gnupg dirs to symlink everything appropriately..."
     mkdir -p "$HOME"/Documents/wd
     ln -sfn "$HOME"/Documents/wd "$HOME"/wd
-    mkdir -p "$HOME/.gnupg"
-    mkdir -p "$HOME/.config/spicetify"
+    mkdir -p -m 700 "$HOME/.gnupg"
     log_success "Directories initialised and linked."
 
     log_info "Install rustup and rust. Ref: https://www.rust-lang.org/learn/get-started"
