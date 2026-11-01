@@ -1,7 +1,7 @@
 .DS_Store
 
 # github-copilot env
-config/github-copilot/hosts.json
+config/github-copilot/
 
 lnav
 
