@@ -86,7 +86,6 @@ brew "skhd"                         # hotkey daemon (works w/ yabai); tap asmvik
 brew "spacer"                       # insert spacers when command output stops
 brew "spark"                        # sparklines in the terminal
 brew "ssh-copy-id"
-brew "starship"                     # current shell prompt
 brew "telnet"
 brew "tlrc"                         # tldr pages client; provides the tldr command
 brew "tmux"                         # terminal multiplexer
