@@ -10,6 +10,12 @@ config/iterm2/
 config/joplin-desktop/*
 !config/joplin-desktop/userstyle.css
 !config/joplin-desktop/userchrome.css
+
+# darktable keybindings and theme tweaks
+config/darktable/*
+!config/darktable/shortcutsrc
+!config/darktable/user.css
+
 config/tanstack/
 config/flutter/
 config/whop/
