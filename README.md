@@ -12,7 +12,6 @@ This repository is my toolkit for setting up and managing my Mac. It handles the
   - Check your terminal application in the list, or add it if needed.
   - Restart your terminal for changes to take effect.
   <img src="./assets/full_disk.png" alt="MacOS Ventura full disk access" width="70%"/>
-- **`git` installed:**  If you need to install Homebrew first, check `run.m4` (lines 60-61) for commands.
 
 ### The `run` Script
 
@@ -75,7 +74,7 @@ For modifications to `macos.sh`, run `./run --configure-os`.
 
 The `run` script is generated using [argbash](https://github.com/matejak/argbash) from the `run.m4` template.  To modify it:
 
-1. Install argbash: [https://argbash.readthedocs.io/en/latest/install.html](https://argbash.readthedocs.io/en/latest/install.html). If dotfiles were set up using this `run` script, check if argbash is installed already as a docker container with `argbash -h`.
+1. argbash[https://argbash.readthedocs.io/en/stable/](https://argbash.readthedocs.io/en/stable/) comes with the repo: it's a submodule at `vendor/argbash`. `./install` symlinks it into `~/.local/bin`. Check with `argbash --version` after running the install command.
 2. Edit the `run.m4` file (using bash syntax highlighting for better clarity).
 3. Generate the `run` script:
    ```sh
