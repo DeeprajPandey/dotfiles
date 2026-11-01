@@ -1,7 +1,6 @@
 # shellcheck shell=bash
 # To allow shellcheck linting
 
-path_prepend "/usr/local/sbin"
 path_prepend "$HOME/.local/bin"
 path_append "$HOME/.luarocks/bin"
 
