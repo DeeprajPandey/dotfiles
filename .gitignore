@@ -19,3 +19,7 @@ config/darktable/*
 config/tanstack/
 config/flutter/
 config/whop/
+
+# dev
+# ksentry has state & credentials
+config/ksentry/
